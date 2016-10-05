@@ -9,6 +9,8 @@ import { MaterialModule } from '@angular/material';
 
 // our components
 import { AppComponent } from './app.component';
+// our routes
+import { EzawRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { AppComponent } from './app.component';
     FormsModule,
     HttpModule,
     MaterialModule.forRoot(),
+    // routes
+    EzawRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
