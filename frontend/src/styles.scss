@@ -1,4 +1,13 @@
-@import '~@angular/material/core/theming/prebuilt/purple-green.css';
+@import '~@angular/material/core/theming/all-theme';
+
+@include md-core();
+
+$primary: md-palette($md-teal);
+$accent: md-palette($md-grey);
+
+$theme: md-light-theme($primary, $accent);
+
+@include angular-material-theme($theme);
 
 @font-face {
   font-family: Material Icons;
