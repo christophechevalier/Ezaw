@@ -9,12 +9,15 @@ import { MaterialModule } from '@angular/material';
 
 // our components
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+
 // our routes
 import { EzawRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
