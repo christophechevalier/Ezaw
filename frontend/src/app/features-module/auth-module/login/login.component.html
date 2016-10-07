@@ -1,0 +1,33 @@
+<md-card-content>
+  <form #formLogin="ngForm">
+    <div align="center">
+      <br>
+      <md-card-subtitle>
+        <p>LOG IN</p>
+      </md-card-subtitle>
+
+      <md-input placeholder="Username" name="username" type="Text">
+            <span md-prefix>
+              <md-icon>person</md-icon>
+            </span>
+      </md-input>
+
+      <md-input placeholder="Password" name="password" type="password">
+            <span md-prefix>
+              <md-icon>vpn_key</md-icon>
+            </span>
+      </md-input>
+    </div>
+    <div align="center">
+      <md-checkbox color="primary" aria-label="Remember me" [checked]="false">
+        Remember me
+      </md-checkbox>
+    </div>
+    <div align="end" class="pnl-btn-connect">
+      <button type="submit" md-raised-button color="primary">
+        <span>{{ 'LOG_ME' | translate }}</span>
+      </button>
+    </div>
+  </form>
+  <br>
+</md-card-content>

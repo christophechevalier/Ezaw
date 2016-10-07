@@ -1,0 +1,85 @@
+/* Authentication */
+
+md-card {
+  background: rgba(255, 255, 255, .3);
+  color: black;
+}
+
+md-input {
+  width: 90%;
+}
+
+md-progress-circle {
+  width: 10px;
+  height: 10px;
+  line-height: 10px;
+  display: inline-block;
+}
+
+md-card-content > * {
+  margin: 10px;
+}
+
+.pnl-auth {
+  max-width: 500px;
+  margin: auto;
+  padding: 0;
+}
+
+.pnl-btn-connect {
+  margin: 16px;
+}
+
+.background-auth {
+  background-color: rgba(224, 224, 224, .8);
+  position: fixed;
+  padding: auto;
+  width: 100%;
+  min-height: 100%;
+  flex: 1 1 auto;
+}
+
+.background-logo-ezaw {
+  background: url("/assets/img/ezaw-logo.png") no-repeat bottom center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  flex: 1 1 auto;
+}
+
+/* Toolbar Auth */
+
+md-toolbar-row {
+  justify-content: space-between;
+  width: 100%;
+  flex: 1 1 auto;
+}
+
+.flex-space {
+  flex: 1 1 auto;
+}
+
+.logo-ezaw {
+  max-width: 110px;
+}
+
+/* Mobile */
+
+@media screen and (max-width: 600px) {
+  .background-auth {
+    background-color: rgba(224, 224, 224, .8);
+    position: fixed;
+    padding: auto;
+    width: 100%;
+    min-height: 100%;
+    flex: 1 1 auto;
+  }
+
+  .background-logo-ezaw {
+    background: url("/assets/img/ezaw-logo.png") no-repeat bottom center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    flex: 1 1 auto;
+  }
+}
