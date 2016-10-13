@@ -4,6 +4,7 @@ import { FeatureComponent } from './features-module.component';
 
 // our modules
 import { AuthModule } from './auth-module/auth-module.module';
+import { NavModule } from './nav-module/nav-module.module';
 import { SharedModule } from '../shared-module/shared-module.module';
 
 // our routes
@@ -17,7 +18,8 @@ import { FeaturesRoutingModule } from './features-module-routing.module';
     FeaturesRoutingModule,
 
     // our modules
-    AuthModule
+    AuthModule,
+    NavModule
   ],
   declarations: [
     FeatureComponent

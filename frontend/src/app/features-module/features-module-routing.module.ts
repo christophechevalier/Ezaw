@@ -7,6 +7,9 @@ import { AuthComponent } from './auth-module/auth-module.component';
 import { LoginComponent } from './auth-module/login/login.component';
 import { RegisterComponent } from './auth-module/register/register.component';
 
+import { NavComponent } from './nav-module/nav-module.component';
+import { NavigationComponent } from './nav-module/navigation/navigation.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -29,6 +32,26 @@ const routes: Routes = [
       {
         path: 'register',
         component: RegisterComponent
+      }
+    ]
+  },
+  {
+    path: '',
+    redirectTo: 'nav',
+    pathMatch: 'full'
+  },
+  {
+    path: 'nav',
+    component: NavComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'navigation',
+        pathMatch: ''
+      },
+      {
+        path: 'navigation',
+        component: NavigationComponent
       }
     ]
   }

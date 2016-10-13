@@ -2,12 +2,32 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Http } from '@angular/http';
+
+// environments for our app
+import { environment } from '../environments/environment';
 
 // angular-material2 modules
 import { MaterialModule } from '@angular/material';
 
 // angular-translate
 import { TranslateStaticLoader, TranslateLoader, TranslateModule } from 'ng2-translate';
+
+// ngrx - store
+import { StoreModule } from '@ngrx/store';
+
+// our effects
+import { UserEffects } from './shared-module/effects/user.effects';
+
+// our reducers
+import { UserReducer } from './shared-module/reducers/user.reducer';
+import { ConfigReducer } from './shared-module/reducers/config.reducer';
+
+// our services
+import { UserService } from './shared-module/services/user.service';
+
+// our mocks
+import { UserMockService } from './shared-module/mocks/user-mock.service';
 
 // our components
 import { AppComponent } from './app.component';
@@ -17,9 +37,6 @@ import { FeatureModule } from './features-module/features-module.module';
 
 // shared module
 import { SharedModule } from './shared-module/shared-module.module';
-import { StoreModule } from '@ngrx/store';
-import { Http } from '@angular/http';
-
 
 @NgModule({
   declarations: [
@@ -31,11 +48,14 @@ import { Http } from '@angular/http';
     FeatureModule,
     FormsModule,
 
+    // ngrx - store
+    StoreModule.provideStore({
+      config: ConfigReducer,
+      user: UserReducer
+    }),
+
     // material design
     MaterialModule.forRoot(),
-
-    // ngrx - store
-    StoreModule.provideStore({ }),
 
     // translate
     TranslateModule.forRoot({
@@ -44,7 +64,13 @@ import { Http } from '@angular/http';
       deps: [Http]
     }),
   ],
-  providers: [],
+  providers: [
+    UserEffects,
+    {
+      provide: UserService,
+      useClass: (environment.mock ? UserMockService : UserService)
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

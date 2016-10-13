@@ -1,0 +1,55 @@
+<div [class.dark-theme]="(config$ | async).isDarkTheme">
+
+  <router-outlet></router-outlet>
+
+  <button md-fab color="primary" class="custom-button-search">
+    <md-icon class="md-24">search</md-icon>
+  </button>
+
+  <md-button-toggle-group class="custom-button-toggle" color="primary">
+    <md-button-toggle>
+      <md-icon>directions_car</md-icon>
+    </md-button-toggle>
+    <md-button-toggle>
+      <span>Accident</span>
+    </md-button-toggle>
+    <md-button-toggle>
+      <span>Police</span>
+    </md-button-toggle>
+    <md-button-toggle>
+      <md-icon>warning</md-icon>
+    </md-button-toggle>
+  </md-button-toggle-group>
+
+  <md-toolbar color="primary" class="toolbar-bottom">
+    <button md-icon-button>
+      <md-icon>settings</md-icon>
+    </button>
+    <span class="flex-space"></span>
+
+    <span>Welcome to </span>
+    <img class="logo-nav-ezaw" src="/assets/img/ezaw-logo.png">
+
+    <span class="flex-space"></span>
+
+    <button md-icon-button [md-menu-trigger-for]="menu">
+      <md-icon>more_vert</md-icon>
+    </button>
+  </md-toolbar>
+
+  <md-menu x-position="before" y-position="above" #menu="mdMenu" align="end">
+
+    <app-profile-module></app-profile-module>
+
+    <app-toggle-theme></app-toggle-theme>
+
+    <button md-menu-item [disabled]="(user$ | async).isDisconnecting" (click)="disconnectUser()"
+            *ngIf="!(user$ | async).isDisconnecting">
+      <md-icon>power_settings_new</md-icon>
+      Disconnect
+      <md-progress-circle *ngIf="(user$ | async).isDisconnecting" mode="indeterminate"></md-progress-circle>
+    </button>
+  </md-menu>
+
+</div>
+
