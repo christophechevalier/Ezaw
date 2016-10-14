@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 
-import {MdDialog, MdDialogConfig} from "@angular/material";
-import {ProfileComponent} from "./profile/profile.component";
+import {MdDialog, MdDialogConfig} from '@angular/material';
+import {ProfileComponent} from './profile/profile.component';
 
 @Component({
   selector: 'app-profile-module',
