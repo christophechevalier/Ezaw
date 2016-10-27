@@ -10,7 +10,12 @@ exports.config = {
     './e2e/**/*.e2e-spec.ts'
   ],
   capabilities: {
-    'browserName': 'chrome'
+    browserName: 'chrome',
+    'chromeOptions': {
+      'mobileEmulation': {
+        'deviceName': 'Apple iPhone 6 Plus'
+      }
+    }
   },
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
@@ -28,5 +33,16 @@ exports.config = {
   },
   onPrepare: function() {
     jasmine.getEnv().addReporter(new SpecReporter());
+
+    setTimeout(function() {
+      browser.driver.executeScript(function() {
+        return {
+          width: 450,
+          height: 840
+        };
+      }).then(function(result) {
+        browser.driver.manage().window().setSize(result.width, result.height);
+      });
+    });
   }
 };
