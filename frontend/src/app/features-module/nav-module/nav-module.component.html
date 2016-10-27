@@ -1,4 +1,4 @@
-<div [class.nav-theme]="(config$ | async).isDarkTheme">
+<div class="page-nav-module" [class.nav-theme]="(config$ | async).isDarkTheme">
 
   <router-outlet></router-outlet>
 
@@ -32,12 +32,12 @@
 
     <span class="flex-space"></span>
 
-    <button md-icon-button [md-menu-trigger-for]="menu">
+    <button class="menu" md-icon-button [md-menu-trigger-for]="menu">
       <md-icon>more_vert</md-icon>
     </button>
   </md-toolbar>
 
-  <md-menu x-position="before" y-position="above" #menu="mdMenu" align="end">
+  <md-menu class="menu-open" x-position="before" y-position="above" #menu="mdMenu" align="end">
 
     <app-profile-module></app-profile-module>
 
