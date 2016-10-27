@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
+// material
+import { MdInput } from '@angular/material';
 
 @Component({
   selector: 'app-register',
@@ -6,10 +9,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-
+  @ViewChild('usernameInput') usernameInput: MdInput;
   constructor() { }
 
   ngOnInit() {
+    this.usernameInput.focus();
   }
 
 }

@@ -14,27 +14,28 @@ import { RouterModule } from '@angular/router';
 
 // google maps
 import { AgmCoreModule } from 'angular2-google-maps/core';
-import { ProfileModuleComponent } from './profile-module/profile-module.component';
 import { SettingsComponent } from './settings/settings.component';
+import { provideLazyMapsAPILoaderConfig } from 'angular2-google-maps/core/services/maps-api-loader/lazy-maps-api-loader';
+
 
 @NgModule({
   imports: [
     SharedModule,
     RouterModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBrTxwdypG6uUnm3hxb_ZtGh8niBD0aHww'
-    }),
+    AgmCoreModule.forRoot(),
     ProfileModule
   ],
   declarations: [
     NavComponent,
     NavigationComponent,
-    ProfileModuleComponent,
     SettingsComponent
   ],
   exports: [
     NavComponent,
     NavigationComponent
+  ],
+  providers: [
+    provideLazyMapsAPILoaderConfig({apiKey: 'AIzaSyBrTxwdypG6uUnm3hxb_ZtGh8niBD0aHww'})
   ]
 })
 export class NavModule { }

@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../../shared-module/shared-module.module';
 
 // our components
+import { ProfileModuleComponent } from './profile-module.component';
 import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
@@ -12,10 +13,12 @@ import { ProfileComponent } from './profile/profile.component';
     SharedModule
   ],
   declarations: [
-    ProfileComponent
+    ProfileComponent,
+    ProfileModuleComponent
   ],
   exports: [
-    ProfileComponent
+    ProfileComponent,
+    ProfileModuleComponent
   ]
 })
 export class ProfileModule { }
