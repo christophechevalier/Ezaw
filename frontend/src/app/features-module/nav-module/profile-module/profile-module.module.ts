@@ -8,6 +8,9 @@ import { SharedModule } from '../../../shared-module/shared-module.module';
 import { ProfileModuleComponent } from './profile-module.component';
 import { ProfileComponent } from './profile/profile.component';
 
+// our service
+import { DialogsService } from '../../../shared-module/services/dialogs.service';
+
 @NgModule({
   imports: [
     SharedModule
@@ -19,6 +22,12 @@ import { ProfileComponent } from './profile/profile.component';
   exports: [
     ProfileComponent,
     ProfileModuleComponent
-  ]
+  ],
+  providers: [
+    DialogsService
+  ],
+  entryComponents: [
+    ProfileComponent
+  ],
 })
 export class ProfileModule { }

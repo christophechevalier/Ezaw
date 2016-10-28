@@ -1,17 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
+import { MdDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
 
-  constructor() {
-    console.log('Profile view is loaded !!');
+  public userName: string;
+  public firstName: string;
+  public lastName: string;
+  public email: string;
+  public phone: string;
+
+  constructor(public dialogRef: MdDialogRef<ProfileComponent>) {
+
   }
-
-  ngOnInit() {
-  }
-
 }

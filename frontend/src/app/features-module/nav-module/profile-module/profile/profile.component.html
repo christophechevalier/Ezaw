@@ -1,4 +1,67 @@
-<md-card>
-  <h1>This is a Profile content !!!</h1>
-</md-card>
+<div class="modal-profile">
+  <md-card>
+    <form #formProfile="ngForm">
 
+      <md-toolbar color="primary">
+        <span>Profile</span>
+        <span class="flex-space"></span>
+        <button md-icon-button>
+          <md-icon>person</md-icon>
+        </button>
+      </md-toolbar>
+
+      <md-card-content>
+        <div align="left">
+          <md-list dense>
+            <div class="list-row">
+              <md-list-item>
+                <h4 md-line>Username :</h4>
+                <p md-line>
+                  <span class="list-subheader">{{userName}}</span>
+                </p>
+              </md-list-item>
+
+              <md-list-item>
+                <h4 md-line>Firstname :</h4>
+                <p md-line>
+                  <span class="list-subheader">{{firstName}}</span>
+                </p>
+              </md-list-item>
+
+              <md-list-item>
+                <h4 md-line>Username :</h4>
+                <p md-line>
+                  <span class="list-subheader">{{lastName}}</span>
+                </p>
+              </md-list-item>
+
+              <md-list-item>
+                <h4 md-line>Email :</h4>
+                <p md-line>
+                  <span class="list-subheader">{{email}}</span>
+                </p>
+              </md-list-item>
+
+              <md-list-item>
+                <h4 md-line>Phone :</h4>
+                <p md-line>
+                  <span class="list-subheader">{{phone}}</span>
+                </p>
+              </md-list-item>
+            </div>
+          </md-list>
+        </div>
+
+        <md-card-actions align="end" class="pnl-btn-profile">
+          <button type="submit" md-raised-button color="primary">
+            Edit Profile
+          </button>
+          <button type="button" md-button (click)="dialogRef.close()">
+            Cancel
+          </button>
+        </md-card-actions>
+
+      </md-card-content>
+    </form>
+  </md-card>
+</div>
