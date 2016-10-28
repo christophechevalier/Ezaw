@@ -1,29 +1,24 @@
-import { Component, OnInit, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { Component, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 
-import { MdDialog, MdDialogConfig } from '@angular/material';
-import { ProfileComponent } from '../profile-module/profile/profile.component';
+/*import { MdDialog, MdDialogConfig } from '@angular/material';
+import { ProfileComponent } from '../profile-module/profile/profile.component';*/
+import { DialogsService } from '../../../shared-module/services/dialogs.service';
 
 @Component({
   selector: 'app-profile-module',
   templateUrl: './profile-module.component.html',
   styleUrls: ['./profile-module.component.scss'],
-  providers: [MdDialog],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
-export class ProfileModuleComponent implements OnInit {
+export class ProfileModuleComponent {
 
-  constructor(public dialog: MdDialog, public vcr: ViewContainerRef) { }
+  public result: any;
 
-  ngOnInit() {
+  constructor(private dialogsService: DialogsService, private viewContainerRef: ViewContainerRef) { }
+
+  public openDialog() {
+    this.dialogsService
+      .confirm('John Doe', 'John', 'Doe', 'johndoe@xxx.com', 'xx.xx.xx.xx.xx', this.viewContainerRef)
+      .subscribe(res => this.result = res);
   }
-
-  openDialog() {
-    const config = new MdDialogConfig();
-    config.viewContainerRef = this.vcr;
-
-    this.dialog.open(ProfileComponent, config);
-  }
-
-
-
 }
