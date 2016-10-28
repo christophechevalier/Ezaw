@@ -1,12 +1,3 @@
-<<<<<<< Updated upstream
-<md-card-content>
-  <form #formLogin="ngForm">
-    <div align="center">
-      <br>
-      <md-card-subtitle>
-        <p>LOG IN</p>
-      </md-card-subtitle>
-=======
 <div class="page-login">
   <md-card-content>
     <form #formLogin="ngForm" (ngSubmit)="connectUser(formLogin.value)">
@@ -21,30 +12,47 @@
                 <md-icon>person</md-icon>
               </span>
         </md-input>
->>>>>>> Stashed changes
 
-      <md-input placeholder="Username" name="username" type="Text">
-            <span md-prefix>
-              <md-icon>person</md-icon>
-            </span>
-      </md-input>
+        <md-input #usernameInput placeholder="Username" name="username" [(ngModel)]="username" type="Text">
+              <span md-prefix>
+                <md-icon>person</md-icon>
+              </span>
+        </md-input>
 
-      <md-input placeholder="Password" name="password" type="password">
-            <span md-prefix>
-              <md-icon>vpn_key</md-icon>
-            </span>
-      </md-input>
-    </div>
+        <md-input placeholder="Password" name="password" [(ngModel)]="password" type="password">
+              <span md-prefix>
+                <md-icon>vpn_key</md-icon>
+              </span>
+        </md-input>
+      </div>
+      <div align="center">
+        <md-checkbox color="primary" aria-label="Remember me" [checked]="false">
+          Remember me
+        </md-checkbox>
+      </div>
+      <div align="end" class="pnl-btn-connect">
+        <button type="submit" md-raised-button color="primary" [disabled]="(user$ | async).isConnecting">
+          <span>{{ 'LOG_ME' | translate }}</span>
+        </button>
+      </div>
+      <div id="overlay" *ngIf="(user$ | async).isConnecting">
+        <md-progress-circle class="overlay-full-screen" mode="indeterminate"></md-progress-circle>
+        <span>{{ 'WAITING_PROGRESS' | translate }}</span>
+      </div>
+    </form>
+    <br>
+
     <div align="center">
-      <md-checkbox color="primary" aria-label="Remember me" [checked]="false">
-        Remember me
-      </md-checkbox>
+      <p>
+        <button md-icon-button color="primary">
+          <md-icon>info</md-icon>
+        </button>
+        <span>Debug :</span>
+        <span class="connecting" *ngIf="(user$ | async).isConnecting">Connecting ...</span>
+        <span class="connected" *ngIf="(user$ | async).isConnected">Is connected !</span>
+        <span class="not-connected" *ngIf="!(user$ | async).isConnected && !(user$ | async).isConnecting">Is NOT connected !</span>
+        <span class="connection-failed" *ngIf="(user$ | async).connectionFailed">Connection failed !</span>
+      </p>
     </div>
-    <div align="end" class="pnl-btn-connect">
-      <button type="submit" md-raised-button color="primary">
-        <span>{{ 'LOG_ME' | translate }}</span>
-      </button>
-    </div>
-  </form>
-  <br>
-</md-card-content>
+  </md-card-content>
+</div>

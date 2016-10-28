@@ -1,7 +1,5 @@
-<<<<<<< Updated upstream
-import { Component, OnInit } from '@angular/core';
-=======
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+
 
 // ngrx - store
 import { Store } from '@ngrx/store';
@@ -16,22 +14,24 @@ import { UserState } from '../../../shared-module/reducers/user.state';
 
 // interface
 import { IUser } from '../../../shared-module/interfaces/user.interface';
->>>>>>> Stashed changes
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
-<<<<<<< Updated upstream
-=======
   private user$: Observable<UserState>;
->>>>>>> Stashed changes
 
-  constructor() { }
+  constructor(private store: Store<AppState>) {
+    this.user$ = <Observable<UserState>>store.select('user');
+  }
 
   ngOnInit() {
   }
 
+  connectUser(user: IUser) {
+    this.store.dispatch({type: USR_IS_CONNECTING, payload: user});
+  }
 }

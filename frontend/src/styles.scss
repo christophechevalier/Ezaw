@@ -1,22 +1,24 @@
 @import '~@angular/material/core/theming/all-theme';
 
-@include md-core();
+@import './custom-theme.scss';
 
-$primary: md-palette($md-teal);
-$accent: md-palette($md-grey);
+.color-primary {
+  color: md-color($primary) !important;
+}
 
-$theme: md-light-theme($primary, $accent);
-
-@include angular-material-theme($theme);
+.color-accent {
+  color: md-color($accent) !important;
+}
 
 @font-face {
   font-family: Material Icons;
   font-style: normal;
   font-weight: 400;
-  src: local(Material Icons), local(MaterialIcons-Regular), url(https://fonts.gstatic.com/s/materialicons/v17/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2) format('woff2');
+  src: local(Material Icons), local(MaterialIcons-Regular);
 }
 
 .material-icons {
+  font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
@@ -40,4 +42,22 @@ body {
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.list-subheader {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.list-row {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+md-dialog-container {
+  width: 100%;
+}
+
+.md-overlay-container {
+  z-index: 10000 !important;
 }

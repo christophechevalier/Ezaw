@@ -7,7 +7,11 @@
     {
       "root": "src",
       "outDir": "dist",
-      "assets": "assets",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "mocks-json": "mocks-json",
       "index": "index.html",
       "main": "main.ts",
       "test": "test.ts",
@@ -15,7 +19,9 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "styles.scss"
+        "../node_modules/material-design-icons/iconfont/material-icons.css",
+        "styles.scss",
+        "custom-theme.scss"
       ],
       "scripts": [
         "../node_modules/hammerjs/hammer.min.js"
@@ -41,6 +47,18 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "prefixInterfaces": false
+    "prefixInterfaces": false,
+    "inline": {
+      "style": false,
+      "template": false
+    },
+    "spec": {
+      "class": false,
+      "component": true,
+      "directive": true,
+      "module": false,
+      "pipe": true,
+      "service": true
+    }
   }
 }

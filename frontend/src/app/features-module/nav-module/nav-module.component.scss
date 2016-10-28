@@ -1,0 +1,39 @@
+/* Navigation */
+
+md-progress-circle {
+  width: 10px;
+  height: 10px;
+  line-height: 10px;
+  display: inline-block;
+}
+
+/* Toolbar Nav */
+
+.flex-space {
+  flex: 1 1 auto;
+}
+
+.logo-nav-ezaw {
+  max-width: 90px;
+}
+
+.toolbar-bottom {
+  bottom: 0;
+  position: fixed;
+}
+
+.custom-button-toggle {
+  position: fixed;
+  justify-content: space-between;
+  width: 100%;
+  bottom: 64px;
+}
+
+.custom-button-search {
+  position: absolute;
+  justify-content: space-between;
+  top: 30px;
+  float: right;
+  left: -30px;
+  z-index: 100;
+}

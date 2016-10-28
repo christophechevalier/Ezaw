@@ -1,11 +1,11 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async } from '@angular/core/testing';
-import { MocksComponent } from './mocks.component';
+import { NavModuleComponent } from './nav-module.component';
 
-describe('Component: Mocks', () => {
+describe('Component: NavModule', () => {
   it('should create an instance', () => {
-    let component = new MocksComponent();
+    let component = new NavModuleComponent();
     expect(component).toBeTruthy();
   });
 });

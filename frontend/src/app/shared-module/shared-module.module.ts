@@ -1,6 +1,11 @@
 // angular modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+
+// angular-material
+import { MaterialModule } from '@angular/material';
 
 // ngrx - store
 import { StoreModule } from '@ngrx/store';
@@ -10,9 +15,6 @@ import { TranslateModule } from 'ng2-translate';
 
 // our components
 import { ToggleThemeComponent } from './toggle-theme/toggle-theme.component';
-import { MaterialModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 
 const SHARED_COMPONENTS = [
   ToggleThemeComponent
