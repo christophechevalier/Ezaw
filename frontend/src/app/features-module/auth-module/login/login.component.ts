@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+
 
 // ngrx - store
 import { Store } from '@ngrx/store';
@@ -14,9 +15,6 @@ import { UserState } from '../../../shared-module/reducers/user.state';
 // interface
 import { IUser } from '../../../shared-module/interfaces/user.interface';
 
-// material
-import { MdInput } from '@angular/material';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -24,7 +22,6 @@ import { MdInput } from '@angular/material';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('usernameInput') usernameInput: MdInput;
   private user$: Observable<UserState>;
 
   constructor(private store: Store<AppState>) {
@@ -32,7 +29,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.usernameInput.focus();
   }
 
   connectUser(user: IUser) {
