@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <md-card-content>
   <form #formLogin="ngForm">
     <div align="center">
@@ -5,6 +6,22 @@
       <md-card-subtitle>
         <p>LOG IN</p>
       </md-card-subtitle>
+=======
+<div class="page-login">
+  <md-card-content>
+    <form #formLogin="ngForm" (ngSubmit)="connectUser(formLogin.value)">
+      <div align="center">
+        <br>
+        <md-card-subtitle>
+          <p>LOG IN</p>
+        </md-card-subtitle>
+
+        <md-input placeholder="Username" name="username" [(ngModel)]="username" type="Text">
+              <span md-prefix>
+                <md-icon>person</md-icon>
+              </span>
+        </md-input>
+>>>>>>> Stashed changes
 
       <md-input placeholder="Username" name="username" type="Text">
             <span md-prefix>
