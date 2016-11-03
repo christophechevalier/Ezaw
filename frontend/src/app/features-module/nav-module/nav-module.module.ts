@@ -5,6 +5,7 @@ import { NavComponent } from './nav-module.component';
 // our modules
 import { SharedModule } from '../../shared-module/shared-module.module';
 import { ProfileModule } from './profile-module/profile-module.module';
+import { ItineraryModule } from './itinerary-module/itinerary-module.module';
 
 // our components
 import { NavigationComponent } from './navigation/navigation.component';
@@ -17,13 +18,13 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
 import { SettingsComponent } from './settings/settings.component';
 import { provideLazyMapsAPILoaderConfig } from 'angular2-google-maps/core/services/maps-api-loader/lazy-maps-api-loader';
 
-
 @NgModule({
   imports: [
     SharedModule,
     RouterModule,
     AgmCoreModule.forRoot(),
-    ProfileModule
+    ProfileModule,
+    ItineraryModule
   ],
   declarations: [
     NavComponent,

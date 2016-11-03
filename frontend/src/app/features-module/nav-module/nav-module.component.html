@@ -1,30 +1,27 @@
 <div class="page-nav-module" [class.nav-theme]="(config$ | async).isDarkTheme">
 
-  <router-outlet></router-outlet>
+  <md-sidenav-layout fullscreen>
+    <md-sidenav #sidenav mode="over" align="start">
+      <app-itinerary-module></app-itinerary-module>
+      <div align="end">
+        <button md-raised-button color="primary" #mybutton (click)="sidenav.close()">
+          Close
+        </button>
+      </div>
+    </md-sidenav>
 
-  <button md-fab color="primary" class="custom-button-search">
-    <md-icon class="md-24">search</md-icon>
-  </button>
+    <button md-fab color="primary" class="custom-button-search">
+      <md-icon class="md-24">search</md-icon>
+    </button>
 
-  <md-button-toggle-group class="custom-button-toggle" color="primary">
-    <md-button-toggle>
-      <md-icon>directions_car</md-icon>
-    </md-button-toggle>
-    <md-button-toggle>
-      <span>Accident</span>
-    </md-button-toggle>
-    <md-button-toggle>
-      <span>Police</span>
-    </md-button-toggle>
-    <md-button-toggle>
-      <md-icon>warning</md-icon>
-    </md-button-toggle>
-  </md-button-toggle-group>
+    <router-outlet></router-outlet>
+  </md-sidenav-layout>
 
   <md-toolbar color="primary" class="toolbar-bottom">
-    <button md-icon-button>
+    <button md-icon-button (click)="sidenav.toggle()">
       <md-icon>settings</md-icon>
     </button>
+
     <span class="flex-space"></span>
 
     <span>Welcome to </span>
@@ -52,4 +49,3 @@
   </md-menu>
 
 </div>
-
