@@ -1,7 +1,6 @@
 import { Component, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 
-/*import { MdDialog, MdDialogConfig } from '@angular/material';
-import { ProfileComponent } from '../profile-module/profile/profile.component';*/
+// our service
 import { DialogsService } from '../../../shared-module/services/dialogs.service';
 
 @Component({
