@@ -1,7 +1,6 @@
-import { Component, ViewEncapsulation, ViewContainerRef } from '@angular/core';
-
-// our service
-import { DialogsService } from '../../../shared-module/services/dialogs.service';
+// angular modules
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile-module',
@@ -9,15 +8,16 @@ import { DialogsService } from '../../../shared-module/services/dialogs.service'
   styleUrls: ['./profile-module.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ProfileModuleComponent {
+export class ProfileModuleComponent implements OnInit {
 
-  public result: any;
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
-  constructor(private dialogsService: DialogsService, private viewContainerRef: ViewContainerRef) { }
-
-  public openDialog() {
-    this.dialogsService
-      .confirm('John Doe', 'John', 'Doe', 'johndoe@xxx.com', 'xx.xx.xx.xx.xx', this.viewContainerRef)
-      .subscribe(res => this.result = res);
+  ngOnInit() {
+    this.route.params.subscribe(params => { });
   }
+
+  openProfile() {
+    this.router.navigate(['/nav/profile']);
+  }
+
 }

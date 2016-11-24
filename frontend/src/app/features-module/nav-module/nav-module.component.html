@@ -1,36 +1,32 @@
-<div class="page-nav-module" [class.nav-theme]="(config$ | async).isDarkTheme">
+<div layout="column" class="page-nav-module" [class.nav-theme]="config?.isDarkTheme">
 
   <md-sidenav-layout fullscreen>
     <md-sidenav #sidenav mode="over" align="start">
       <app-itinerary-module></app-itinerary-module>
-      <div align="end">
+      <md-card-actions layout="row" layout-align="end center" layout-margin layout-padding>
         <button md-raised-button color="primary" #mybutton (click)="sidenav.close()">
-          Close
+          <span>{{ 'CLOSE' | translate }}</span>
         </button>
-      </div>
+      </md-card-actions>
     </md-sidenav>
-
-    <button md-fab color="primary" class="custom-button-search">
-      <md-icon class="md-24">search</md-icon>
-    </button>
 
     <router-outlet></router-outlet>
   </md-sidenav-layout>
 
   <md-toolbar color="primary" class="toolbar-bottom">
     <button md-icon-button (click)="sidenav.toggle()">
-      <md-icon>settings</md-icon>
+      <md-icon class="color-accent">add</md-icon>
     </button>
 
     <span class="flex-space"></span>
 
-    <span>Welcome to </span>
+    <span>{{ 'WELCOME_TO' | translate }}</span>
     <img class="logo-nav-ezaw" src="/assets/img/ezaw-logo.png">
 
     <span class="flex-space"></span>
 
     <button class="menu" md-icon-button [md-menu-trigger-for]="menu">
-      <md-icon>more_vert</md-icon>
+      <md-icon class="color-accent">more_vert</md-icon>
     </button>
   </md-toolbar>
 
@@ -38,13 +34,15 @@
 
     <app-profile-module></app-profile-module>
 
-    <app-toggle-theme></app-toggle-theme>
+    <app-settings-module></app-settings-module>
 
-    <button md-menu-item [disabled]="(user$ | async).isDisconnecting" (click)="disconnectUser()"
-            *ngIf="!(user$ | async).isDisconnecting">
+    <button md-menu-item [disabled]="user.isDisconnecting" (click)="disconnectUser()"
+            *ngIf="!user.isDisconnecting">
       <md-icon>power_settings_new</md-icon>
-      Disconnect
-      <md-progress-circle *ngIf="(user$ | async).isDisconnecting" mode="indeterminate"></md-progress-circle>
+      <span class="flex-space"></span>
+      <span>{{ 'DISCONNECTION' | translate }}</span>
+      <span class="flex-space"></span>
+      <md-progress-circle *ngIf="user.isDisconnecting" mode="indeterminate"></md-progress-circle>
     </button>
   </md-menu>
 

@@ -1,73 +1,96 @@
 // angular modules
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http } from '@angular/http';
+import { Response } from '@angular/http';
 
 // rxjs
-import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
 // store
-import { Store } from '@ngrx/store';
-import { Actions, Effect, mergeEffects } from '@ngrx/effects';
+import { Action } from '@ngrx/store';
+import { Actions, Effect } from '@ngrx/effects';
 
-// our states
-import { AppState } from '../../app.state';
+// our environment
+import { environment } from '../../../environments/environment';
+
+// our interfaces
+import { IUser } from '../interfaces/user.interface';
 
 // our services
 import { UserService } from '../services/user.service';
+import { RouteService } from '../services/route.service';
 
 // our actions
-import {
-  USR_IS_CONNECTING,
-  USR_IS_CONNECTED,
-  USR_CONNECTION_FAILED,
-  USR_IS_DISCONNECTING,
-  USR_IS_DISCONNECTED
-} from '../reducers/user.reducer';
+import { UserActions } from '../reducers/user.actions';
 
 @Injectable()
-export class UserEffects implements OnDestroy {
-  // our subscription(s) to @ngrx/effects
-  private subscription: Subscription;
-
+export class UserEffects {
   constructor(
     private router: Router,
-    private http: Http,
     private actions$: Actions,
-    private store$: Store<AppState>,
-    private userService: UserService
-  ) {
-    this.subscription = mergeEffects(this).subscribe(store$);
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-  // tslint:disable-next-line:member-ordering
-  @Effect({dispatch: true}) usr_connect$: Observable<{ type: string }> = this.actions$
-    .ofType(USR_IS_CONNECTING)
-    .switchMap(action => this.userService.connectUser(action.payload))
-    .map((res: any) => {
-      // TODO : check HTTP header here instead of checking for properties
-      if (typeof res.data.username === 'undefined') {
-        return { type: USR_CONNECTION_FAILED };
-      }
-
-      this.router.navigate(['/nav/navigation']);
-      return { type: USR_IS_CONNECTED };
-    });
+    private userService: UserService,
+    private routeService: RouteService
+  ) { }
 
   // tslint:disable-next-line:member-ordering
-    @Effect({dispatch: true}) usr_disconnect$: Observable<{ type: string }> = this.actions$
-      .ofType(USR_IS_DISCONNECTING)
-      .switchMap(() => this.userService.disconnectUser())
+  @Effect({dispatch: true}) usrConnect$: Observable<Action> = this.actions$
+    .ofType(UserActions.USR_IS_CONNECTING)
+    .switchMap((action: Action) => this.userService.connectUser(action.payload)
       .map((res: any) => {
-        // TODO : check HTTP header here and check there's no errors
-        // otherwise, create a new action type to handle this error
-        this.router.navigate(['/auth/login']);
-        return {type: USR_IS_DISCONNECTED};
-      });
+        if (!res.ok) {
+          throw new Error('Error while connecting user');
+        }
+
+        let user: IUser = res.json();
+
+        if (this.routeService.urlBeforeRedirectToLogin) {
+          if (environment.debug) {
+            console.debug(
+              `Redirecting to the URL "${this.routeService.urlBeforeRedirectToLogin}" which was asked before being redirected to /login`
+            );
+          }
+
+          this.router.navigate([this.routeService.urlBeforeRedirectToLogin]);
+        } else {
+          this.router.navigate(['/nav/navigation']);
+        }
+
+        return { type: UserActions.USR_IS_CONNECTED, payload: user };
+      })
+      .catch((err) => {
+        if (environment.debug) {
+          console.error(err);
+        }
+
+        return Observable.of({ type: UserActions.USR_CONNECTION_FAILED });
+      })
+    );
+
+  // tslint:disable-next-line:member-ordering
+  @Effect({dispatch: true}) usrDisconnect$: Observable<Action> = this.actions$
+    .ofType(UserActions.USR_IS_DISCONNECTING)
+    .switchMap(() => this.userService.disconnectUser()
+      .map((res: Response) => {
+        if (!res.ok) {
+          throw new Error('Error while disconnecting user');
+        }
+
+        return { type: UserActions.USR_IS_DISCONNECTED };
+      })
+      .catch((err) => {
+        if (environment.debug) {
+          console.error(err);
+        }
+
+        return Observable.of({ type: UserActions.USR_DISCONNECTION_FAILED });
+      })
+    );
+
+  @Effect({dispatch: false}) usrDisconnected$: Observable<void> = this.actions$
+    .ofType(UserActions.USR_IS_DISCONNECTED)
+    .map(() => {
+      this.router.navigate(['/auth/login']);
+    });
   }
 
 

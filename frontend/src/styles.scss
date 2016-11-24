@@ -2,12 +2,50 @@
 
 @import './custom-theme.scss';
 
+@import '~angular-material/layouts/angular-material.layout-attributes.scss';
+
+/* Dark Theme */
+
+.nav-theme .color-primary-bold {
+  @extend .color-primary;
+  @extend .bold;
+}
+
+.nav-theme .color-accent-bold {
+  @extend .color-accent;
+  @extend .bold;
+}
+
+.nav-theme .color-dark-theme {
+  background-color: md-color($accent) !important;
+}
+
+/* Light Theme */
+
 .color-primary {
   color: md-color($primary) !important;
 }
 
 .color-accent {
   color: md-color($accent) !important;
+}
+
+.color-red {
+  color: md-color($md-red, 500, 1) !important;
+}
+
+.bold {
+  font-weight: bold !important;
+}
+
+.color-primary-bold {
+  @extend .color-primary;
+  @extend .bold;
+}
+
+.color-accent-bold {
+  @extend .color-accent;
+  @extend .bold;
 }
 
 @font-face {
@@ -64,5 +102,33 @@ md-dialog-container {
 
 md-sidenav {
   min-width: 15%;
+}
+
+.flex-space {
+  flex: 1 1 auto;
+}
+
+md-slide-toggle {
+  flex: 1 !important;
+}
+
+.info {
+  @extend .error;
+
+  background-color: rgba(206, 227, 255, 0.4) !important;
+  color: #4c83ef !important;
+}
+
+.warning {
+  @extend .error;
+
+  background-color: rgba(255, 234, 206, 0.4) !important;
+  color: orange !important;
+}
+
+.error{
+  padding: 12px;
+  background-color: rgba(255, 0, 0, 0.2);
+  color: md-color($md-red, 500, 1) !important;
 }
 

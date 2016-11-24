@@ -13,11 +13,17 @@ import { MaterialModule } from '@angular/material';
 // angular-translate
 import { TranslateStaticLoader, TranslateLoader, TranslateModule } from 'ng2-translate';
 
-// ngrx - store
-import { StoreModule } from '@ngrx/store';
+// ngrx
+import { StoreModule, combineReducers } from '@ngrx/store';
+import { compose } from '@ngrx/core/compose';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 // our effects
 import { UserEffects } from './shared-module/effects/user.effects';
+
+// store freeze
+import { storeFreeze } from 'ngrx-store-freeze';
 
 // our reducers
 import { UserReducer } from './shared-module/reducers/user.reducer';
@@ -25,6 +31,7 @@ import { ConfigReducer } from './shared-module/reducers/config.reducer';
 
 // our services
 import { UserService } from './shared-module/services/user.service';
+import { RouteService } from './shared-module/services/route.service';
 
 // our mocks
 import { UserMockService } from './shared-module/mocks/user-mock.service';
@@ -38,6 +45,21 @@ import { FeatureModule } from './features-module/features-module.module';
 // shared module
 import { SharedModule } from './shared-module/shared-module.module';
 
+// opaque tokens
+import { AVAILABLE_LANGUAGES } from './shared-module/opaque-tokens/opaque-tokens';
+
+export function createTranslateLoader(http: Http) {
+  return new TranslateStaticLoader(http, './assets/i18n', '.json');
+}
+
+// define a meta reducer that prevent object mutation when dev env
+const metaReducers = !environment.production ? [storeFreeze, combineReducers] : [combineReducers];
+
+const store = compose(...metaReducers)({
+    config: ConfigReducer,
+    user: UserReducer
+});
+
 @NgModule({
   declarations: [
     AppComponent
@@ -49,26 +71,34 @@ import { SharedModule } from './shared-module/shared-module.module';
     FormsModule,
 
     // ngrx - store
-    StoreModule.provideStore({
-      config: ConfigReducer,
-      user: UserReducer
-    }),
+    StoreModule.provideStore(store),
 
-    // material design
-    MaterialModule.forRoot(),
+    // ngrx
+    StoreDevtoolsModule.instrumentOnlyWithExtension(),
+
+    // effects
+    EffectsModule.runAfterBootstrap(UserEffects),
 
     // translate
     TranslateModule.forRoot({
       provide: TranslateLoader,
-      useFactory: (http: Http) => new TranslateStaticLoader(http, '/assets/i18n', '.json'),
+      useFactory: createTranslateLoader,
       deps: [Http]
     }),
+
+    // material design
+    MaterialModule.forRoot(),
   ],
   providers: [
-    UserEffects,
+    // services
+    RouteService,
     {
       provide: UserService,
       useClass: (environment.mock ? UserMockService : UserService)
+    },
+    {
+      provide: AVAILABLE_LANGUAGES,
+      useValue: ['en', 'fr']
     }
   ],
   bootstrap: [AppComponent]

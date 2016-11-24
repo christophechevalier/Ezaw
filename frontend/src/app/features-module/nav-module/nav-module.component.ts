@@ -1,22 +1,20 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+// angular modules
+import { Component, ViewEncapsulation, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+
+// rxjs
+import { Subscription } from 'rxjs';
 
 // ngrx - store
 import { Store } from '@ngrx/store';
 
-// translate
-import { TranslateService } from 'ng2-translate';
-
-// rxjs
-import { Observable, Subscription } from 'rxjs';
-
-// our states
-import { AppState } from '../../app.state';
-import { UserState } from '../../shared-module/reducers/user.state';
-import { ConfigStateRecord } from '../../shared-module/reducers/config.state';
-
-// our actions
+// our reducers
 import { USR_IS_DISCONNECTING } from '../../shared-module/reducers/user.reducer';
-import { TOGGLE_THEME } from '../../shared-module/reducers/config.reducer';
+
+// our interfaces
+import { IStore } from '../../shared-module/interfaces/store.interface';
+import { IConfig, IConfigRecord } from '../../shared-module/interfaces/config.interface';
+import { IUser, IUserRecord } from '../../shared-module/interfaces/user.interface';
+
 
 @Component({
   selector: 'app-nav-module',
@@ -26,37 +24,33 @@ import { TOGGLE_THEME } from '../../shared-module/reducers/config.reducer';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class NavComponent implements OnInit {
-  private isDarkTheme = true;
-  private lang: string;
+export class NavComponent implements OnDestroy {
+  private config: IConfig;
+  private configSub: Subscription;
+  private user: IUser;
+  private userSub: Subscription;
 
-  private configUnsubscribe$: Subscription;
 
-  private config$: Observable<ConfigStateRecord>;
-  private user$: Observable<UserState>;
+  constructor(
+    private store$: Store<IStore>
+  ) {
+    this.configSub =
+      store$.select('config')
+        .map((configR: IConfigRecord) => configR.toJS())
+        .subscribe((config: IConfig) => this.config = config);
 
-  constructor(private store: Store<AppState>, private translate: TranslateService) {
-    this.user$ = <Observable<UserState>>store.select('user');
-    this.config$ = <Observable<ConfigStateRecord>>store.select('config');
+    this.userSub =
+      store$.select('user')
+        .map((userR: IUserRecord) => userR.toJS())
+        .subscribe((user: IUser) => this.user = user);
   }
 
-  ngOnInit() {
-    this.configUnsubscribe$ = this.config$
-      .map(config => config.toJS())
-      .map(config => {
-        this.isDarkTheme = config.isDarkTheme;
-      }).subscribe();
+  ngOnDestroy() {
+    this.configSub.unsubscribe();
+    this.userSub.unsubscribe();
   }
 
   disconnectUser() {
-    this.store.dispatch({ type: USR_IS_DISCONNECTING });
-  }
-
-  toggleTheme() {
-    this.store.dispatch({ type: TOGGLE_THEME });
-  }
-
-  changeLanguageTo() {
-    this.translate.use(this.lang);
+    this.store$.dispatch({ type: USR_IS_DISCONNECTING });
   }
 }

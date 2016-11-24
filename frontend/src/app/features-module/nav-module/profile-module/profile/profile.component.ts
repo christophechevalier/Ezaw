@@ -1,21 +1,24 @@
-import { Component } from '@angular/core';
-
-import { MdDialogRef } from '@angular/material';
+// angular modules
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
 
-  public userName: string;
-  public firstName: string;
-  public lastName: string;
-  public email: string;
-  public phone: string;
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
-  constructor(public dialogRef: MdDialogRef<ProfileComponent>) {
+  ngOnInit() {
+    this.route.params.subscribe(params => { });
+  }
 
+  openNavigation() {
+    this.router.navigate(['/nav/navigation']);
   }
 }

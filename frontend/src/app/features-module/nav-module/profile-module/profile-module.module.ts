@@ -8,26 +8,20 @@ import { SharedModule } from '../../../shared-module/shared-module.module';
 import { ProfileModuleComponent } from './profile-module.component';
 import { ProfileComponent } from './profile/profile.component';
 
-// our service
-import { DialogsService } from '../../../shared-module/services/dialogs.service';
+const PROFILE_COMPONENTS = [
+  ProfileModuleComponent,
+  ProfileComponent
+];
 
 @NgModule({
   imports: [
     SharedModule
   ],
   declarations: [
-    ProfileComponent,
-    ProfileModuleComponent
+    ...PROFILE_COMPONENTS
   ],
   exports: [
-    ProfileComponent,
-    ProfileModuleComponent
-  ],
-  providers: [
-    DialogsService
-  ],
-  entryComponents: [
-    ProfileComponent
-  ],
+    ...PROFILE_COMPONENTS
+  ]
 })
 export class ProfileModule { }

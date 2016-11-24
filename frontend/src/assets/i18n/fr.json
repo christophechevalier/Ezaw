@@ -1,4 +1,19 @@
 {
   "LOG_ME": "Se Connecter",
-  "WAITING_PROGRESS": "Veuillez patienter..."
+  "DISCONNECTION": "Déconnexion",
+  "SAVE": "Sauvegarder",
+  "BACK": "Retour",
+  "CLOSE": "Fermer",
+  "WAITING_PROGRESS": "Veuillez patienter...",
+  "WELCOME_TO": "Bienvenue sur",
+  "SETTINGS": "Paramètres",
+  "PROFILE": "Profil",
+  "ITINERARY": "Itinéraire",
+  "SIGN_UP": "S'inscrire",
+  "MAPS": "Cartes",
+  "REMEMBER_ME": "Se souvenir de moi",
+  "USERNAME": "Nom Utilisateur",
+  "PASSWORD": "Mot de passe",
+  "PASSWORD_CONFIRM": "Confirmation du Mot de passe",
+  "EMAIL": "Adresse Email"
 }

@@ -1,14 +1,20 @@
 // angular modules
 import { NgModule } from '@angular/core';
-import { AuthComponent } from './auth-module.component';
+import { RouterModule } from '@angular/router';
 
 // our modules
 import { SharedModule } from '../../shared-module/shared-module.module';
 
+// our components
+import { AuthComponent } from './auth-module.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
-import { RouterModule } from '@angular/router';
+const AUTH_COMPONENTS = [
+  AuthComponent,
+  LoginComponent,
+  RegisterComponent
+];
 
 
 @NgModule({
@@ -17,14 +23,10 @@ import { RouterModule } from '@angular/router';
     RouterModule
   ],
   declarations: [
-    AuthComponent,
-    LoginComponent,
-    RegisterComponent
+    ...AUTH_COMPONENTS
   ],
   exports: [
-    AuthComponent,
-    LoginComponent,
-    RegisterComponent
+    ...AUTH_COMPONENTS
   ]
 })
 
