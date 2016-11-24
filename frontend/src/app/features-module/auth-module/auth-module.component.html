@@ -1,10 +1,10 @@
-<div class="page-auth background-auth">
+<div layout="column" layout-align="center center" class="page-auth background-auth">
   <div class="background-logo-ezaw"></div>
   <md-card class="pnl-auth">
 
     <md-toolbar color="primary">
       <img class="logo-ezaw" src="/assets/img/ezaw-logo.png">
-      <span class="flex-space"></span>
+      <span flex></span>
       <button md-icon-button>
         <md-icon>supervisor_account</md-icon>
       </button>
@@ -13,7 +13,7 @@
     <md-toolbar-row>
       <md-tab-group #tabGroup (selectChange)="openTab(tabGroup.selectedIndex)">
         <md-tab *ngFor="let tab of tabs">
-          <template md-tab-label>{{tab.title}}</template>
+          <template md-tab-label>{{tab.title | translate}}</template>
         </md-tab>
       </md-tab-group>
     </md-toolbar-row>
@@ -21,7 +21,7 @@
     <router-outlet></router-outlet>
 
     <md-card-subtitle align="center">
-      <p>GPS, Cartes & Trafic</p>
+      <p>GPS, {{ 'MAPS' | translate }} & Trafic</p>
       <br>
     </md-card-subtitle>
   </md-card>

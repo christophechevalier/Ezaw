@@ -1,4 +1,19 @@
 {
   "LOG_ME": "Log in",
-  "WAITING_PROGRESS": "Please, wait..."
+  "DISCONNECTION": "Disconnection",
+  "SAVE": "Save",
+  "BACK": "Back",
+  "CLOSE": "Close",
+  "WAITING_PROGRESS": "Please, wait...",
+  "WELCOME_TO": "Welcome to",
+  "SETTINGS": "Settings",
+  "PROFILE": "Profile",
+  "ITINERARY": "Itinerary",
+  "SIGN_UP": "Sign up",
+  "MAPS": "Maps",
+  "REMEMBER_ME": "Remember me",
+  "USERNAME": "Username",
+  "PASSWORD": "Password",
+  "PASSWORD_CONFIRM": "Confirm Password",
+  "EMAIL": "Email Address"
 }

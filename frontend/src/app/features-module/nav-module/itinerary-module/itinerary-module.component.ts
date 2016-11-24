@@ -1,3 +1,4 @@
+// angular module
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 
 @Component({

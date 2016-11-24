@@ -3,31 +3,37 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
 
 // angular-material
 import { MaterialModule } from '@angular/material';
 
 // ngrx - store
 import { StoreModule } from '@ngrx/store';
+
 // ngrx - effects
 import { EffectsModule } from '@ngrx/effects';
 import { TranslateModule } from 'ng2-translate';
 
-// our components
-import { ToggleThemeComponent } from './toggle-theme/toggle-theme.component';
+// service
+import { DialogsService } from './services/dialogs.service';
+
+// component
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 const SHARED_COMPONENTS = [
-  ToggleThemeComponent
+  ConfirmDialogComponent
 ];
 
 const SHARED_MODULES = [
   CommonModule,
   FormsModule,
   HttpModule,
+  RouterModule,
   MaterialModule,
   StoreModule,
   EffectsModule,
-  TranslateModule
+  TranslateModule,
 ];
 
 @NgModule({
@@ -40,6 +46,9 @@ const SHARED_MODULES = [
   exports: [
     ...SHARED_COMPONENTS,
     ...SHARED_MODULES
+  ],
+  providers: [
+    DialogsService,
   ]
 })
 export class SharedModule { }

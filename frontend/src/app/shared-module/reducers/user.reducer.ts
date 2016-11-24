@@ -1,5 +1,14 @@
+// ngrx
 import { ActionReducer, Action } from '@ngrx/store';
-import { UserStateRecord, userStateFactory } from './user.state';
+
+// our interfaces
+import { IUserRecord } from '../interfaces/user.interface';
+
+// our states
+import { userRecordFactory } from './user.state';
+
+// our actions
+import { UserActions } from './user.actions';
 
 // actions
 export const USR_IS_CONNECTING = 'USR_IS_CONNECTING';
@@ -9,51 +18,55 @@ export const USR_IS_DISCONNECTED = 'USR_IS_DISCONNECTED';
 export const USR_CONNECTION_FAILED = 'USR_CONNECTION_FAILED';
 export const USR_DISCONNECTION_FAILED = 'USR_DISCONNECTION_FAILED';
 
-export const UserReducer: ActionReducer<UserStateRecord> = (userState: UserStateRecord = userStateFactory(), action: Action) => {
+function createUserReducer (userR: IUserRecord = userRecordFactory(), action: Action) {
   switch (action.type) {
-    case USR_IS_CONNECTING:
-      return userState
+    case UserActions.USR_IS_CONNECTING:
+      return userR
         .setIn(['isConnecting'], true)
         .setIn(['isConnected'], false)
         .setIn(['isDisconnecting'], false)
         .setIn(['connectionFailed'], false);
 
-    case USR_IS_CONNECTED:
-      return userState
+    case UserActions.USR_IS_CONNECTED:
+      return userR
+        .setIn(['username'], null)
         .setIn(['isConnected'], true)
         .setIn(['isConnecting'], false)
         .setIn(['isDisconnecting'], false)
         .setIn(['connectionFailed'], false);
 
-    case USR_IS_DISCONNECTING:
-      return userState
+    case UserActions.USR_IS_DISCONNECTING:
+      return userR
         .setIn(['isDisconnecting'], true)
         .setIn(['isConnecting'], false)
         .setIn(['isConnected'], true)
         .setIn(['connectionFailed'], false);
 
-    case USR_IS_DISCONNECTED:
-      return userState
+    case UserActions.USR_IS_DISCONNECTED:
+      return userR
+        .setIn(['username'], null)
         .setIn(['isConnected'], false)
         .setIn(['isConnecting'], false)
         .setIn(['isDisconnecting'], false)
         .setIn(['connectionFailed'], false);
 
-    case USR_CONNECTION_FAILED:
-      return userState
+    case UserActions.USR_CONNECTION_FAILED:
+      return userR
         .setIn(['connectionFailed'], true)
         .setIn(['isDisconnecting'], false)
         .setIn(['isConnecting'], false)
         .setIn(['isConnected'], false);
 
-    case USR_DISCONNECTION_FAILED:
-      return userState
+    case UserActions.USR_DISCONNECTION_FAILED:
+      return userR
         .setIn(['connectionFailed'], false)
         .setIn(['isDisconnecting'], false)
         .setIn(['isConnecting'], false)
         .setIn(['isConnected'], true);
 
     default:
-      return userState;
+      return userR;
   }
 };
+
+export const UserReducer: ActionReducer<IUserRecord> = createUserReducer;

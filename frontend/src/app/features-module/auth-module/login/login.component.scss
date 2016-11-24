@@ -6,8 +6,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  margin: 0;
-  padding: 0;
   background-color:rgba(0, 0, 0, 0.7);
   overflow: hidden;
   color: white;
@@ -28,3 +26,24 @@
   min-width: 1px !important;
   width: 100% !important;
 }
+
+/* Mobile */
+
+@media screen and (max-width: 420px) {
+  #overlay {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    background-color:rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    color: white;
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: wait;
+  }
+}
+

@@ -1,0 +1,46 @@
+<div class="page-settings">
+  <md-card layout="column">
+
+    <md-toolbar class="color-dark-theme color-primary-bold">
+      <span>{{ 'SETTINGS' | translate }}</span>
+      <span flex></span>
+      <button md-icon-button>
+        <md-icon>settings</md-icon>
+      </button>
+    </md-toolbar>
+
+    <md-card-content layout="column" layout-margin>
+
+      <md-nav-list>
+        <h3 md-subheader>Theme :</h3>
+        <md-list-item layout="row" layout-align="stretch center" (click)="toggleTheme()">
+          <md-slide-toggle [checked]="config.isDarkTheme">
+            Night mode
+          </md-slide-toggle>
+        </md-list-item>
+
+        <h3 md-subheader>Language :</h3>
+
+        <md-radio-group layout="row" layout-align="stretch center" [(ngModel)]="lang" align="center">
+          <md-list-item (click)="changeLanguageTo(l)" *ngFor="let l of availableLanguages">
+            <md-radio-button [value]="l" [checked]="lang === l">
+              {{l}}
+            </md-radio-button>
+          </md-list-item>
+        </md-radio-group>
+
+      </md-nav-list>
+
+      <md-card-actions layout="row" layout-align="space-between center" layout-margin layout-padding>
+        <button md-raised-button color="accent" (click)="openNavigation()">
+          <span>{{ 'BACK' | translate }}</span>
+        </button>
+        <button type="submit" md-raised-button color="primary" (click)="openNavigation()">
+          <span>{{ 'SAVE' | translate }}</span>
+        </button>
+      </md-card-actions>
+
+    </md-card-content>
+
+  </md-card>
+</div>

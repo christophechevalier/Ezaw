@@ -1,19 +1,18 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+// angular module
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 
+// rxjs
+import { Subscription } from 'rxjs';
 
 // ngrx - store
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 
 // reducer
 import { USR_IS_CONNECTING } from '../../../shared-module/reducers/user.reducer';
 
-// our states
-import { AppState } from '../../../app.state';
-import { UserState } from '../../../shared-module/reducers/user.state';
-
-// interface
-import { IUser } from '../../../shared-module/interfaces/user.interface';
+// our interfaces
+import { IStore } from '../../../shared-module/interfaces/store.interface';
+import { IUser, IUserRecord } from '../../../shared-module/interfaces/user.interface';
 
 @Component({
   selector: 'app-login',
@@ -21,17 +20,25 @@ import { IUser } from '../../../shared-module/interfaces/user.interface';
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent implements OnInit {
-  private user$: Observable<UserState>;
+export class LoginComponent implements OnInit, OnDestroy {
+  private user: IUser;
+  private userSub: Subscription;
 
-  constructor(private store: Store<AppState>) {
-    this.user$ = <Observable<UserState>>store.select('user');
+  constructor(private store$: Store<IStore>) {
+    this.userSub =
+      store$.select('user')
+        .map((userR: IUserRecord) => userR.toJS())
+        .subscribe((user: IUser) => this.user = user);
   }
 
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
+  }
+
   connectUser(user: IUser) {
-    this.store.dispatch({type: USR_IS_CONNECTING, payload: user});
+    this.store$.dispatch({type: USR_IS_CONNECTING, payload: user});
   }
 }

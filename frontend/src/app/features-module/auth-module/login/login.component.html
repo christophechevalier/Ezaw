@@ -1,52 +1,46 @@
 <div class="page-login">
-  <md-card-content>
+  <md-card-content layout="column" layout-margin layout-padding layout-align="center center">
     <form #formLogin="ngForm" (ngSubmit)="connectUser(formLogin.value)">
       <div align="center">
         <br>
         <md-card-subtitle>
-          <p>LOG IN</p>
+          <p>{{ 'LOG_ME' | translate | uppercase}}</p>
         </md-card-subtitle>
 
-        <md-input placeholder="Username" name="username" [(ngModel)]="username" type="Text">
+        <md-input placeholder="{{ 'USERNAME' | translate }}" name="username" [(ngModel)]="username" type="Text">
               <span md-prefix>
                 <md-icon>person</md-icon>
               </span>
         </md-input>
 
-        <md-input placeholder="Password" name="password" [(ngModel)]="password" type="password">
+        <md-input placeholder="{{ 'PASSWORD' | translate }}" name="password" [(ngModel)]="password" type="password">
               <span md-prefix>
                 <md-icon>vpn_key</md-icon>
               </span>
         </md-input>
       </div>
+
       <div align="center">
         <md-checkbox color="primary" aria-label="Remember me" [checked]="false">
-          Remember me
+          <span>{{ 'REMEMBER_ME' | translate}}</span>
         </md-checkbox>
       </div>
-      <div align="end" class="pnl-btn-connect">
-        <button type="submit" md-raised-button color="primary" [disabled]="(user$ | async).isConnecting">
+
+      <div align="end" layout-margin layout-padding>
+        <button type="submit" md-raised-button color="primary" [disabled]="user?.isConnecting">
           <span>{{ 'LOG_ME' | translate }}</span>
         </button>
       </div>
-      <div id="overlay" *ngIf="(user$ | async).isConnecting">
+
+      <div id="overlay" *ngIf="user?.isConnecting">
         <md-progress-circle class="overlay-full-screen" mode="indeterminate"></md-progress-circle>
         <span>{{ 'WAITING_PROGRESS' | translate }}</span>
       </div>
-    </form>
-    <br>
 
-    <div align="center">
-      <p>
-        <button md-icon-button color="primary">
-          <md-icon>info</md-icon>
-        </button>
-        <span>Debug :</span>
-        <span class="connecting" *ngIf="(user$ | async).isConnecting">Connecting ...</span>
-        <span class="connected" *ngIf="(user$ | async).isConnected">Is connected !</span>
-        <span class="not-connected" *ngIf="!(user$ | async).isConnected && !(user$ | async).isConnecting">Is NOT connected !</span>
-        <span class="connection-failed" *ngIf="(user$ | async).connectionFailed">Connection failed !</span>
-      </p>
-    </div>
+      <div class="error" *ngIf="user?.connectionFailed">
+        Username and password do not match
+      </div>
+
+    </form>
   </md-card-content>
 </div>

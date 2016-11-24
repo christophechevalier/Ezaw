@@ -1,11 +1,19 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+// angular modules
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 // ngrx - store
 import { Store } from '@ngrx/store';
 
-// our states
-import { AppState } from '../../app.state';
+// our interfaces
+import { IStore } from '../../shared-module/interfaces/store.interface';
+import { IUser, IUserRecord } from '../../shared-module/interfaces/user.interface';
+
+// rxjs
+import { Subscription } from 'rxjs/Rx';
+
+// reducer
+import { USR_IS_CONNECTING } from '../../shared-module/reducers/user.reducer';
 
 @Component({
   selector: 'app-auth',
@@ -15,17 +23,25 @@ import { AppState } from '../../app.state';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
   tabs: Array <{ title: string, url: string }>;
+  private user: IUser;
+  private userSub: Subscription;
 
-  constructor(private store: Store<AppState>, private router: Router, private route: ActivatedRoute) {
+  constructor(private store$: Store<IStore>, private router: Router, private route: ActivatedRoute) {
+
+    this.userSub =
+      store$.select('user')
+        .map((userR: IUserRecord) => userR.toJS())
+        .subscribe((user: IUser) => this.user = user);
+
     this.tabs = [
       {
-        title: 'Log In',
+        title: 'LOG_ME',
         url: 'login'
       },
       {
-        title: 'Register',
+        title: 'SIGN_UP',
         url: 'register'
       }
     ];
@@ -35,6 +51,15 @@ export class AuthComponent implements OnInit {
     // TODO When users refresh the auth page, keep the same route turned
     this.route.params.subscribe(params => { });
   }
+
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
+  }
+
+  connectUser(user: IUser) {
+    this.store$.dispatch({ type: USR_IS_CONNECTING, payload: user });
+  }
+
 
   openTab(index) {
     this.router.navigate(['/auth', this.tabs[index].url]);

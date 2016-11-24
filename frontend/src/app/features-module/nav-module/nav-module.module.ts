@@ -1,39 +1,44 @@
 // angular modules
 import { NgModule } from '@angular/core';
-import { NavComponent } from './nav-module.component';
+import { RouterModule } from '@angular/router';
 
 // our modules
 import { SharedModule } from '../../shared-module/shared-module.module';
 import { ProfileModule } from './profile-module/profile-module.module';
 import { ItineraryModule } from './itinerary-module/itinerary-module.module';
+import { SettingsModule } from './settings-module/settings-module.module';
 
 // our components
 import { NavigationComponent } from './navigation/navigation.component';
-
-// our routes
-import { RouterModule } from '@angular/router';
+import { NavComponent } from './nav-module.component';
 
 // google maps
 import { AgmCoreModule } from 'angular2-google-maps/core';
-import { SettingsComponent } from './settings/settings.component';
 import { provideLazyMapsAPILoaderConfig } from 'angular2-google-maps/core/services/maps-api-loader/lazy-maps-api-loader';
+
+const NAV_COMPONENTS = [
+  NavigationComponent,
+  NavComponent
+];
+
+const NAV_MODULES = [
+  SharedModule,
+  RouterModule,
+  AgmCoreModule.forRoot(),
+  ProfileModule,
+  ItineraryModule,
+  SettingsModule
+];
 
 @NgModule({
   imports: [
-    SharedModule,
-    RouterModule,
-    AgmCoreModule.forRoot(),
-    ProfileModule,
-    ItineraryModule
+    ...NAV_MODULES
   ],
   declarations: [
-    NavComponent,
-    NavigationComponent,
-    SettingsComponent
+    ...NAV_COMPONENTS
   ],
   exports: [
-    NavComponent,
-    NavigationComponent
+    ...NAV_COMPONENTS
   ],
   providers: [
     provideLazyMapsAPILoaderConfig({apiKey: 'AIzaSyBrTxwdypG6uUnm3hxb_ZtGh8niBD0aHww'})

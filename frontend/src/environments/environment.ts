@@ -5,5 +5,10 @@
 
 export const environment = {
   production: false,
-  mock: true
+  mock: true,
+  urlBackend: '/api',
+  debug: true,
+  alreadyConnected: false,
+  // delay for each http request (used if mock is set to true)
+  httpDelay: 500,
 };
