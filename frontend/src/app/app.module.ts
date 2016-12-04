@@ -48,6 +48,10 @@ import { SharedModule } from './shared-module/shared-module.module';
 // opaque tokens
 import { AVAILABLE_LANGUAGES } from './shared-module/opaque-tokens/opaque-tokens';
 
+//firebase connector
+import {AngularFireModule} from "angularfire2/index";
+import {firebaseConfig} from '../environments/firebase.config';
+
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, './assets/i18n', '.json');
 }
@@ -88,6 +92,8 @@ const store = compose(...metaReducers)({
 
     // material design
     MaterialModule.forRoot(),
+    // firebase config
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   providers: [
     // services
