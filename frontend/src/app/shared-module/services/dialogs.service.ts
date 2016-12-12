@@ -1,13 +1,12 @@
+// angular modules
 import { Injectable, ViewContainerRef } from '@angular/core';
+import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material';
 
 // ngrx - observable
 import { Observable } from 'rxjs/Rx';
 
-import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material';
-import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';
-
 // component
-
+import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';
 
 @Injectable()
 export class DialogsService {

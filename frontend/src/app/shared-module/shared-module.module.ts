@@ -15,14 +15,19 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { TranslateModule } from 'ng2-translate';
 
-// service
+// services
 import { DialogsService } from './services/dialogs.service';
+import { MarkerService } from './services/marker.service';
 
 // component
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { ToggleSidenavComponent } from './components/toggle-sidenav/toggle-sidenav.component';
+import { MarkersSidenavComponent } from './components/markers-sidenav/markers-sidenav.component';
 
 const SHARED_COMPONENTS = [
-  ConfirmDialogComponent
+  ConfirmDialogComponent,
+  ToggleSidenavComponent,
+  MarkersSidenavComponent
 ];
 
 const SHARED_MODULES = [
@@ -49,6 +54,7 @@ const SHARED_MODULES = [
   ],
   providers: [
     DialogsService,
+    MarkerService
   ]
 })
 export class SharedModule { }

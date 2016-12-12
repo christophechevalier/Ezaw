@@ -31,7 +31,7 @@
     "no-bitwise": true,
     "no-console": [
       true,
-      "info",
+      "log",
       "time",
       "timeEnd",
       "trace"
@@ -57,7 +57,6 @@
       true,
       "check-open-brace",
       "check-catch",
-      "check-else",
       "check-whitespace"
     ],
     "quotemark": [
@@ -91,7 +90,6 @@
       "check-separator",
       "check-type"
     ],
-
     "directive-selector-prefix": [true, "app"],
     "component-selector-prefix": [true, "app"],
     "directive-selector-name": [true, "camelCase"],

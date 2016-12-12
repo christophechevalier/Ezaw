@@ -1,12 +1,11 @@
-// Karma configuration file, see link for more information
-// https://karma-runner.github.io/0.13/config/configuration-file.html
-
 module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine', 'angular-cli'],
     plugins: [
       require('karma-jasmine'),
+      require('karma-jasmine-diff-reporter'),
+      require('karma-clear-screen-reporter'),
       require('karma-chrome-launcher'),
       require('karma-remap-istanbul'),
       require('angular-cli/plugins/karma')
@@ -16,6 +15,9 @@ module.exports = function (config) {
     ],
     preprocessors: {
       './src/test.ts': ['angular-cli']
+    },
+    mime: {
+      'text/x-typescript': ['ts','tsx']
     },
     remapIstanbulReporter: {
       reports: {
@@ -27,12 +29,17 @@ module.exports = function (config) {
       config: './angular-cli.json',
       environment: 'dev'
     },
-    reporters: ['progress', 'karma-remap-istanbul'],
+    reporters: config.angularCli && config.angularCli.codeCoverage
+      ? ['jasmine-diff', 'progress', 'karma-remap-istanbul', 'clear-screen']
+      : ['jasmine-diff', 'progress', 'clear-screen'],
+    jasmineDiffReporter: {
+      pretty: true
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+    browsers: ['Chromium'],
     singleRun: false
   });
 };

@@ -58,26 +58,4 @@ export class UserMockService {
       .of(response)
       .delay(environment.httpDelay);
   }
-
-/*  public connectUser() {
-    return Observable.create(observer => {
-      setTimeout(() => {
-        observer.next({
-          data: {
-            'username': 'admin'
-          }
-        });
-        observer.complete();
-      }, 2000);
-    });
-  }
-
-  public disconnectUser() {
-    return Observable.create(observer => {
-      setTimeout(() => {
-        observer.next();
-        observer.complete();
-      }, 2000);
-    });
-  }*/
 }

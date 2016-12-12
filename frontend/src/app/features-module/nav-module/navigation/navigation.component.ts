@@ -19,9 +19,9 @@ export class NavigationComponent {
   public markers: IMarker[] = [];
 
   zoom: number = 15;
-  lat: number = 43.548317;
-  lng: number = 1.502877;
   showMap = true;
+  centerLat: number = 43.548317;
+  centerLng: number = 1.502877;
 
   constructor() { }
 
