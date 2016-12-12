@@ -9,11 +9,18 @@
   "SETTINGS": "Settings",
   "PROFILE": "Profile",
   "ITINERARY": "Itinerary",
+  "MARKERS": "Markers",
   "SIGN_UP": "Sign up",
   "MAPS": "Maps",
   "REMEMBER_ME": "Remember me",
   "USERNAME": "Username",
   "PASSWORD": "Password",
   "PASSWORD_CONFIRM": "Confirm Password",
-  "EMAIL": "Email Address"
+  "EMAIL": "Email Address",
+  "TRAFFIC_JAM": "TrafficJam",
+  "ACCIDENT": "Accident",
+  "POLICE": "Police",
+  "WARNING": "Warning",
+  "ALERTS": "Alerts",
+  "GAS_STATION": "Gas Station"
 }

@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared-module/shared-module.module';
 import { ProfileModule } from './profile-module/profile-module.module';
 import { ItineraryModule } from './itinerary-module/itinerary-module.module';
+import { MarkerModule } from './marker-module/marker-module.module';
 import { SettingsModule } from './settings-module/settings-module.module';
 
 // our components
@@ -14,7 +15,6 @@ import { NavComponent } from './nav-module.component';
 
 // google maps
 import { AgmCoreModule } from 'angular2-google-maps/core';
-import { provideLazyMapsAPILoaderConfig } from 'angular2-google-maps/core/services/maps-api-loader/lazy-maps-api-loader';
 
 const NAV_COMPONENTS = [
   NavigationComponent,
@@ -24,9 +24,12 @@ const NAV_COMPONENTS = [
 const NAV_MODULES = [
   SharedModule,
   RouterModule,
-  AgmCoreModule.forRoot(),
+  AgmCoreModule.forRoot({
+    apiKey: 'AIzaSyBrTxwdypG6uUnm3hxb_ZtGh8niBD0aHww'
+  }),
   ProfileModule,
   ItineraryModule,
+  MarkerModule,
   SettingsModule
 ];
 
@@ -40,8 +43,6 @@ const NAV_MODULES = [
   exports: [
     ...NAV_COMPONENTS
   ],
-  providers: [
-    provideLazyMapsAPILoaderConfig({apiKey: 'AIzaSyBrTxwdypG6uUnm3hxb_ZtGh8niBD0aHww'})
-  ]
+  providers: []
 })
 export class NavModule { }

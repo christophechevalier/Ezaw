@@ -19,7 +19,13 @@ md-progress-circle {
   z-index: 10;
 }
 
-md-sidenav {
+md-sidenav .sidenav-itinerary {
   width: 320px;
+  z-index: 10;
+}
+
+
+md-sidenav .sidenav-markers {
+  width: 60px;
   z-index: 10;
 }

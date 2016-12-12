@@ -1,7 +1,7 @@
 <div class="custom-map" [class.nav-theme]="config?.isDarkTheme">
   <sebm-google-map *ngIf="showMap"
-                   [latitude]="lat"
-                   [longitude]="lng"
+                   [latitude]="lat || centerLat"
+                   [longitude]="lng || centerLng"
                    [zoom]="zoom"
                    [disableDefaultUI]="false"
                    [zoomControl]="false"
@@ -12,8 +12,7 @@
       (markerClick)="clickedMarker(m.label, i)"
       [latitude]="m.lat"
       [longitude]="m.lng"
-      [label]="m.label"
-      [markerDraggable]="m.draggable">
+    >
 
 
       <sebm-google-map-info-window>
@@ -25,5 +24,6 @@
         </span>
       </sebm-google-map-info-window>
     </sebm-google-map-marker>
+
   </sebm-google-map>
 </div>
