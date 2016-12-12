@@ -16,9 +16,4 @@ export class MarkerDetailComponent {
   markers: Marker[];
 
   constructor() { }
-
-  showMessage() {
-    this.message = `The marker name is ${this.marker.name}`;
-  }
-
 }

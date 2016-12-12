@@ -19,7 +19,7 @@ export class ToggleSidenavComponent {
 
   constructor(private store$: Store<IStore>) { }
 
-  toggleSidenav() {
-    this.store$.dispatch({ type: ConfigActions.TOGGLE_SIDENAV });
+  toggleSidenavLeft() {
+    this.store$.dispatch({ type: ConfigActions.TOGGLE_SIDENAV_LEFT });
   }
 }

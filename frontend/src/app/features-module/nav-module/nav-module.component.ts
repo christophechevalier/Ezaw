@@ -33,7 +33,8 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
   private configSub: Subscription;
   private user: IUser;
   private userSub: Subscription;
-  public isSidenavVisibleSub: Subscription;
+  public isSidenavLeftVisibleSub: Subscription;
+  public isSidenavRightVisibleSub: Subscription;
 
   @ViewChild('start') start: MdSidenav;
   @ViewChild('end') end: MdSidenav;
@@ -71,16 +72,27 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.isSidenavVisibleSub =
+    this.isSidenavLeftVisibleSub =
       this.store$.select('config')
-        .map((configR: IConfigRecord) => configR.get('isSidenavVisible'))
+        .map((configR: IConfigRecord) => configR.get('isSidenavLeftVisible'))
         .distinctUntilChanged()
-        .map((isSidenavVisible: boolean) => {
-          if (isSidenavVisible) {
+        .map((isSidenavLeftVisible: boolean) => {
+          if (isSidenavLeftVisible) {
             this.start.open();
-            this.end.open();
           } else {
             this.start.close();
+          }
+        })
+        .subscribe();
+
+    this.isSidenavRightVisibleSub =
+      this.store$.select('config')
+        .map((configR: IConfigRecord) => configR.get('isSidenavRightVisible'))
+        .distinctUntilChanged()
+        .map((isSidenavRightVisible: boolean) => {
+          if (isSidenavRightVisible) {
+            this.end.open();
+          } else {
             this.end.close();
           }
         })
@@ -90,31 +102,32 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this.configSub.unsubscribe();
     this.userSub.unsubscribe();
-    this.isSidenavVisibleSub.unsubscribe();
+    this.isSidenavLeftVisibleSub.unsubscribe();
+    this.isSidenavRightVisibleSub.unsubscribe();
   }
 
   disconnectUser() {
     this.store$.dispatch({ type: USR_IS_DISCONNECTING });
   }
 
-  toggleSidenav() {
-    this.store$.dispatch({ type: ConfigActions.TOGGLE_SIDENAV });
+  closeSidenavLeft() {
+    this.store$.dispatch({ type: ConfigActions.CLOSE_SIDENAV_LEFT });
   }
 
-  toggleMarkersSidenav() {
-    this.store$.dispatch({ type: ConfigActions.TOGGLE_SIDENAV });
+  closeSidenavLeftIfMobile() {
+    this.store$.dispatch({ type: ConfigActions.CLOSE_SIDENAV_LEFT_IF_MOBILE });
   }
 
-  closeSidenav() {
-    this.store$.dispatch({ type: ConfigActions.CLOSE_SIDENAV });
+  closeSidenavRightIfMobile() {
+    this.store$.dispatch({ type: ConfigActions.CLOSE_SIDENAV_RIGHT_IF_MOBILE });
   }
 
-  closeSidenavIfMobile() {
-    this.store$.dispatch({ type: ConfigActions.CLOSE_SIDENAV_IF_MOBILE });
+  openSidenavLeft() {
+    this.store$.dispatch({ type: ConfigActions.OPEN_SIDENAV_LEFT });
   }
 
-  openSidenav() {
-    this.store$.dispatch({ type: ConfigActions.OPEN_SIDENAV });
+  openSidenavRight() {
+    this.store$.dispatch({ type: ConfigActions.OPEN_SIDENAV_RIGHT });
   }
 
   onResize() {
@@ -123,11 +136,13 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe((event: Event) => {
         if (event.target['innerWidth'] < 960) {
           this.store$.dispatch({ type: ConfigActions.SET_SIDENAV_MODE, payload: 'over' });
-          this.closeSidenav();
+          this.closeSidenavLeft();
+          this.closeSidenavRightIfMobile();
         }
         else {
           this.store$.dispatch({ type: ConfigActions.SET_SIDENAV_MODE, payload: 'side' });
-          this.openSidenav();
+          this.openSidenavLeft();
+          this.openSidenavRight();
         }
       });
   }

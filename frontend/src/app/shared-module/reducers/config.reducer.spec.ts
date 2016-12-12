@@ -30,7 +30,8 @@ describe(`Config Reducer`, () => {
 
     let defaultState = {
       isDarkTheme: false,
-      isSidenavVisible: true,
+      isSidenavLeftVisible: true,
+      isSidenavRightVisible: true,
       sidenavMode: 'side'
     };
 
@@ -52,67 +53,134 @@ describe(`Config Reducer`, () => {
     expect(nextState2.isDarkTheme).toBe(false);
   });
 
-  // OPEN_SIDENAV
-  it(`should changed isSidenavVisible from false to true`, () => {
+  // OPEN_SIDENAV LEFT
+  it(`should changed isSidenavLeftVisible from false to true`, () => {
     let stateRTmp = stateR
-      .set('isSidenavVisible', false);
+      .set('isSidenavLeftVisible', false);
 
-    let nextStateR: IConfigRecord = ConfigReducer(stateRTmp, {type: ConfigActions.OPEN_SIDENAV});
+    let nextStateR: IConfigRecord = ConfigReducer(stateRTmp, {type: ConfigActions.OPEN_SIDENAV_LEFT});
     let nextState = nextStateR.toJS();
 
-    expect(nextState.isSidenavVisible).toBe(true);
+    expect(nextState.isSidenavLeftVisible).toBe(true);
   });
 
-  // CLOSE_SIDENAV
-  it(`${ConfigActions.CLOSE_SIDENAV}`, () => {
+  // OPEN_SIDENAV RIGHT
+  it(`should changed isSidenavRightVisible from false to true`, () => {
     let stateRTmp = stateR
-      .set('isSidenavVisible', true);
+      .set('isSidenavRightVisible', false);
 
-    let nextStateR: IConfigRecord = ConfigReducer(stateRTmp, {type: ConfigActions.CLOSE_SIDENAV});
+    let nextStateR: IConfigRecord = ConfigReducer(stateRTmp, {type: ConfigActions.OPEN_SIDENAV_RIGHT});
     let nextState = nextStateR.toJS();
 
-    expect(nextState.isSidenavVisible).toBe(false);
+    expect(nextState.isSidenavRightVisible).toBe(true);
   });
 
-  // TOGGLE_SIDENAV
-  it(`${ConfigActions.TOGGLE_SIDENAV}`, () => {
+  // CLOSE_SIDENAV LEFT
+  it(`${ConfigActions.CLOSE_SIDENAV_LEFT}`, () => {
+    let stateRTmp = stateR
+      .set('isSidenavLeftVisible', true);
+
+    let nextStateR: IConfigRecord = ConfigReducer(stateRTmp, {type: ConfigActions.CLOSE_SIDENAV_LEFT});
+    let nextState = nextStateR.toJS();
+
+    expect(nextState.isSidenavLeftVisible).toBe(false);
+  });
+
+  // CLOSE_SIDENAV RIGHT
+  it(`${ConfigActions.CLOSE_SIDENAV_RIGHT}`, () => {
+    let stateRTmp = stateR
+      .set('isSidenavRightVisible', true);
+
+    let nextStateR: IConfigRecord = ConfigReducer(stateRTmp, {type: ConfigActions.CLOSE_SIDENAV_RIGHT});
+    let nextState = nextStateR.toJS();
+
+    expect(nextState.isSidenavRightVisible).toBe(false);
+  });
+
+  // TOGGLE_SIDENAV LEFT
+  it(`${ConfigActions.TOGGLE_SIDENAV_LEFT}`, () => {
     // from open to close
     let stateRTmp = stateR
-      .set('isSidenavVisible', true);
+      .set('isSidenavLeftVisible', true);
 
-    let nextStateR1: IConfigRecord = ConfigReducer(stateRTmp, {type: ConfigActions.TOGGLE_SIDENAV});
+    let nextStateR1: IConfigRecord = ConfigReducer(stateRTmp, {type: ConfigActions.TOGGLE_SIDENAV_LEFT});
     let nextState1 = nextStateR1.toJS();
 
-    expect(nextState1.isSidenavVisible).toBe(false);
+    expect(nextState1.isSidenavLeftVisible).toBe(false);
 
     // from (previous) close to open
-    let nextStateR2: IConfigRecord = ConfigReducer(nextStateR1, {type: ConfigActions.TOGGLE_SIDENAV});
+    let nextStateR2: IConfigRecord = ConfigReducer(nextStateR1, {type: ConfigActions.TOGGLE_SIDENAV_LEFT});
     let nextState2 = nextStateR2.toJS();
 
     expect(nextState2.isSidenavVisible).toBe(true);
   });
 
-  // CLOSE_SIDENAV_IF_MOBILE
-  it(`${ConfigActions.CLOSE_SIDENAV_IF_MOBILE}`, () => {
+  // TOGGLE_SIDENAV RIGHT
+  it(`${ConfigActions.TOGGLE_SIDENAV_RIGHT}`, () => {
+    // from open to close
+    let stateRTmp = stateR
+      .set('isSidenavRightVisible', true);
+
+    let nextStateR1: IConfigRecord = ConfigReducer(stateRTmp, {type: ConfigActions.TOGGLE_SIDENAV_RIGHT});
+    let nextState1 = nextStateR1.toJS();
+
+    expect(nextState1.isSidenavRightVisible).toBe(false);
+
+    // from (previous) close to open
+    let nextStateR2: IConfigRecord = ConfigReducer(nextStateR1, {type: ConfigActions.TOGGLE_SIDENAV_RIGHT});
+    let nextState2 = nextStateR2.toJS();
+
+    expect(nextState2.isSidenavRightVisible).toBe(true);
+  });
+
+  // CLOSE_SIDENAV_LEFT_IF_MOBILE
+  it(`${ConfigActions.CLOSE_SIDENAV_LEFT_IF_MOBILE}`, () => {
     let stateRTmp = stateR
       .set('sidenavMode', 'over')
-      .set('isSidenavVisible', false);
+      .set('isSidenavLeftVisible', false);
 
     let nextStateR1: IConfigRecord = ConfigReducer(stateRTmp, {
-      type: ConfigActions.CLOSE_SIDENAV_IF_MOBILE,
+      type: ConfigActions.CLOSE_SIDENAV_LEFT_IF_MOBILE,
       payload: 'over'
     });
     let nextState1 = nextStateR1.toJS();
 
     let expectedState1 = {
       sidenavMode: 'over',
-      isSidenavVisible: false
+      isSidenavLeftVisible: false
     };
 
     expect(nextState1).toEqual(jasmine.objectContaining(expectedState1));
 
     let nextStateR2: IConfigRecord = ConfigReducer(nextStateR1, {
-      type: ConfigActions.CLOSE_SIDENAV_IF_MOBILE,
+      type: ConfigActions.CLOSE_SIDENAV_LEFT_IF_MOBILE,
+      payload: 'side'
+    });
+
+    expect(nextStateR2.toJS()).toEqual(jasmine.objectContaining(expectedState1));
+  });
+
+  // CLOSE_SIDENAV_RIGHT_IF_MOBILE
+  it(`${ConfigActions.CLOSE_SIDENAV_RIGHT_IF_MOBILE}`, () => {
+    let stateRTmp = stateR
+      .set('sidenavMode', 'over')
+      .set('isSidenavRightVisible', false);
+
+    let nextStateR1: IConfigRecord = ConfigReducer(stateRTmp, {
+      type: ConfigActions.CLOSE_SIDENAV_RIGHT_IF_MOBILE,
+      payload: 'over'
+    });
+    let nextState1 = nextStateR1.toJS();
+
+    let expectedState1 = {
+      sidenavMode: 'over',
+      isSidenavRightVisible: false
+    };
+
+    expect(nextState1).toEqual(jasmine.objectContaining(expectedState1));
+
+    let nextStateR2: IConfigRecord = ConfigReducer(nextStateR1, {
+      type: ConfigActions.CLOSE_SIDENAV_RIGHT_IF_MOBILE,
       payload: 'side'
     });
 

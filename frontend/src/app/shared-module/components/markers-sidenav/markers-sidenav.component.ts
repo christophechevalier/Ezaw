@@ -19,7 +19,7 @@ export class MarkersSidenavComponent {
 
   constructor(private store$: Store<IStore>) { }
 
-  toggleMarkersSidenav() {
-    this.store$.dispatch({ type: ConfigActions.TOGGLE_SIDENAV });
+  toggleSidenavRight() {
+    this.store$.dispatch({ type: ConfigActions.TOGGLE_SIDENAV_RIGHT });
   }
 }

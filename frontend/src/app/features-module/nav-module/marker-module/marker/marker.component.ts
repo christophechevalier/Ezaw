@@ -30,8 +30,8 @@ export class MarkerComponent {
     private markerService: MarkerService
   ) { }
 
-  closeSidenavIfMobile() {
-    this.store$.dispatch({ type: ConfigActions.CLOSE_SIDENAV_IF_MOBILE });
+  closeSidenavRightIfMobile() {
+    this.store$.dispatch({ type: ConfigActions.CLOSE_SIDENAV_RIGHT_IF_MOBILE });
   }
 
   ngOnInit() {
@@ -48,5 +48,4 @@ export class MarkerComponent {
   selectIt(m: Marker) {
     this.selectedMarker = m;
   }
-
 }

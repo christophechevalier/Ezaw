@@ -3,7 +3,8 @@ import { TypedRecord } from 'typed-immutable-record';
 
 export interface IConfig {
   isDarkTheme: boolean;
-  isSidenavVisible: boolean;
+  isSidenavLeftVisible: boolean;
+  isSidenavRightVisible: boolean;
   sidenavMode: string;
 }
 

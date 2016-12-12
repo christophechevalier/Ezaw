@@ -6,7 +6,8 @@ import { IConfig, IConfigRecord } from '../interfaces/config.interface';
 export function configFactory(): IConfig {
   return {
     isDarkTheme: true,
-    isSidenavVisible: true,
+    isSidenavLeftVisible: true,
+    isSidenavRightVisible: true,
     sidenavMode: 'side'
   };
 }

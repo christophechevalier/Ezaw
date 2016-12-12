@@ -9,7 +9,7 @@
       *ngFor="let marker of markers"
       md-tooltip="{{ marker.title | translate }}"
       tooltip-position="before"
-      (click)="closeSidenavIfMobile() && selectIt(marker)"
+      (click)="closeSidenavRightIfMobile() && selectIt(marker)"
     >
       <md-icon>{{marker.name}}</md-icon>
     </button>
