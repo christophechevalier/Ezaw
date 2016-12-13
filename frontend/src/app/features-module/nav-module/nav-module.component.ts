@@ -58,16 +58,6 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    // temporary fix based on problems with property opened in Angular Material sidenav
-    this.start._onTransitionEnd = function () {
-      this._openPromise = null;
-      this._closePromise = null;
-    };
-    this.end._onTransitionEnd = function () {
-      this._openPromise = null;
-      this._closePromise = null;
-    };
-
     this.onResize();
   }
 
