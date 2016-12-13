@@ -1,27 +1,32 @@
 <div class="custom-map" [class.nav-theme]="config?.isDarkTheme">
-  <sebm-google-map *ngIf="showMap"
-                   [latitude]="lat || centerLat"
-                   [longitude]="lng || centerLng"
-                   [zoom]="zoom"
-                   [disableDefaultUI]="false"
-                   [zoomControl]="false"
-                   (mapClick)="mapClicked($event)">
+  <sebm-google-map
+    *ngIf="showMap"
+    [latitude]="lat || centerLat"
+    [longitude]="lng || centerLng"
+    [zoom]="zoom"
+    [disableDefaultUI]="false"
+    [zoomControl]="false"
+    (mapClick)="mapClicked($event)"
+    >
 
     <sebm-google-map-marker
       *ngFor="let m of markers; let i = index"
-      (markerClick)="clickedMarker(m.label, i)"
+      (markerClick)="clickedMarker(m.label, i, m.lat, m.lng)"
       [latitude]="m.lat"
       [longitude]="m.lng"
+      [label]="m.label"
+      [markerDraggable]="m.draggable"
+      (dragEnd)="markerDragEnd($event)"
     >
-
-
       <sebm-google-map-info-window>
-        <p align="center"><strong>Marker :</strong> {{i}}</p>
-        <span>
+        <strong>Infos :</strong> {{i}}
+        <!--<span>
           <strong>Latitude :</strong> {{m.lat}}
           <br>
           <strong>Longitude :</strong> {{m.lng}}
-        </span>
+          <br>
+          <strong>Longitude :</strong> {{m.label}}
+        </span>-->
       </sebm-google-map-info-window>
     </sebm-google-map-marker>
 
