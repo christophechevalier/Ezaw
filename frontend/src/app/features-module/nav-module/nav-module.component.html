@@ -1,6 +1,6 @@
 <div layout="column" class="page-nav-module" [class.nav-theme]="config?.isDarkTheme">
 
-  <md-sidenav-layout fullscreen>
+  <md-sidenav-layout fullscreen (backdrop-clicked)="closeSidenavLeft() && closeSidenavRight()">
     <md-sidenav #start [mode]="config.sidenavMode" (close)="closeSidenavLeftIfMobile()" align="start" class="sidenav-itinerary">
       <app-itinerary-module></app-itinerary-module>
 
