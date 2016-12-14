@@ -8,6 +8,7 @@ export function userFactory(): IUser {
     // from server
     username: null,
     password: null,
+    emailAdress : null,
 
     // for UI
     isConnecting: false,

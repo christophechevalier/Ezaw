@@ -5,6 +5,8 @@ export interface IUser {
   // from server
   username: string;
   password: string;
+  emailAdress : string;
+
 
   // for UI
   isConnecting: boolean;
