@@ -32,8 +32,10 @@ export class NavigationComponent implements OnInit {
   mapClicked($event: MouseEvent) {
     this.markers.push(<IMarker>{
       label: `New Marker`,
-      lat: $event.coords.lat,
-      lng: $event.coords.lng,
+      coordinates: {
+        lat: $event.coords.lat,
+        lng: $event.coords.lng
+      },
       draggable: true
     });
   }
@@ -54,8 +56,10 @@ export class NavigationComponent implements OnInit {
 
         this.markers.push(<IMarker>{
           label: 'User Position Marker',
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
+          coordinates: {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          },
           draggable: false
         });
         console.log('User Current Position: ' + '\n' + '- Lat: ' + this.currentPosLat + '\n' + '- Lng: ' + this.currentPosLng);

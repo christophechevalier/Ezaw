@@ -4,7 +4,7 @@
     [latitude]="lat || centerLat"
     [longitude]="lng || centerLng"
     [zoom]="zoom"
-    [disableDefaultUI]="false"
+    [disableDefaultUI]="true"
     [zoomControl]="false"
     (mapClick)="mapClicked($event)"
     >
@@ -12,21 +12,25 @@
     <sebm-google-map-marker
       *ngFor="let m of markers; let i = index"
       (markerClick)="clickedMarker(m.label, i, m.lat, m.lng)"
-      [latitude]="m.lat"
-      [longitude]="m.lng"
+      [latitude]="m.coordinates.lat"
+      [longitude]="m.coordinates.lng"
       [label]="m.label"
       [markerDraggable]="m.draggable"
       (dragEnd)="markerDragEnd($event)"
+      [iconUrl]="'assets/img/markers/royaute.png'"
     >
-      <sebm-google-map-info-window>
-        <strong>Infos :</strong> {{i}}
-        <!--<span>
-          <strong>Latitude :</strong> {{m.lat}}
+      <sebm-google-map-info-window [disableAutoPan]="true">
+        <span>
+          <strong><h3 align="center">DETAILS ALERT</h3></strong>
           <br>
-          <strong>Longitude :</strong> {{m.lng}}
+          <strong>Id :</strong> {{ i }}
           <br>
-          <strong>Longitude :</strong> {{m.label}}
-        </span>-->
+          <strong>Label :</strong> {{ m.label }}
+          <br>
+          <strong>Latitude :</strong> {{ m.coordinates.lat }}
+          <br>
+          <strong>Longitude :</strong> {{ m.coordinates.lng }}
+        </span>
       </sebm-google-map-info-window>
     </sebm-google-map-marker>
 

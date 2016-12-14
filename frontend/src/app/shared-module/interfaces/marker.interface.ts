@@ -3,8 +3,10 @@ import { TypedRecord } from 'typed-immutable-record';
 
 export interface IMarker {
   label?: string;
-  lat: number;
-  lng: number;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
   // duration: number;
   // commentary: string;
   draggable: boolean;
