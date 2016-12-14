@@ -7,25 +7,25 @@
           <p>{{ 'SIGN_UP' | translate | uppercase }}</p>
         </md-card-subtitle>
 
-        <md-input placeholder="{{ 'USERNAME' | translate }}" name="username" type="Text">
+        <md-input placeholder="{{ 'USERNAME' | translate }}" name="username" type="Text" [(ngModel)]="nUser.username">
               <span md-prefix>
                 <md-icon>person</md-icon>
               </span>
         </md-input>
 
-        <md-input placeholder="{{ 'EMAIL' | translate }}" name="email" type="Text">
+        <md-input placeholder="{{ 'EMAIL' | translate }}" name="email" type="Text" [(ngModel)]="nUser.emailAdress">
               <span md-prefix>
                 <md-icon>email</md-icon>
               </span>
         </md-input>
 
-        <md-input placeholder="{{ 'PASSWORD' | translate }}" name="password" type="Text">
+        <md-input placeholder="{{ 'PASSWORD' | translate }}" name="password" type="password" [(ngModel)]="nUser.password">
               <span md-prefix>
                 <md-icon>vpn_key</md-icon>
               </span>
         </md-input>
 
-        <md-input placeholder="{{ 'PASSWORD_CONFIRM' | translate }}" name="cfpassword" type="password">
+        <md-input placeholder="{{ 'PASSWORD_CONFIRM' | translate }}" name="cfpassword" type="password"  [(ngModel)]="confirmPass">
               <span md-prefix>
                 <md-icon>done</md-icon>
               </span>
@@ -33,7 +33,7 @@
       </div>
 
       <div align="end" class="pnl-btn-connect">
-        <button type="submit" md-raised-button color="primary">
+        <button type="submit" (click)="clicked()" md-raised-button color="primary">
           <span>{{ 'SIGN_UP' | translate }}</span>
         </button>
       </div>
