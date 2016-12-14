@@ -5,16 +5,14 @@
                    [zoom]="zoom"
                    [disableDefaultUI]="false"
                    [zoomControl]="false"
+                   [fitBounds]="mapBounds"
                    (mapClick)="mapClicked($event)">
 
     <sebm-google-map-marker
-      *ngFor="let m of markers; let i = index"
-      (markerClick)="clickedMarker(m.label, i)"
+      *ngFor="let m of markers"
       [latitude]="m.lat"
       [longitude]="m.lng"
-      [label]="m.label"
-      [markerDraggable]="m.draggable">
-
+      >
 
       <sebm-google-map-info-window>
         <p align="center"><strong>Marker :</strong> {{i}}</p>
@@ -27,3 +25,4 @@
     </sebm-google-map-marker>
   </sebm-google-map>
 </div>
+
