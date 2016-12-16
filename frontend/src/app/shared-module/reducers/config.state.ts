@@ -1,4 +1,5 @@
-import { makeTypedFactory } from 'typed-immutable-record';
+// our helpers
+import { makeTypedFactory } from '../helpers/helper';
 
 // our interfaces
 import { IConfig, IConfigRecord } from '../interfaces/config.interface';
