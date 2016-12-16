@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Http } from '@angular/http';
 
+// http interceptor
+import { provideInterceptorService } from 'ng2-interceptors';
+
 // environments for our app
 import { environment } from '../environments/environment';
 
@@ -28,9 +31,11 @@ import { storeFreeze } from 'ngrx-store-freeze';
 // our reducers
 import { UserReducer } from './shared-module/reducers/user.reducer';
 import { ConfigReducer } from './shared-module/reducers/config.reducer';
+import { NavigationReducer } from './shared-module/reducers/navigation.reducer';
 
 // our services
 import { UserService } from './shared-module/services/user.service';
+import { HttpResponseInterceptor } from './shared-module/services/http-response-interceptor.service';
 import { RouteService } from './shared-module/services/route.service';
 
 // our mocks
@@ -57,7 +62,8 @@ const metaReducers = !environment.production ? [storeFreeze, combineReducers] : 
 
 const store = compose(...metaReducers)({
     config: ConfigReducer,
-    user: UserReducer
+    user: UserReducer,
+    navigation: NavigationReducer
 });
 
 @NgModule({
@@ -90,6 +96,12 @@ const store = compose(...metaReducers)({
     MaterialModule.forRoot(),
   ],
   providers: [
+    // http interceptors
+    HttpResponseInterceptor,
+    provideInterceptorService([
+      HttpResponseInterceptor
+    ]),
+
     // services
     RouteService,
     {
