@@ -13,6 +13,9 @@ import { NavigationComponent } from './nav-module/navigation/navigation.componen
 import { SettingsComponent } from './nav-module/settings-module/settings/settings.component';
 import { ProfileComponent } from './nav-module/profile-module/profile/profile.component';
 
+// our components
+import { NotFoundComponent } from './../shared-module/components/not-found/not-found.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -48,6 +51,10 @@ const routes: Routes = [
     component: NavComponent,
     children: [
       {
+        path: '404',
+        component: NotFoundComponent,
+      },
+      {
         path: '',
         redirectTo: 'navigation',
         pathMatch: ''
@@ -65,6 +72,10 @@ const routes: Routes = [
         component: ProfileComponent
       }
     ]
+  },
+  {
+    path: '**',
+    redirectTo: '404'
   }
 ];
 
