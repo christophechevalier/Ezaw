@@ -1,18 +1,25 @@
+// angular modules
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-
-import { Marker } from '../../features-module/nav-module/marker-module/marker/marker';
+import { Response } from '@angular/http';
 
 // rxjs
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
+
+// http interceptor
+import { InterceptorService } from 'ng2-interceptors';
+
+// our environment
+import { environment } from '../../../environments/environment';
+
+import { Marker } from '../../features-module/nav-module/marker-module/marker/marker';
 
 @Injectable()
 export class MarkerService {
 
-  constructor(private http: Http) { }
+  constructor(private http: InterceptorService) { }
 
   getMarkers() {
-    return this.http.get('app/shared-module/mocks-json/markers.json')
+    return this.http.get('../../../mocks-json/markers.json')
       .map((response: Response) => <Marker[]>response.json().data);
   }
 }
