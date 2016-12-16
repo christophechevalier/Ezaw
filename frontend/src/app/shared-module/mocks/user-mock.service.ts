@@ -57,4 +57,23 @@ export class UserMockService {
       .of(response)
       .delay(environment.httpDelay);
   }
+
+    public getUserInformations() {
+    let response: Response;
+
+    if (this.userIsConnected) {
+      response = <Response>{
+        ok: true,
+        json: () => {
+          return this.adminUser;
+        }
+      };
+    } else {
+      response = <Response>{ ok: false };
+    }
+
+    return Observable
+      .of(response)
+      .delay(environment.httpDelay);
+  }
 }
