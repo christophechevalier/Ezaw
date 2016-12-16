@@ -18,7 +18,7 @@ import { TranslateModule } from 'ng2-translate';
 // services
 import { DialogsService } from './services/dialogs.service';
 import { MarkerService } from './services/marker.service';
-import { NavigationService } from './services/navigation.service';
+// import { NavigationService } from './services/navigation.service';
 
 // component
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
@@ -58,7 +58,7 @@ const SHARED_MODULES = [
   providers: [
     DialogsService,
     MarkerService,
-    NavigationService
+    // NavigationService
   ]
 })
 export class SharedModule { }

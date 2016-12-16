@@ -16,15 +16,15 @@ export class MarkerService {
 
   constructor(private http: InterceptorService) { }
 
-  addPoliceMarker(name: string, idTypeMarker: string, idMarker: string) {
-    return this.http.post(`${environment.urlBackend}/markers${idMarker}/type/${idTypeMarker}`, {name});
-  }
+  // addPoliceMarker(name: string, idTypeMarker: string, idMarker: string) {
+  //   return this.http.post(`${environment.urlBackend}/markers${idMarker}/type/${idTypeMarker}`, {name});
+  // }
 
-  removePoliceMarker(idMarker: string, idTypeMarker: string, idControlPolice: string) {
-    return this.http.delete(`${environment.urlBackend}/markers/${idMarker}/type/${idTypeMarker}/control/${idControlPolice}`);
-  }
+  // removePoliceMarker(idMarker: string, idTypeMarker: string, idControlPolice: string) {
+  //   return this.http.delete(`${environment.urlBackend}/markers/${idMarker}/type/${idTypeMarker}/control/${idControlPolice}`);
+  // }
 
-  getDetailsPolice(idMarker: string, idTypeMarker: string, idControlPolice: string) {
-    return this.http.get(`${environment.urlBackend}/markers/${idMarker}/type/${idTypeMarker}/control/${idControlPolice}`);
-  }
+  // getDetailsPolice(idMarker: string, idTypeMarker: string, idControlPolice: string) {
+  //   return this.http.get(`${environment.urlBackend}/markers/${idMarker}/type/${idTypeMarker}/control/${idControlPolice}`);
+  // }
 }
