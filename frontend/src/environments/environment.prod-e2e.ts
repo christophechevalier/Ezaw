@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  mock: false,
+  mock: true,
   urlBackend: '/api',
   debug: false,
   // auto log user or not

@@ -8,7 +8,9 @@ export const environment = {
   mock: true,
   urlBackend: '/api',
   debug: true,
-  alreadyConnected: false,
+  // auto log user or not
+  // useful for dev env to avoid being redirected to /login every time the page is reloaded
+  alreadyConnected: true,
   // delay for each http request (used if mock is set to true)
-  httpDelay: 500,
+  httpDelay: 1000
 };
