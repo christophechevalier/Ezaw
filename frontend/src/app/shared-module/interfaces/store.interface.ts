@@ -1,10 +1,11 @@
 // our interfaces
-import { IUserRecord } from './user.interface';
-import { IConfigRecord } from './config.interface';
-import { IMarkerRecord } from './marker.interface';
+import { IUser } from './user.interface';
+import { IConfig } from './config.interface';
+import { IMarker, IMarkers } from './navigation.interface';
 
 export interface IStore {
-  config: IConfigRecord;
-  user: IUserRecord;
-  marker: IMarkerRecord;
+  config: IConfig;
+  user: IUser;
+  marker: IMarker;
+  markers: IMarkers;
 };
