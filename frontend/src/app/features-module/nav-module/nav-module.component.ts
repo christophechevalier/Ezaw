@@ -8,9 +8,6 @@ import { Subscription, Observable } from 'rxjs';
 // ngrx - store
 import { Store } from '@ngrx/store';
 
-// our reducers
-import { USR_IS_DISCONNECTING } from '../../shared-module/reducers/user.reducer';
-
 // our interfaces
 import { IStore } from '../../shared-module/interfaces/store.interface';
 import { IConfig, IConfigRecord } from '../../shared-module/interfaces/config.interface';
@@ -18,6 +15,7 @@ import { IUser, IUserRecord } from '../../shared-module/interfaces/user.interfac
 
 // our actions
 import { ConfigActions } from '../../shared-module/reducers/config.actions';
+import { UserActions } from './../../shared-module/reducers/user.actions';
 
 
 @Component({
@@ -97,7 +95,7 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   disconnectUser() {
-    this.store$.dispatch({ type: USR_IS_DISCONNECTING });
+    this.store$.dispatch({ type: UserActions.USR_IS_DISCONNECTING });
   }
 
   closeSidenavLeft() {
