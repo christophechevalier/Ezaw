@@ -7,8 +7,8 @@ import { Subscription } from 'rxjs';
 // ngrx - store
 import { Store } from '@ngrx/store';
 
-// reducer
-import { USR_IS_CONNECTING } from '../../../shared-module/reducers/user.reducer';
+// our actions
+import { UserActions } from './../../../shared-module/reducers/user.actions';
 
 // our interfaces
 import { IStore } from '../../../shared-module/interfaces/store.interface';
@@ -39,6 +39,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   connectUser(user: IUser) {
-    this.store$.dispatch({type: USR_IS_CONNECTING, payload: user});
+    this.store$.dispatch({type: UserActions.USR_IS_CONNECTING, payload: user});
   }
 }

@@ -12,8 +12,8 @@ import { IUser, IUserRecord } from '../../shared-module/interfaces/user.interfac
 // rxjs
 import { Subscription } from 'rxjs/Rx';
 
-// reducer
-import { USR_IS_CONNECTING } from '../../shared-module/reducers/user.reducer';
+// our actions
+import { UserActions } from './../../shared-module/reducers/user.actions';
 
 @Component({
   selector: 'app-auth',
@@ -57,9 +57,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   connectUser(user: IUser) {
-    this.store$.dispatch({ type: USR_IS_CONNECTING, payload: user });
+    this.store$.dispatch({ type: UserActions.USR_IS_CONNECTING, payload: user });
   }
-
 
   openTab(index) {
     this.router.navigate(['/auth', this.tabs[index].url]);
