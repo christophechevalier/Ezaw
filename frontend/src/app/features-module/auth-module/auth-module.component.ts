@@ -48,8 +48,10 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // TODO When users refresh the auth page, keep the same route turned
-    this.route.params.subscribe(params => { });
+    this.userSub =
+      this.route.params.subscribe(params => {
+
+      });
   }
 
   ngOnDestroy() {

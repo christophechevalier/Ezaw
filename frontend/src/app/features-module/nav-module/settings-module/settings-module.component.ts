@@ -1,19 +1,30 @@
 // angular modules
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+
+// rxjs
+import { Subscription } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-settings-module',
   templateUrl: './settings-module.component.html',
-  styleUrls: ['./settings-module.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./settings-module.component.scss']
 })
-export class SettingsModuleComponent implements OnInit {
+export class SettingsModuleComponent implements OnInit, OnDestroy {
+
+  private routeSub: Subscription;
 
   constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => { });
+    this.routeSub =
+      this.route.params.subscribe(params => { 
+        
+      });
+  }
+
+  ngOnDestroy() {
+    this.routeSub.unsubscribe();
   }
 
   openSettings() {
