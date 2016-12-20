@@ -2,28 +2,23 @@
   "data": [
     {
       "id": 10,
-      "name": "traffic",
-      "title": "TRAFFIC_JAM"
+      "title": "TRAFFIC_JAM",
+      "icon": "assets/img/markers/traffic_jam.png"
     },
     {
       "id": 20,
-      "name": "priority_hight",
-      "title": "ACCIDENT"
+      "title": "ACCIDENT",
+      "icon": "assets/img/markers/accident.png"
     },
     {
       "id": 30,
-      "name": "local_taxi",
-      "title": "POLICE"
+      "title": "POLICE",
+      "icon": "assets/img/markers/police.png"
     },
     {
       "id": 40,
-      "name": "warning",
-      "title": "WARNING"
-    },
-    {
-      "id": 50,
-      "name": "local_gas_station",
-      "title": "GAS_STATION"
+      "title": "WARNING",
+      "icon": "assets/img/markers/danger.png"
     }
   ]
 }
