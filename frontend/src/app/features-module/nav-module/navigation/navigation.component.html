@@ -6,31 +6,65 @@
     [zoom]="zoom"
     [disableDefaultUI]="true"
     [zoomControl]="false"
-    (mapClick)="mapClicked($event)"
     >
 
     <sebm-google-map-marker
       *ngFor="let m of markers; let i = index"
       (markerClick)="clickedMarker(m.label, i, m.lat, m.lng)"
-      [latitude]="m.coordinates.lat"
-      [longitude]="m.coordinates.lng"
+      [latitude]="m.lat"
+      [longitude]="m.lng"
+      [title]="m.title"
       [label]="m.label"
+      [id]="m.id"
       [markerDraggable]="m.draggable"
       (dragEnd)="markerDragEnd($event)"
-      [iconUrl]="'assets/img/markers/royaute.png'"
+      [iconUrl]="'assets/img/markers/baby.png'"
     >
       <sebm-google-map-info-window [disableAutoPan]="true">
-        <span>
-          <strong><h3 align="center">DETAILS ALERT</h3></strong>
+        <div layout-padding>
+          <strong><p align="center">{{ m.title }}</p></strong>
           <br>
-          <strong>Id :</strong> {{ i }}
+          <strong>Index :</strong> {{ i }}
+          <br>
+          <strong>Id :</strong> {{ m.id }}
           <br>
           <strong>Label :</strong> {{ m.label }}
           <br>
-          <strong>Latitude :</strong> {{ m.coordinates.lat }}
+          <strong>Latitude :</strong> {{ m.lat }}
           <br>
-          <strong>Longitude :</strong> {{ m.coordinates.lng }}
-        </span>
+          <strong>Longitude :</strong> {{ m.lng }}
+          <br>
+          <strong>Duration : </strong> {{ m.duration }}
+          <br>
+          <strong>Draggable :</strong> {{ m.draggable }}
+          <br>
+          <strong>TypeMarker :</strong> {{ m.typeMarker }}
+          <br>
+        </div>
+        <div align="center">
+          <button
+          md-icon-button
+          md-tooltip="{{ 'COMMENTARY' | translate }}"
+          tooltip-position="below"
+          >
+            <md-icon>insert_comment</md-icon>
+          </button>
+          <button
+          md-icon-button
+          md-tooltip="{{ 'DISLIKE' | translate }}"
+          tooltip-position="below"
+          >
+            <img class="icon-window-marker" src="assets/img/markers/dislike.png">
+          </button>
+          <button
+          md-icon-button
+          md-tooltip="{{ 'LIKE' | translate }}"
+          tooltip-position="below"
+          >
+            <img class="icon-window-marker" src="assets/img/markers/like.png">
+          </button>
+        </div>
+
       </sebm-google-map-info-window>
     </sebm-google-map-marker>
 
