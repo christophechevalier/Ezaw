@@ -10,6 +10,8 @@ import { NavModule } from './nav-module/nav-module.module';
 import { SharedModule } from '../shared-module/shared-module.module';
 import { ItineraryModule } from './nav-module/itinerary-module/itinerary-module.module';
 import { MarkerModule } from './nav-module/marker-module/marker-module.module';
+
+// our routes
 import { FeaturesRoutingModule } from './features-module-routing.module';
 
 const FEATURES_MODULES = [
@@ -24,6 +26,7 @@ const FEATURES_MODULES = [
 
 @NgModule({
   imports: [
+    SharedModule,
     ...FEATURES_MODULES
   ],
   declarations: [

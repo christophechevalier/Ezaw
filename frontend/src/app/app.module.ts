@@ -31,7 +31,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
 // our reducers
 import { UserReducer } from './shared-module/reducers/user.reducer';
 import { ConfigReducer } from './shared-module/reducers/config.reducer';
-// import { NavigationReducer } from './shared-module/reducers/navigation.reducer';
+import { NavigationReducer } from './shared-module/reducers/navigation.reducer';
 
 // our services
 import { UserService } from './shared-module/services/user.service';
@@ -40,6 +40,10 @@ import { RouteService } from './shared-module/services/route.service';
 import { MarkerService } from './shared-module/services/marker.service';
 import { DialogsService } from './shared-module/services/dialogs.service';
 // import { NavigationService } from './shared-module/services/navigation.service';
+
+// our guards
+import { AlreadyLoggedGuardService } from './shared-module/services/already-logged-guard.service';
+import { AuthGuardService } from './shared-module/services/auth-guard.service';
 
 // our mocks
 import { UserMockService } from './shared-module/mocks/user-mock.service';
@@ -66,7 +70,7 @@ const metaReducers = !environment.production ? [storeFreeze, combineReducers] : 
 const store = compose(...metaReducers)({
     config: ConfigReducer,
     user: UserReducer,
-    // navigation: NavigationReducer
+    navigation: NavigationReducer
 });
 
 @NgModule({
@@ -99,6 +103,10 @@ const store = compose(...metaReducers)({
     MaterialModule.forRoot(),
   ],
   providers: [
+    // guards
+    AuthGuardService,
+    AlreadyLoggedGuardService,
+
     // http interceptors
     HttpResponseInterceptor,
     provideInterceptorService([

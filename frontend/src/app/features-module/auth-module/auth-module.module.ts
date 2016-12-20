@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 
 // our modules
 import { SharedModule } from '../../shared-module/shared-module.module';
+import { AuthRoutingModule } from './auth-module-routing.module';
 
 // our components
 import { AuthComponent } from './auth-module.component';
@@ -16,10 +17,10 @@ const AUTH_COMPONENTS = [
   RegisterComponent
 ];
 
-
 @NgModule({
   imports: [
     SharedModule,
+    AuthRoutingModule,
     RouterModule
   ],
   declarations: [
