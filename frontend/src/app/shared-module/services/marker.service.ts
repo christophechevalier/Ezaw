@@ -46,6 +46,7 @@ export class MarkerService {
 
   constructor(private http: InterceptorService) { }
 
+// Todo: Remove Javascript Object assign & use typescript Object
 /*  this.initGeoLocation(currentPosLat, currentPosLng);
   this.markers.push({
     ...generateMarker(m, currentPosLat, currentPosLng),
@@ -58,13 +59,15 @@ export class MarkerService {
   break;*/
 
   // Add new marker with all details
-  addMarker($event: MouseEvent, m: IMarker, currentPosLat: number, currentPosLng: number) {
-    switch (m.typeMarker) {
+  addMarker(mkType: ETypeMarkers, currentPosLat: number, currentPosLng: number) {
+    console.log(mkType, 'is added');
+    switch (mkType) {
       case (ETypeMarkers.Police):
         this.initGeoLocation(currentPosLat, currentPosLng);
         this.markers.push(Object.assign(
-          generateMarker(m, currentPosLat, currentPosLng),
+          generateMarker(mkType, currentPosLat, currentPosLng),
           {
+            icon: 'assets/img/markers/police.png',
             title: 'Details marker police :',
             label: 'Marker Police',
             typeMarker: ETypeMarkers.Police,
@@ -76,8 +79,9 @@ export class MarkerService {
       case (ETypeMarkers.Accident):
         this.initGeoLocation(currentPosLat, currentPosLng);
         this.markers.push(Object.assign(
-          generateMarker(m, currentPosLat, currentPosLng),
+          generateMarker(mkType, currentPosLat, currentPosLng),
           {
+            icon: 'assets/img/markers/accident.png',
             title: 'Details marker accident :',
             label: 'Marker Accident',
             typeMarker: ETypeMarkers.Accident,
@@ -89,8 +93,9 @@ export class MarkerService {
       case (ETypeMarkers.TrafficJam):
         this.initGeoLocation(currentPosLat, currentPosLng);
         this.markers.push(Object.assign(
-          generateMarker(m, currentPosLat, currentPosLng),
+          generateMarker(mkType, currentPosLat, currentPosLng),
           {
+            icon: 'assets/img/markers/traffic_jam.png',
             title: 'Details marker traffic jam :',
             label: 'Marker Traffic Jam',
             typeMarker: ETypeMarkers.TrafficJam,
@@ -102,8 +107,9 @@ export class MarkerService {
       case (ETypeMarkers.Warning):
         this.initGeoLocation(currentPosLat, currentPosLng);
         this.markers.push(Object.assign(
-          generateMarker(m, currentPosLat, currentPosLng),
+          generateMarker(mkType, currentPosLat, currentPosLng),
           {
+            icon: 'assets/img/markers/danger.png',
             title: 'Details marker warning :',
             label: 'Marker Warning',
             typeMarker: ETypeMarkers.Warning,
@@ -117,24 +123,28 @@ export class MarkerService {
     }
   }
 
+  currentUserPosition(mkType, currentPosLat, currentPosLng) {
+    console.log('init user position');
+    this.initGeoLocation(currentPosLat, currentPosLng);
+    this.markers.push(Object.assign(
+      generateMarker(mkType, currentPosLat, currentPosLng),
+      {
+        icon: 'assets/img/markers/baby.png',
+        title: 'Details current position :',
+        label: 'Current User Position',
+        typeMarker: ETypeMarkers.User,
+        control: null,
+        warning: null
+      }
+    ));
+  }
+
   // getCurrentPosition with refresh position in real time
   initGeoLocation(currentPosLat: number, currentPosLng: number) {
-    console.log('geoooooooo');
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(position => {
         this.currentPosLat = position.coords.latitude;
         this.currentPosLng = position.coords.longitude;
-
-        this.markers.push(<IMarker>{
-          id: generateUuidV4(),
-          title: 'Details marker user location :',
-          label: 'Marker User',
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-          duration: null,
-          draggable: false,
-          typeMarker: ETypeMarkers.User
-        });
         console.log('User Current Position: ' + '\n' + '- Lat: ' + this.currentPosLat + '\n' + '- Lng: ' + this.currentPosLng);
       });
     }
