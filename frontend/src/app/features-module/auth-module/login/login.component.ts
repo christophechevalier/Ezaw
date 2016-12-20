@@ -1,5 +1,6 @@
 // angular module
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 // rxjs
 import { Subscription } from 'rxjs';
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private user: IUser;
   private userSub: Subscription;
 
-  constructor(private store$: Store<IStore>) {
+  constructor(private store$: Store<IStore>, private router: Router, private route: ActivatedRoute) {
     this.userSub =
       store$.select('user')
         .map((userR: IUserRecord) => userR.toJS())
@@ -32,6 +33,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.userSub =
+      this.route.params.subscribe(params => {
+
+      });
   }
 
   ngOnDestroy() {
