@@ -23,6 +23,7 @@ export function navigationFactory(): IMarker {
     label: null,
     lat: null,
     lng: null,
+    icon: null,
     duration: null,
     draggable: false,
     typeMarker: null,
