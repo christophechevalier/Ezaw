@@ -44,6 +44,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   public marker: IMarker;
   private markerSub: Subscription;
 
+  public mkType: ETypeMarkers;
   public currentPosLat: number;
   public currentPosLng: number;
   public markers: IMarker[] = [];
@@ -73,7 +74,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
       });
 
-    this.markerService.initGeoLocation(this.currentPosLat, this.currentPosLng);
+    this.markerService.currentUserPosition(this.mkType, this.currentPosLat, this.currentPosLng);
   }
 
   ngOnDestroy() {
@@ -87,89 +88,4 @@ export class NavigationComponent implements OnInit, OnDestroy {
   clickedMarker(m: IMarker) {
     console.log(`Clicked on the marker: ${ m }`);
   }
-
-  // addMarkerPolice($event: MouseEvent, m: IMarker) {
-  //   this.initGeoLocation();
-  //   this.markers.push(<IMarker> {
-  //     id: generateUuidV4(),
-  //     title: 'Details marker police :',
-  //     label: 'Marker Police',
-  //     lat: this.currentPosLat,
-  //     lng: this.currentPosLng,
-  //     duration: null,
-  //     draggable: false,
-  //     typeMarker: ETypeMarkers.Police,
-  //     controlPolices: null
-  //   });
-  // }
-
-  // addMarkerAccident($event: MouseEvent, m: IMarker) {
-  //   this.initGeoLocation();
-  //   this.markers.push(<IMarker> {
-  //     id: generateUuidV4(),
-  //     title: 'Details marker accident :',
-  //     label: 'Marker Accident',
-  //     lat: this.currentPosLat,
-  //     lng: this.currentPosLng,
-  //     duration: null,
-  //     draggable: false,
-  //     typeMarker: ETypeMarkers.Accident,
-  //     controlAccidents: null
-  //   });
-  // }
-
-  // addMarkerTrafficJam($event: MouseEvent, m: IMarker) {
-  //   this.initGeoLocation();
-  //   this.markers.push(<IMarker> {
-  //     id: generateUuidV4(),
-  //     title: 'Details marker traffic jam :',
-  //     label: 'Marker Traffic Jam',
-  //     lat: this.currentPosLat,
-  //     lng: this.currentPosLng,
-  //     duration: null,
-  //     draggable: false,
-  //     typeMarker: ETypeMarkers.TrafficJam,
-  //     controlTrafficJams: null
-  //   });
-  // }
-
-  // addMarkerWarning($event: MouseEvent, m: IMarker) {
-  //   this.initGeoLocation();
-  //   this.markers.push(<IMarker> {
-  //     id: generateUuidV4(),
-  //     title: 'Details marker warning :',
-  //     label: 'Marker Traffic Jam',
-  //     lat: this.currentPosLat,
-  //     lng: this.currentPosLng,
-  //     duration: null,
-  //     draggable: false,
-  //     typeMarker: ETypeMarkers.Warning,
-  //     controlWarnings: null,
-  //     onTheRoadCauses: null,
-  //     sideRoadCauses: null,
-  //     weatherCauses: null
-  //   });
-  // }
-
-  // getCurrentPosition with refresh position in real time
-  // initGeoLocation() {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.watchPosition(position => {
-  //       this.currentPosLat = position.coords.latitude;
-  //       this.currentPosLng = position.coords.longitude;
-
-  //       this.markers.push(<IMarker> {
-  //         id: generateUuidV4(),
-  //         title: 'Details marker user location :',
-  //         label: 'Marker User',
-  //         lat: position.coords.latitude,
-  //         lng: position.coords.longitude,
-  //         duration: null,
-  //         draggable: false,
-  //         typeMarker: ETypeMarkers.User
-  //       });
-  //       console.log('User Current Position: ' + '\n' + '- Lat: ' + this.currentPosLat + '\n' + '- Lng: ' + this.currentPosLng);
-  //     });
-  //   }
-  // }
 }

@@ -8,7 +8,7 @@
       layout-margin
       layout-padding
       md-icon-button
-      *ngFor="let marker of markers"
+      *ngFor="let marker of listMarkers"
       md-tooltip="{{ marker.title | translate }}"
       tooltip-position="before"
       (click)="selectIt(marker)"
@@ -25,7 +25,6 @@
       color="primary"
       md-tooltip="{{ 'USER_POSITION' | translate }}"
       tooltip-position="before"
-      (click)="selectIt(marker)"
     >
       <md-icon>my_location</md-icon>
     </button>

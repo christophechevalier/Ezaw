@@ -24,9 +24,11 @@ import { MarkerService } from '../../../../shared-module/services/marker.service
 })
 
 export class MarkerComponent implements OnInit {
-  // public listMarkers: string;
-  public markers: Marker[];
-  // public markers: IMarker[] = [];
+  public marker: IMarker;
+  public currentPosLat: number;
+  public currentPosLng: number;
+  public listMarkers: Marker[];
+  public markers: IMarker[] = [];
 
   constructor(
     private store$: Store<IStore>,
@@ -39,16 +41,18 @@ export class MarkerComponent implements OnInit {
 
   ngOnInit() {
     this.markerService.getMarkers()
-      .subscribe(markers => this.markers = markers);
+      .subscribe(listMarkers => this.listMarkers = listMarkers);
   }
 
   selectedMarker: Marker; // = this.markers[0];
 
-  isSelected(m: Marker) {
-    return this.selectedMarker === m;
+  isSelected(mk: Marker) {
+    return this.selectedMarker === mk;
   }
 
-  selectIt(m: Marker) {
-    this.selectedMarker = m;
+  selectIt(mk: Marker) {
+    this.selectedMarker = mk;
+
+    this.markerService.addMarker(mk.markerType, this.currentPosLat, this.currentPosLng);
   }
 }
