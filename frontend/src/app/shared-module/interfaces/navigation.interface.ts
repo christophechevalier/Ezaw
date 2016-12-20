@@ -26,6 +26,7 @@ export interface IMarker {
   label?: string;
   lat: number;
   lng: number;
+  icon: string;
   duration: number;
   draggable: boolean;
   typeMarker: ETypeMarkers;
