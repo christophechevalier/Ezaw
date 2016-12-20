@@ -4,6 +4,9 @@ import { fromJS } from 'immutable';
 // typed record
 import { TypedRecord } from 'typed-immutable-record';
 
+// markers sidenav
+import { IMarker } from './../interfaces/navigation.interface';
+
 let matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
 
 export function escapeStringRegexp (str) {
@@ -44,3 +47,15 @@ export function makeTypedFactory<E, T extends TypedRecord<T> & E>(obj: E): (val?
     return fromJS(Object.assign(obj, val)) as T;
   };
 };
+
+// define method for generate new marker with min details
+export const generateMarker = (m: IMarker, lat, lng) => {
+  return {
+    id: generateUuidV4(),
+    lat,
+    lng,
+    duration: null,
+    draggable: false,
+    typeMarker: m.typeMarker
+  }
+}
