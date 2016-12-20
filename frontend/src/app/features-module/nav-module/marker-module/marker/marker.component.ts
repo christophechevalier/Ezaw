@@ -1,5 +1,5 @@
 // angular module
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 // ngrx - store
 import { Store } from '@ngrx/store';
@@ -9,7 +9,9 @@ import { ConfigActions } from '../../../../shared-module/reducers/config.actions
 
 // interfaces
 import { IStore } from '../../../../shared-module/interfaces/store.interface';
+import { IMarker } from './../../../../shared-module/interfaces/navigation.interface';
 
+// description of markers buttons
 import { Marker } from './marker';
 
 // service
@@ -21,21 +23,10 @@ import { MarkerService } from '../../../../shared-module/services/marker.service
   styleUrls: ['./marker.component.scss']
 })
 
-export class MarkerComponent {
-  public listMarkers: string;
-  markers: Marker[];
-
-  iconUrl = [
-    {
-      listMarkers: [
-        'assets/img/markers/danger.png',
-        'assets/img/markers/accident.png',
-        'assets/img/markers/police.png',
-        'assets/img/markers/traffic_jam.png',
-        'assets/img/markers/pin.png',
-      ]
-    }
-  ];
+export class MarkerComponent implements OnInit {
+  // public listMarkers: string;
+  public markers: Marker[];
+  // public markers: IMarker[] = [];
 
   constructor(
     private store$: Store<IStore>,

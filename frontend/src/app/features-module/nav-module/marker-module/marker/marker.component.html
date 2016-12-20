@@ -4,17 +4,31 @@
     <h4 md-subheader>{{ 'ALERTS' | translate }} ?</h4>
 
     <button
+      #appMarker
+      layout-margin
+      layout-padding
       md-icon-button
-      color="accent"
       *ngFor="let marker of markers"
       md-tooltip="{{ marker.title | translate }}"
       tooltip-position="before"
-      (click)="closeSidenavRightIfMobile() && selectIt(marker)"
+      (click)="selectIt(marker)"
     >
-      <md-icon>{{marker.name}}</md-icon>
+      <img class="icon-marker-btn" src="{{ marker.icon }}"/>
     </button>
+
+    <app-marker-detail [marker]="selectedMarker"></app-marker-detail>
   </div>
 
-  <app-marker-detail [marker]="selectedMarker"></app-marker-detail>
+  <div layout="column" layout-align="center center">
+    <button
+      md-mini-fab
+      color="primary"
+      md-tooltip="{{ 'USER_POSITION' | translate }}"
+      tooltip-position="before"
+      (click)="selectIt(marker)"
+    >
+      <md-icon>my_location</md-icon>
+    </button>
+  </div>
 
 </md-card>

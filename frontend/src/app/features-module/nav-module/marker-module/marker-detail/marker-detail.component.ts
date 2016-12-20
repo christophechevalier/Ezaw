@@ -1,7 +1,12 @@
 // angular module
 import { Component, Input } from '@angular/core';
 
+// marker sidenav
 import { Marker } from '../marker/marker';
+
+// our interfaces
+import { IMarker } from './../../../../shared-module/interfaces/navigation.interface';
+import { IMarkers } from './../../../../shared-module/interfaces/navigation.interface';
 
 @Component({
   selector: 'app-marker-detail',
@@ -10,7 +15,6 @@ import { Marker } from '../marker/marker';
 })
 export class MarkerDetailComponent {
 
-  message: string;
   @Input() marker: Marker;
 
   markers: Marker[];
