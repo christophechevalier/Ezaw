@@ -12,10 +12,12 @@ import {
   IMarkers,
   INavigationRecord,
   ETypeMarkers,
+  EControls,
   EControlPolices,
   EControlAccidents,
   EControlTrafficJams,
   EControlWarnings,
+  EWarnings,
   EControlFavorites,
   EOnTheRoadCauses,
   ESideRoadCauses,
@@ -72,7 +74,8 @@ export class MarkerService {
             label: 'Marker Police',
             typeMarker: ETypeMarkers.Police,
             control: null,
-            warning: null
+            warning: null,
+            isFetchingDetails: true
           }
         ));
         break;
@@ -86,7 +89,8 @@ export class MarkerService {
             label: 'Marker Accident',
             typeMarker: ETypeMarkers.Accident,
             control: null,
-            warning: null
+            warning: null,
+            isFetchingDetails: true
           }
         ));
         break;
@@ -100,7 +104,8 @@ export class MarkerService {
             label: 'Marker Traffic Jam',
             typeMarker: ETypeMarkers.TrafficJam,
             control: null,
-            warning: null
+            warning: null,
+            isFetchingDetails: true
           }
         ));
         break;
@@ -114,7 +119,8 @@ export class MarkerService {
             label: 'Marker Warning',
             typeMarker: ETypeMarkers.Warning,
             control: null,
-            warning: null
+            warning: null,
+            isFetchingDetails: true
           }
         ));
         break;
@@ -124,8 +130,8 @@ export class MarkerService {
   }
 
   currentUserPosition(mkType, currentPosLat, currentPosLng) {
-    console.log('init user position');
     this.initGeoLocation(currentPosLat, currentPosLng);
+    // console.log('User Current Position : ' + '\n' + '- Type: ' + mkType + '\n' + '- Lat: ' + currentPosLat + '\n' + '- Lng: ' + currentPosLng);
     this.markers.push(Object.assign(
       generateMarker(mkType, currentPosLat, currentPosLng),
       {
@@ -134,7 +140,8 @@ export class MarkerService {
         label: 'Current User Position',
         typeMarker: ETypeMarkers.User,
         control: null,
-        warning: null
+        warning: null,
+        isFetchingDetails: true
       }
     ));
   }
@@ -145,8 +152,8 @@ export class MarkerService {
       navigator.geolocation.watchPosition(position => {
         this.currentPosLat = position.coords.latitude;
         this.currentPosLng = position.coords.longitude;
-        console.log('User Current Position: ' + '\n' + '- Lat: ' + this.currentPosLat + '\n' + '- Lng: ' + this.currentPosLng);
       });
+    // console.log('Coordinates : ' + '\n' + '- Lat: ' + this.currentPosLat + '\n' + '- Lng: ' + this.currentPosLng)
     }
   }
 

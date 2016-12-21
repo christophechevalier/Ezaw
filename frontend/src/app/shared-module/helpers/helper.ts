@@ -5,7 +5,22 @@ import { fromJS } from 'immutable';
 import { TypedRecord } from 'typed-immutable-record';
 
 // markers sidenav
-import { ETypeMarkers } from './../interfaces/navigation.interface';
+import {
+  IMarker,
+  IMarkers,
+  INavigationRecord,
+  ETypeMarkers,
+  EControls,
+  EWarnings,
+  EControlPolices,
+  EControlAccidents,
+  EControlTrafficJams,
+  EControlWarnings,
+  EControlFavorites,
+  EOnTheRoadCauses,
+  ESideRoadCauses,
+  EWeatherCauses
+} from './../interfaces/navigation.interface';
 
 let matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
 
@@ -49,11 +64,11 @@ export function makeTypedFactory<E, T extends TypedRecord<T> & E>(obj: E): (val?
 };
 
 // define method for generate new marker with min details
-export const generateMarker = (mkType: ETypeMarkers, lat, lng) => {
+export const generateMarker = (mkType: ETypeMarkers, mkLat: number, mkLng: number) => {
   return {
     id: generateUuidV4(),
-    lat,
-    lng,
+    lat: mkLat,
+    lng: mkLat,
     duration: null,
     draggable: false,
     typeMarker: mkType

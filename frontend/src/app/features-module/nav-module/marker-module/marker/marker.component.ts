@@ -9,7 +9,22 @@ import { ConfigActions } from '../../../../shared-module/reducers/config.actions
 
 // interfaces
 import { IStore } from '../../../../shared-module/interfaces/store.interface';
-import { IMarker } from './../../../../shared-module/interfaces/navigation.interface';
+import {
+  IMarker,
+  IMarkers,
+  INavigationRecord,
+  ETypeMarkers,
+  EControls,
+  EWarnings,
+  EControlPolices,
+  EControlAccidents,
+  EControlTrafficJams,
+  EControlWarnings,
+  EControlFavorites,
+  EOnTheRoadCauses,
+  ESideRoadCauses,
+  EWeatherCauses
+} from './../../../../shared-module/interfaces/navigation.interface';
 
 // description of markers buttons
 import { Marker } from './marker';
@@ -28,7 +43,6 @@ export class MarkerComponent implements OnInit {
   public currentPosLat: number;
   public currentPosLng: number;
   public listMarkers: Marker[];
-  public markers: IMarker[] = [];
 
   constructor(
     private store$: Store<IStore>,
@@ -52,7 +66,7 @@ export class MarkerComponent implements OnInit {
 
   selectIt(mk: Marker) {
     this.selectedMarker = mk;
-
     this.markerService.addMarker(mk.markerType, this.currentPosLat, this.currentPosLng);
+    console.log('Marker : ', mk)
   }
 }

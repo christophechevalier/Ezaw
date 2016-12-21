@@ -1,25 +1,25 @@
 {
   "data": [
     {
-      "id": 10,
+      "id": "10",
       "title": "TRAFFIC_JAM",
       "icon": "assets/img/markers/traffic_jam.png",
       "markerType": "TrafficJam"
     },
     {
-      "id": 20,
+      "id": "20",
       "title": "ACCIDENT",
       "icon": "assets/img/markers/accident.png",
       "markerType": "Accident"
     },
     {
-      "id": 30,
+      "id": "30",
       "title": "POLICE",
       "icon": "assets/img/markers/police.png",
       "markerType": "Police"
     },
     {
-      "id": 40,
+      "id": "40",
       "title": "WARNING",
       "icon": "assets/img/markers/danger.png",
       "markerType": "Warning"

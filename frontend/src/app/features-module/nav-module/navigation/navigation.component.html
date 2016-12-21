@@ -18,7 +18,7 @@
       [id]="m.id"
       [markerDraggable]="m.draggable"
       (dragEnd)="markerDragEnd($event)"
-      [iconUrl]="'assets/img/markers/baby.png'"
+      [iconUrl]="m.icon"
     >
       <sebm-google-map-info-window [disableAutoPan]="true">
         <div layout-padding>

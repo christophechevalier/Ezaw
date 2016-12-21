@@ -32,6 +32,7 @@ export interface IMarker {
   typeMarker: ETypeMarkers;
   control: EControls;
   warning: EWarnings;
+  isFetchingDetails: boolean;
 }
 
 export interface IMarkers {

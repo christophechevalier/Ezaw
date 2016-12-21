@@ -28,7 +28,9 @@ export function navigationFactory(): IMarker {
     draggable: false,
     typeMarker: null,
     control: null,
-    warning: null
+    warning: null,
+    // for UI
+    isFetchingDetails: false
   };
 }
 

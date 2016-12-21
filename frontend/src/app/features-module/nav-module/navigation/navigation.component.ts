@@ -15,6 +15,8 @@ import {
   IMarkers,
   INavigationRecord,
   ETypeMarkers,
+  EControls,
+  EWarnings,
   EControlPolices,
   EControlAccidents,
   EControlTrafficJams,
@@ -73,8 +75,9 @@ export class NavigationComponent implements OnInit, OnDestroy {
       this.route.params.subscribe(params => {
 
       });
-
+    this.markerService.initGeoLocation(this.currentPosLat, this.currentPosLng);
     this.markerService.currentUserPosition(this.mkType, this.currentPosLat, this.currentPosLng);
+    // console.log('User Current Position : ' + '\n' + '- Type: ' + this.mkType + '\n' + '- Lat: ' + this.currentPosLat + '\n' + '- Lng: ' + this.currentPosLng);
   }
 
   ngOnDestroy() {
