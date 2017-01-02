@@ -1,5 +1,7 @@
 // typed-record
 import { TypedRecord } from 'typed-immutable-record';
+// immutable
+import { List } from 'immutable';
 
 // types
 export enum ETypeMarkers { Police, Accident, TrafficJam, Warning, GasStation, User };
@@ -40,4 +42,4 @@ export interface IMarkers {
   allIds: Array<string>;
 }
 
-export interface INavigationRecord extends TypedRecord<INavigationRecord>, IMarker { };
+export interface INavigationList extends List<IMarker> { };
