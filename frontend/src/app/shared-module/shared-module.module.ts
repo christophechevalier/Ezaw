@@ -15,12 +15,12 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { TranslateModule } from 'ng2-translate';
 
-// services
+// our services
 import { DialogsService } from './services/dialogs.service';
 import { MarkerService } from './services/marker.service';
 // import { NavigationService } from './services/navigation.service';
 
-// component
+// our components
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { ToggleSidenavComponent } from './components/toggle-sidenav/toggle-sidenav.component';
 import { MarkersSidenavComponent } from './components/markers-sidenav/markers-sidenav.component';

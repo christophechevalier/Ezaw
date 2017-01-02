@@ -24,6 +24,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 // our effects
 import { UserEffects } from './shared-module/effects/user.effects';
+import { NavigationEffects } from './shared-module/effects/navigation.effects';
 
 // store freeze
 import { storeFreeze } from 'ngrx-store-freeze';
@@ -91,6 +92,7 @@ const store = compose(...metaReducers)({
 
     // effects
     EffectsModule.runAfterBootstrap(UserEffects),
+    EffectsModule.runAfterBootstrap(NavigationEffects),
 
     // translate
     TranslateModule.forRoot({
