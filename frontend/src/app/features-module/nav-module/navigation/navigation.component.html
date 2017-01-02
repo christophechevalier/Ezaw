@@ -1,11 +1,13 @@
 <div class="custom-map" [class.nav-theme]="config?.isDarkTheme">
   <sebm-google-map
+    class="sebm-google-map-container"
     *ngIf="showMap"
     [latitude]="lat || centerLat"
     [longitude]="lng || centerLng"
     [zoom]="zoom"
     [disableDefaultUI]="true"
     [zoomControl]="false"
+    [styles]="lightAndDark"
     >
 
     <sebm-google-map-marker
@@ -24,31 +26,15 @@
         <div layout-padding>
           <strong><p align="center">{{ m.title }}</p></strong>
           <br>
-          <strong>Index :</strong> {{ i }}
-          <br>
-          <strong>Id :</strong> {{ m.id }}
-          <br>
           <strong>Label :</strong> {{ m.label }}
           <br>
           <strong>Latitude :</strong> {{ m.lat }}
           <br>
           <strong>Longitude :</strong> {{ m.lng }}
           <br>
-          <strong>Duration : </strong> {{ m.duration }}
-          <br>
           <strong>Draggable :</strong> {{ m.draggable }}
-          <br>
-          <strong>TypeMarker :</strong> {{ m.typeMarker }}
-          <br>
         </div>
         <div align="center">
-          <button
-          md-icon-button
-          md-tooltip="{{ 'COMMENTARY' | translate }}"
-          tooltip-position="below"
-          >
-            <md-icon>insert_comment</md-icon>
-          </button>
           <button
           md-icon-button
           md-tooltip="{{ 'DISLIKE' | translate }}"
