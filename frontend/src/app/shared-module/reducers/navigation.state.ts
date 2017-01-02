@@ -1,10 +1,14 @@
 // our helpers
 import { makeTypedFactory } from '../helpers/helper';
 
+// immutable
+import { List } from 'immutable';
+
 // our interfaces
 import {
   IMarker,
-  INavigationRecord,
+  IMarkers,
+  INavigationList,
   ETypeMarkers,
   EControlPolices,
   EControlAccidents,
@@ -16,22 +20,8 @@ import {
   EWeatherCauses
 } from '../interfaces/navigation.interface';
 
-export function navigationFactory(): IMarker {
-  return {
-    id: null,
-    title: null,
-    label: null,
-    lat: null,
-    lng: null,
-    icon: null,
-    duration: null,
-    draggable: false,
-    typeMarker: null,
-    control: null,
-    warning: null,
-    // for UI
-    isFetchingDetails: false
-  };
+export function navigationFactory() {
+  return List<IMarker>();
 }
 
-export const navigationRecordFactory = makeTypedFactory<IMarker, INavigationRecord>(navigationFactory());
+export const navigationRecordFactory = navigationFactory();
