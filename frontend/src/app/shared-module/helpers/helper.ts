@@ -8,7 +8,7 @@ import { TypedRecord } from 'typed-immutable-record';
 import {
   IMarker,
   IMarkers,
-  INavigationRecord,
+  INavigationList,
   ETypeMarkers,
   EControls,
   EWarnings,
@@ -24,7 +24,7 @@ import {
 
 let matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
 
-export function escapeStringRegexp (str) {
+export function escapeStringRegexp(str) {
   if (typeof str !== 'string') {
     throw new TypeError('Expected a string');
   }
@@ -35,8 +35,8 @@ export function escapeStringRegexp (str) {
 // generate a UUID
 export function generateUuidV4(a = null) {
   /* tslint:disable */
-  return a?(a^Math.random()*16>>a/4)
-    .toString(16):(<any>[1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,generateUuidV4);
+  return a ? (a ^ Math.random() * 16 >> a / 4)
+    .toString(16) : (<any>[1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, generateUuidV4);
   /* tslint:enable */
 }
 
@@ -63,14 +63,29 @@ export function makeTypedFactory<E, T extends TypedRecord<T> & E>(obj: E): (val?
   };
 };
 
-// define method for generate new marker with min details
-export const generateMarker = (mkType: ETypeMarkers, mkLat: number, mkLng: number) => {
+// define method for generate new marker
+export const generateMarker = (mkLat: number, mkLng: number) => {
   return {
     id: generateUuidV4(),
     lat: mkLat,
-    lng: mkLat,
+    lng: mkLng,
     duration: null,
     draggable: false,
-    typeMarker: mkType
   }
+}
+
+// getCurrentPosition with refresh position in real time
+export const getCurrentLocation = () => {
+  return new Promise<{lat: number, lng: number}>((resolve) => {
+    let pos = { lat: null, lng: null };
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        pos.lat = position.coords.latitude;
+        pos.lng = position.coords.longitude;
+
+        resolve(pos);
+      });
+    }
+  });
 }
