@@ -2,7 +2,7 @@
 import { ActionReducer, Action } from '@ngrx/store';
 
 // immutable
-import { fromJS, List, Map } from 'immutable';
+import { List } from 'immutable';
 
 // rxjs
 import { Observable } from 'rxjs';
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import {
   IMarker,
   IMarkers,
-  INavigationRecord,
+  INavigationList,
   ETypeMarkers,
   EControls,
   EControlPolices,
@@ -23,7 +23,7 @@ import {
   EOnTheRoadCauses,
   ESideRoadCauses,
   EWeatherCauses
- } from '../interfaces/navigation.interface';
+} from '../interfaces/navigation.interface';
 
 import { Marker } from './../../features-module/nav-module/marker-module/marker/marker';
 
@@ -33,39 +33,67 @@ import { navigationRecordFactory } from './navigation.state';
 // our actions
 import { NavigationActions } from './navigation.actions';
 
-function createNavigationReducer(navigationR: INavigationRecord = navigationRecordFactory(), action: Action) {
+function createNavigationReducer(navigationR = navigationRecordFactory, action: Action) {
+  switch (action.type) {
+    case NavigationActions.FETCH_MARKER_SUCCESS:
+      return navigationR.push(action.payload);
 
-  if (action.type === NavigationActions.FETCH_MARKER_DETAILS) {
-    let markerIndex = navigationR
-      .get('allIds')
-      .findIndex((allIds: INavigationRecord) => allIds.get('id') === action.payload.byId);
-  }
+    case NavigationActions.REMOVE_MARKER:
+      return navigationR.filter(nav => nav.id !== action.payload);
 
-  else if (action.type === NavigationActions.FETCH_MARKER_DETAILS_SUCCESS) {
-    let markerIndex = navigationR
-      .get('allIds')
-      .findIndex((allIds: INavigationRecord) => allIds.get('id') === action.payload.marker.id);
-
-    if (markerIndex === -1) {
+    default:
       return navigationR;
-    }
-
-    return navigationR.setIn(['allIds', markerIndex],
-      navigationR
-        .getIn(['allIds', markerIndex])
-        .merge(
-        fromJS({ isFetchingDetails: false }),
-        fromJS(action.payload)
-        )
-    );
-  }
-
-  else if (action.type === NavigationActions.FETCH_MARKER_DETAILS_FAILED) {
-    let markerIndex = navigationR
-      .get('allIds')
-      .findIndex((allIds: INavigationRecord) => allIds.get('id') === action.payload.byId);
-
   }
 }
 
-export const NavigationReducer: ActionReducer<INavigationRecord> = createNavigationReducer;
+export const NavigationReducer: ActionReducer<INavigationList> = createNavigationReducer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // if (action.type === NavigationActions.FETCH_MARKER_DETAILS) {
+  //   let markerIndex = navigationR
+  //     .get('allIds')
+  //     .findIndex((allIds: INavigationRecord) => allIds.get('id') === action.payload.byId);
+  // }
+
+  // else if (action.type === NavigationActions.FETCH_MARKER_DETAILS_SUCCESS) {
+  //   let markerIndex = navigationR
+  //     .get('allIds')
+  //     .findIndex((allIds: INavigationRecord) => allIds.get('id') === action.payload.marker.id);
+
+  //   if (markerIndex === -1) {
+  //     return navigationR;
+  //   }
+
+  //   return navigationR.setIn(['allIds', markerIndex],
+  //     navigationR
+  //       .getIn(['allIds', markerIndex])
+  //       .merge(
+  //       fromJS({ isFetchingDetails: false }),
+  //       fromJS(action.payload)
+  //       )
+  //   );
+  // }
+
+  // else if (action.type === NavigationActions.FETCH_MARKER_DETAILS_FAILED) {
+  //   let markerIndex = navigationR
+  //     .get('allIds')
+  //     .findIndex((allIds: INavigationRecord) => allIds.get('id') === action.payload.byId);
