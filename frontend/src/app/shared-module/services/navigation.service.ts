@@ -12,7 +12,7 @@ import { InterceptorService } from 'ng2-interceptors';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
-export class MarkerService {
+export class NavigationService {
 
   constructor(private http: InterceptorService) { }
 
@@ -24,7 +24,19 @@ export class MarkerService {
   //   return this.http.delete(`${environment.urlBackend}/markers/${idMarker}/type/${idTypeMarker}/control/${idControlPolice}`);
   // }
 
-  // getDetailsPolice(idMarker: string, idTypeMarker: string, idControlPolice: string) {
-  //   return this.http.get(`${environment.urlBackend}/markers/${idMarker}/type/${idTypeMarker}/control/${idControlPolice}`);
+  getDetails(idMarker: string, TypeMarker: string) {
+    return this.http.get(`${environment.urlBackend}/markers/${idMarker}/type/${TypeMarker}`);
+  }
+
+  // getDetailsWarning(idMarker: string, TypeMarker: string, ControlWarning: string) {
+  //   return this.http.get(`${environment.urlBackend}/markers/${idMarker}/type/${TypeMarker}/control/${ControlWarning}`);
+  // }
+
+  // getDetailsTrafficJam(idMarker: string, TypeMarker: string, ControlTrafficJam: string) {
+  //   return this.http.get(`${environment.urlBackend}/markers/${idMarker}/type/${TypeMarker}/control/${ControlTrafficJam}`);
+  // }
+
+  // getDetailsAccident(idMarker: string, TypeMarker: string, ControlAccident: string) {
+  //   return this.http.get(`${environment.urlBackend}/markers/${idMarker}/type/${TypeMarker}/control/${ControlAccident}`);
   // }
 }
