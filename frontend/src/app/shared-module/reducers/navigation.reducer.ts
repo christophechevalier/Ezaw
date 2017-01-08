@@ -36,6 +36,7 @@ import { NavigationActions } from './navigation.actions';
 function createNavigationReducer(navigationR = navigationRecordFactory, action: Action) {
   switch (action.type) {
     case NavigationActions.FETCH_MARKER_SUCCESS:
+      console.log(navigationR);
       return navigationR.push(action.payload);
 
     case NavigationActions.REMOVE_MARKER:

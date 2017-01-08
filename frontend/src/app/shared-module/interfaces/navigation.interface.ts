@@ -37,6 +37,14 @@ export interface IMarker {
   isFetchingDetails: boolean;
 }
 
+export interface Sendlocation {
+
+    lat: number;
+    lng: number;
+    type? : ETypeMarkers;
+
+}
+
 export interface IMarkers {
   byId: Map<string, IMarker>;
   allIds: Array<string>;

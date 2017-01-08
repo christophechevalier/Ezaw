@@ -39,6 +39,10 @@ import { Marker } from './marker';
 
 // service
 import { MarkerService } from '../../../../shared-module/services/marker.service';
+import { NavigationService } from '../../../../shared-module/services/navigation.service';
+
+import { getCurrentLocation } from '../../../../shared-module/helpers/helper';
+
 
 @Component({
   selector: 'app-marker',
@@ -50,12 +54,20 @@ export class MarkerComponent implements OnInit, OnDestroy {
   public listMarkers: Marker[];
   private markerSub: Subscription;
   public markers: IMarker[] = [];
+  public lng;
+  public lat;
+  public tmp: number;
+  public a: number;
+  public listeServeur: number[] = [1, 2, 3, 4, 5, 6];
+  public listeUser: number[] = [3, 4, 5, 7, 8];
 
   constructor(
     private store$: Store<IStore>,
     private router: Router,
     private route: ActivatedRoute,
+    public navService: NavigationService,
     private markerService: MarkerService
+
   ) {
     this.markerSub =
       store$.select('navigation')
@@ -79,6 +91,11 @@ export class MarkerComponent implements OnInit, OnDestroy {
       .subscribe(listMarkers => {
         this.listMarkers = listMarkers;
       });
+
+
+    //this.testLoop();
+
+
   }
 
   ngOnDestroy() {
@@ -92,11 +109,61 @@ export class MarkerComponent implements OnInit, OnDestroy {
   }
 
   selectIt(m: Marker) {
+
+
+
+    console.log("etape 1");
     this.selectedMarker = m;
     this.store$.dispatch({ type: NavigationActions.FETCH_MARKER, payload: m.markerType });
   }
 
   removeIt(m: Marker) {
-     this.store$.dispatch({ type: NavigationActions.REMOVE_MARKER });
+    this.store$.dispatch({ type: NavigationActions.REMOVE_MARKER });
   }
+
+  getUserPosition(lat: number, lng: number) {
+    this.navService.getNearByMarkers(lat, lng);
+  }
+
+  testLoop() {
+
+    var br = 0;
+
+    for (this.a = 0; this.a < this.listeUser.length; this.a++) {
+
+      if (br == 1) {
+        break;
+      }
+
+      if (this.listeServeur[this.a] == null) {
+        this.listeUser.splice((this.listeUser.length - (this.listeUser.length - (this.a))), (this.listeUser.length - (this.a) ))
+        break;
+      }
+      while (this.listeServeur[this.a] != this.listeUser[this.a]) {
+        if (this.listeServeur[this.a] == null) {
+          this.listeUser.splice(this.listeUser.length, this.listeUser.length - (this.a))
+          br = 1
+          break;
+        }
+        if (this.listeUser[this.a] < this.listeServeur[this.a])
+          this.listeUser.splice(this.a, 1)
+        else {
+            this.listeUser.splice(this.a, 0, this.listeServeur[this.a])
+        }
+      }
+      this.tmp = this.a + 1;
+    }
+
+    if (this.listeServeur[this.tmp] != null) {
+      while (this.tmp < this.listeServeur.length) {
+        this.listeUser.push(this.listeServeur[this.tmp]);
+        this.tmp++
+      }
+    }
+
+    for (var i = 0; i < this.listeUser.length; i++) {
+      console.log(this.listeUser[i]);
+    }
+  }
+
 }

@@ -40,7 +40,7 @@ import { HttpResponseInterceptor } from './shared-module/services/http-response-
 import { RouteService } from './shared-module/services/route.service';
 import { MarkerService } from './shared-module/services/marker.service';
 import { DialogsService } from './shared-module/services/dialogs.service';
-// import { NavigationService } from './shared-module/services/navigation.service';
+import { NavigationService } from './shared-module/services/navigation.service';
 
 // our guards
 import { AlreadyLoggedGuardService } from './shared-module/services/already-logged-guard.service';
@@ -119,7 +119,7 @@ const store = compose(...metaReducers)({
     RouteService,
     DialogsService,
     MarkerService,
-    // NavigationService,
+    NavigationService,
     {
       provide: UserService,
       useClass: (environment.mock ? UserMockService : UserService)

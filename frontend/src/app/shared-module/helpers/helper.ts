@@ -64,9 +64,9 @@ export function makeTypedFactory<E, T extends TypedRecord<T> & E>(obj: E): (val?
 };
 
 // define method for generate new marker
-export const generateMarker = (mkLat: number, mkLng: number) => {
+export const generateMarker = (mkLat: number, mkLng: number, idbdd: number) => {
   return {
-    id: generateUuidV4(),
+    id: idbdd,
     lat: mkLat,
     lng: mkLng,
     duration: null,
@@ -78,12 +78,10 @@ export const generateMarker = (mkLat: number, mkLng: number) => {
 export const getCurrentLocation = () => {
   return new Promise<{lat: number, lng: number}>((resolve) => {
     let pos = { lat: null, lng: null };
-
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
         pos.lat = position.coords.latitude;
         pos.lng = position.coords.longitude;
-
         resolve(pos);
       });
     }

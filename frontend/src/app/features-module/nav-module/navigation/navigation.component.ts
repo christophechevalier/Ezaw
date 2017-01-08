@@ -236,7 +236,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.markerSub =
       this.route.params.subscribe(params => {
-
       });
   }
 

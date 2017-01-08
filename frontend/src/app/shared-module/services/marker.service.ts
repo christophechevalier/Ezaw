@@ -1,6 +1,6 @@
 // angular modules
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { Response, Headers, RequestOptions } from '@angular/http';
 
 // rxjs
 import { Observable } from 'rxjs';
@@ -39,8 +39,13 @@ import { Marker } from './../../features-module/nav-module/marker-module/marker/
 // generate marker
 import { generateMarker } from './../helpers/helper';
 
+// interface
+import { Sendlocation } from '../interfaces/navigation.interface';
+
 @Injectable()
 export class MarkerService {
+
+  public locationNeeded: Sendlocation = { lat: 0, lng: 0, type: null };
 
   constructor(private http: InterceptorService) { }
 
@@ -56,5 +61,18 @@ export class MarkerService {
         })
         return a;
       });
+  }
+
+  addMarker(lat: number, lng: number, type: ETypeMarkers) {
+    this.locationNeeded.lat = lat
+    this.locationNeeded.lng = lng
+    this.locationNeeded.type = type
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let body = JSON.stringify(this.locationNeeded);
+    console.log("the body :" + body);
+    return this.http.post('http://localhost/ezawphp/addAlert.php', body)
+    //   .map(res => res.json())
+    //   .subscribe(res => console.log(res));  
   }
 }
