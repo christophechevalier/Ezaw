@@ -39,6 +39,10 @@ function createNavigationReducer(navigationR = navigationRecordFactory, action: 
       console.log(navigationR);
       return navigationR.push(action.payload);
 
+    // TODO: Add condition to get markers on the map
+    case NavigationActions.GET_MARKERS_SUCCESS:
+      return navigationR.push(action.payload);
+
     case NavigationActions.REMOVE_MARKER:
       return navigationR.filter(nav => nav.id !== action.payload);
 
