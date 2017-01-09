@@ -50,8 +50,8 @@ function createNavigationReducer(navigationR = navigationRecordFactory, action: 
       return navigationR;
   }
 }
-
-export const NavigationReducer: ActionReducer<INavigationList> = createNavigationReducer;
+// : ActionReducer<INavigationList>
+export const NavigationReducer = createNavigationReducer;
 
 
 

@@ -80,7 +80,7 @@ export class MarkerComponent implements OnInit, OnDestroy {
   }
 
   closeSidenavRightIfMobile() {
-    this.store$.dispatch({ type: ConfigActions.CLOSE_SIDENAV_RIGHT_IF_MOBILE });
+    this.store$.dispatch({ type: `CLOSE_SIDENAV_IF_MOBILE_RIGHT` });
   }
 
   ngOnInit() {

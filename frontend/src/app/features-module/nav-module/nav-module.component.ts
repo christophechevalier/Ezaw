@@ -11,12 +11,16 @@ import { Store } from '@ngrx/store';
 // our interfaces
 import { IStore } from '../../shared-module/interfaces/store.interface';
 import { IConfig, IConfigRecord } from '../../shared-module/interfaces/config.interface';
+import { ISidenav, ISidenavRecord } from '../../shared-module/interfaces/sidenav.interface';
 import { IUser, IUserRecord } from '../../shared-module/interfaces/user.interface';
 
 // our actions
 import { ConfigActions } from '../../shared-module/reducers/config.actions';
 import { UserActions } from './../../shared-module/reducers/user.actions';
 
+// our reducers
+import { createSidenavReducer } from './../../shared-module/reducers/sidenav.reducer';
+import { ConfigReducer } from './../../shared-module/reducers/config.reducer';
 
 @Component({
   selector: 'app-nav-module',
@@ -28,7 +32,10 @@ import { UserActions } from './../../shared-module/reducers/user.actions';
 
 export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
   private config: IConfig;
+  private sidenav: ISidenav;
   private configSub: Subscription;
+  public sidenavLeftSub: Subscription;
+  public sidenavRightSub: Subscription;
   private user: IUser;
   private userSub: Subscription;
   public isSidenavLeftVisibleSub: Subscription;
@@ -42,9 +49,24 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     this.configSub =
       store$.select('config')
+        .do(x => console.log(x))
         .map((configR: IConfigRecord) => configR.toJS())
         .subscribe((config: IConfig) => {
           this.config = config;
+        });
+
+    this.sidenavLeftSub =
+      store$.select('sidenavLeft')
+        .map((sidenavR: ISidenavRecord) => sidenavR.toJS())
+        .subscribe((sidenav: ISidenav) => {
+          this.sidenav = sidenav;
+        });
+
+    this.sidenavRightSub =
+      store$.select('sidenavRight')
+        .map((sidenavR: ISidenavRecord) => sidenavR.toJS())
+        .subscribe((sidenav: ISidenav) => {
+          this.sidenav = sidenav;
         });
 
     this.userSub =
@@ -61,8 +83,8 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.isSidenavLeftVisibleSub =
-      this.store$.select('config')
-        .map((configR: IConfigRecord) => configR.get('isSidenavLeftVisible'))
+      this.store$.select('sidenavLeft')
+        .map((sidenavR: ISidenavRecord) => sidenavR.get('isSidenavLeftVisible'))
         .distinctUntilChanged()
         .map((isSidenavLeftVisible: boolean) => {
           if (isSidenavLeftVisible) {
@@ -74,8 +96,8 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe();
 
     this.isSidenavRightVisibleSub =
-      this.store$.select('config')
-        .map((configR: IConfigRecord) => configR.get('isSidenavRightVisible'))
+      this.store$.select('sidenavRight')
+        .map((sidenavR: ISidenavRecord) => sidenavR.get('isSidenavRightVisible'))
         .distinctUntilChanged()
         .map((isSidenavRightVisible: boolean) => {
           if (isSidenavRightVisible) {
@@ -89,6 +111,8 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.configSub.unsubscribe();
+    this.sidenavLeftSub.unsubscribe();
+    this.sidenavRightSub.unsubscribe();
     this.userSub.unsubscribe();
     this.isSidenavLeftVisibleSub.unsubscribe();
     this.isSidenavRightVisibleSub.unsubscribe();
@@ -99,23 +123,27 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   closeSidenavLeft() {
-    this.store$.dispatch({ type: ConfigActions.CLOSE_SIDENAV_LEFT });
+    this.store$.dispatch({ type: `CLOSE_SIDENAV_LEFT` });
+  }
+
+  closeSidenavRight() {
+    this.store$.dispatch({ type: `CLOSE_SIDENAV_RIGHT` });
   }
 
   closeSidenavLeftIfMobile() {
-    this.store$.dispatch({ type: ConfigActions.CLOSE_SIDENAV_LEFT_IF_MOBILE });
+    this.store$.dispatch({ type: `CLOSE_SIDENAV_IF_MOBILE_LEFT` });
   }
 
   closeSidenavRightIfMobile() {
-    this.store$.dispatch({ type: ConfigActions.CLOSE_SIDENAV_RIGHT_IF_MOBILE });
+    this.store$.dispatch({ type: `CLOSE_SIDENAV_IF_MOBILE_RIGHT` });
   }
 
   openSidenavLeft() {
-    this.store$.dispatch({ type: ConfigActions.OPEN_SIDENAV_LEFT });
+    this.store$.dispatch({ type: `OPEN_SIDENAV_LEFT` });
   }
 
   openSidenavRight() {
-    this.store$.dispatch({ type: ConfigActions.OPEN_SIDENAV_RIGHT });
+    this.store$.dispatch({ type: `OPEN_SIDENAV_RIGHT` });
   }
 
   onResize() {
@@ -123,14 +151,14 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
       .debounceTime(100)
       .subscribe((event: Event) => {
         if (event.target['innerWidth'] < 960) {
-          this.store$.dispatch({ type: ConfigActions.SET_SIDENAV_MODE, payload: 'over' });
-          this.closeSidenavLeft();
-          this.closeSidenavRightIfMobile();
+          this.store$.dispatch({ type: `SET_SIDENAV_MODE`, payload: 'over' });
+          // this.closeSidenavLeft();
+          // this.closeSidenavRight();
         }
         else {
-          this.store$.dispatch({ type: ConfigActions.SET_SIDENAV_MODE, payload: 'side' });
-          this.openSidenavLeft();
-          this.openSidenavRight();
+          this.store$.dispatch({ type: `SET_SIDENAV_MODE`, payload: 'side' });
+          // this.openSidenavLeft();
+          // this.openSidenavRight();
         }
       });
   }

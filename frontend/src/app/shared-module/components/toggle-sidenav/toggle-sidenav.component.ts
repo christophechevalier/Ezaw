@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 // our actions
-import { ConfigActions } from '../../reducers/config.actions';
+import { SidenavActions } from '../../reducers/sidenav.actions';
 
 // interfaces
 import { IStore } from '../../interfaces/store.interface';
@@ -20,6 +20,6 @@ export class ToggleSidenavComponent {
   constructor(private store$: Store<IStore>) { }
 
   toggleSidenavLeft() {
-    this.store$.dispatch({ type: ConfigActions.TOGGLE_SIDENAV_LEFT });
+    this.store$.dispatch({ type: `TOGGLE_SIDENAV_LEFT` });
   }
 }

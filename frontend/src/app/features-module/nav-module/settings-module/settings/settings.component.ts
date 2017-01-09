@@ -58,7 +58,7 @@ export class SettingsComponent implements OnDestroy, OnInit {
   }
 
   toggleTheme() {
-    this.store$.dispatch({type: ConfigActions.TOGGLE_THEME});
+    this.store$.dispatch({type: `TOGGLE_THEME`});
   }
 
   changeLanguageTo(lang) {

@@ -33,6 +33,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import { UserReducer } from './shared-module/reducers/user.reducer';
 import { ConfigReducer } from './shared-module/reducers/config.reducer';
 import { NavigationReducer } from './shared-module/reducers/navigation.reducer';
+import { createSidenavReducer } from './shared-module/reducers/sidenav.reducer';
 
 // our services
 import { UserService } from './shared-module/services/user.service';
@@ -61,6 +62,7 @@ import { SharedModule } from './shared-module/shared-module.module';
 // opaque tokens
 import { AVAILABLE_LANGUAGES } from './shared-module/opaque-tokens/opaque-tokens';
 
+
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, './assets/i18n', '.json');
 }
@@ -70,6 +72,8 @@ const metaReducers = !environment.production ? [storeFreeze, combineReducers] : 
 
 const store = compose(...metaReducers)({
     config: ConfigReducer,
+    sidenavLeft : createSidenavReducer('LEFT'),
+    sidenavRight : createSidenavReducer('RIGHT'),
     user: UserReducer,
     navigation: NavigationReducer
 });

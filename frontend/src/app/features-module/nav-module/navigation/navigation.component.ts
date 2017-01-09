@@ -42,7 +42,6 @@ import { MarkerService } from './../../../shared-module/services/marker.service'
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss'],
   styles: [`
     .sebm-google-map-container {
       min-height: 100vh;
@@ -227,6 +226,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   ) {
     this.markerSub =
       store$.select('navigation')
+        // .do(z => console.log(z.toJS()))
         .map((navigationR: INavigationList) => navigationR.toJS())
         .subscribe(navigation => {
           this.markers = navigation;

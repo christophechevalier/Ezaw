@@ -126,7 +126,7 @@ export class NavigationEffects {
                 lat: null,
                 lng: null,
                 icon: 'assets/img/markers/police.png',
-                title: 'Details marker police :',
+                title: 'Police !!',
                 label: 'Marker Police',
                 typeMarker: ETypeMarkers.Police,
                 control: null,
