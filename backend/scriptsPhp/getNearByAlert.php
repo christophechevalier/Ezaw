@@ -10,7 +10,7 @@ $lon_courante= trim(strip_tags($request -> lng));
 //$lat_courante= 43.353010299;
 //$lon_courante= 1.623376199;
 
-	// Perimètre en km
+	// PerimÃ¨tre en km
 	$distance_choisie = 5;
 	include('bd.php');
 	$formule="(6366*acos(cos(radians(?))*cos(radians(`lat`))*cos(radians(`lng`) -radians(?))+sin(radians(?))*sin(radians(`lat`))))";
