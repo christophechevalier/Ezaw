@@ -58,8 +58,10 @@ export class MarkerComponent implements OnInit, OnDestroy {
   public lat;
   public tmp: number;
   public a: number;
-  public listeServeur: number[] = [1, 2, 3, 4, 5, 6];
-  public listeUser: number[] = [3, 4, 5, 7, 8];
+  public listeServeur: IMarker[] = []
+  public listeUser: IMarker[] = []
+
+
 
   constructor(
     private store$: Store<IStore>,
@@ -92,10 +94,8 @@ export class MarkerComponent implements OnInit, OnDestroy {
         this.listMarkers = listMarkers;
       });
 
-
+    //this.store$.dispatch({ type: NavigationActions.GET_MARKERS });
     //this.testLoop();
-
-
   }
 
   ngOnDestroy() {
@@ -109,9 +109,6 @@ export class MarkerComponent implements OnInit, OnDestroy {
   }
 
   selectIt(m: Marker) {
-
-
-
     console.log("etape 1");
     this.selectedMarker = m;
     this.store$.dispatch({ type: NavigationActions.FETCH_MARKER, payload: m.markerType });
@@ -126,44 +123,87 @@ export class MarkerComponent implements OnInit, OnDestroy {
   }
 
   testLoop() {
-
-    var br = 0;
-
-    for (this.a = 0; this.a < this.listeUser.length; this.a++) {
-
-      if (br == 1) {
-        break;
-      }
-
-      if (this.listeServeur[this.a] == null) {
-        this.listeUser.splice((this.listeUser.length - (this.listeUser.length - (this.a))), (this.listeUser.length - (this.a) ))
-        break;
-      }
-      while (this.listeServeur[this.a] != this.listeUser[this.a]) {
-        if (this.listeServeur[this.a] == null) {
-          this.listeUser.splice(this.listeUser.length, this.listeUser.length - (this.a))
-          br = 1
-          break;
-        }
-        if (this.listeUser[this.a] < this.listeServeur[this.a])
-          this.listeUser.splice(this.a, 1)
-        else {
-            this.listeUser.splice(this.a, 0, this.listeServeur[this.a])
+    var listeId: number[] = [];
+    // Array IDS
+    //For sur boucle serveur
+    for (var a = 0; a < this.listeServeur.length; a++) {
+      var arequals = false
+      //For sur boucle client
+      for (var b = 0; b < this.listeUser.length; b++) {
+        // On compare client == serveur
+        if (this.listeUser[b].id == this.listeServeur[a].id) {
+          listeId.push(parseInt(this.listeUser[b].id))
+          arequals = true
         }
       }
-      this.tmp = this.a + 1;
-    }
-
-    if (this.listeServeur[this.tmp] != null) {
-      while (this.tmp < this.listeServeur.length) {
-        this.listeUser.push(this.listeServeur[this.tmp]);
-        this.tmp++
+      if (!arequals) {
+        this.listeUser.push(this.listeServeur[a])
+        listeId.push(parseInt(this.listeServeur[a].id))
       }
     }
 
-    for (var i = 0; i < this.listeUser.length; i++) {
-      console.log(this.listeUser[i]);
+    for (var a = 0; a < this.listeUser.length; a++) {
+      var areEquals = false
+      for (var b = 0; b < listeId.length; b++) {
+          if (listeId[b] == parseInt(this.listeUser[a].id)) {
+              areEquals = true
+          }
+      }
+      if(!arequals){
+        this.listeUser.splice(a,1)
+      }
     }
+
+
+
+
+    // If areEquals == false
+    // Tu l'ajoute et stockage ID tableau
+    // IF areEquals == true
+    //  stockage ID tableau
+
+    // For sur boucle client
+    // FOR 
+    // Comparaison ID client et tableau ID
+
+
+    // var br = 0;
+
+    // for (this.a = 0; this.a < this.listeUser.length; this.a++) {
+
+    //   if (br == 1) {
+    //     break;
+    //   }
+
+    //   if (this.listeServeur[this.a] == null) {
+    //     this.listeUser.splice((this.listeUser.length - (this.listeUser.length - (this.a))), (this.listeUser.length - (this.a) ))
+    //     break;
+    //   }
+    //   while (this.listeServeur[this.a] != this.listeUser[this.a]) {
+    //     if (this.listeServeur[this.a] == null) {
+    //       this.listeUser.splice(this.listeUser.length, this.listeUser.length - (this.a))
+    //       br = 1
+    //       break;
+    //     }
+    //     if (this.listeUser[this.a] < this.listeServeur[this.a])
+    //       this.listeUser.splice(this.a, 1)
+    //     else {
+    //         this.listeUser.splice(this.a, 0, this.listeServeur[this.a])
+    //     }
+    //   }
+    //   this.tmp = this.a + 1;
+    // }
+
+    // if (this.listeServeur[this.tmp] != null) {
+    //   while (this.tmp < this.listeServeur.length) {
+    //     this.listeUser.push(this.listeServeur[this.tmp]);
+    //     this.tmp++
+    //   }
+    // }
+
+    // for (var i = 0; i < this.listeUser.length; i++) {
+    //   console.log(this.listeUser[i]);
+    // }
   }
 
 }

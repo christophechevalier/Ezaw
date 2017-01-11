@@ -41,6 +41,8 @@ import {
 // our actions
 import { NavigationActions } from './../reducers/navigation.actions';
 
+import { navigationRecordFactory } from '../reducers/navigation.state';
+
 // our helpers
 import { generateUuidV4, generateMarker, getCurrentLocation } from './../helpers/helper';
 
@@ -73,181 +75,159 @@ export class NavigationEffects {
     .ofType(NavigationActions.GET_MARKERS)
     .switchMap(x => this.navigationService.getNearByMarkers(this.currentPosLat, this.currentPosLng)
       .map((res: Response) => {
+
+        let listMarker = navigationRecordFactory;
+        console.log("TEST EFFECT");
         if (!res.ok) {
           throw new Error("coucou")
         }
         let listMarkers: List<IMarker> = res.json();
         return { type: NavigationActions.GET_MARKERS_SUCCESS, payload: listMarkers }
       }
+      ));
 
+  // FETCH TYPE MARKER DETAILS
+  // tslint:disable-next-line:member-ordering
+  @Effect({ dispatch: true }) fetchDetails$: Observable<Action> = this.actions$
+    .ofType(NavigationActions.FETCH_MARKER)
+    .switchMap(x => {
 
-      
-    ));
+      let locationPromise = getCurrentLocation().then(pos => {
 
-
-// FETCH TYPE MARKER DETAILS
-// tslint:disable-next-line:member-ordering
-@Effect({ dispatch: true }) fetchDetails$: Observable < Action > = this.actions$
-  .ofType(NavigationActions.FETCH_MARKER)
-  .switchMap(x => {
-    console.log("etape 2");
-    let locationPromise = getCurrentLocation().then(pos => {
-
-      let markers = this.navigationService.getNearByMarkers(pos.lat, pos.lng)
-
-      markers
-        .map(res => res.json())
-        .subscribe(res => {
-
-          for (var i = 0; i < res.length; i++) {
-            console.log(res[i]['type'])
+        if (x.payload == ETypeMarkers.Police) {
+          this.id = ETypeMarkers.Police
+        } else {
+          if (x.payload == ETypeMarkers.Accident) {
+            this.id = ETypeMarkers.Accident
+          } else {
+            if (x.payload == ETypeMarkers.TrafficJam) {
+              this.id = ETypeMarkers.TrafficJam
+            } else {
+              if (x.payload == ETypeMarkers.Warning) {
+                this.id = ETypeMarkers.Warning
+              } else {
+                if (x.payload == ETypeMarkers.User) {
+                  this.id = ETypeMarkers.User
+                } else {
+                  if (x.payload == ETypeMarkers.GasStation) {
+                    this.id = ETypeMarkers.GasStation
+                  }
+                }
+              }
+            }
           }
-          //   for (var i = 0; i < res.length; i++) {
-          //     switch(res[i]['type']){
-          //       case "POLICE":
-          //       console.log("POLICE");
-          //       console.log(res[i]['lat'], res[i]['lng']);
-          //       let etmP = Object.assign(
-          //       generateMarker(res[i]['lat'], res[i]['lng']),
-          //       {
-          //       lat: res[i]['lat'],
-          //       lng: res[i]['lng'],
-          //       icon: 'assets/img/markers/police.png',
-          //       title: 'Details marker police :',
-          //       label: 'Marker Police',
-          //       typeMarker: ETypeMarkers.Police,
-          //       control: null,
-          //       warning: null,
-          //       isFetchingDetails: true
-          //         }
-          //       );
-          //       console.log("Moncul");
-          //       return { type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmP };
-          //       //break;
-          //       case "TRAFFICJAM":
-          //       console.log("TRAFFIC")
-          //       return { type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmP };
-          //     }
-          //  }
-        })
-
-
-
-
-      switch (x.payload) {
-        case ETypeMarkers.Police:
-          let marker = this.markerService.addMarker(pos.lat, pos.lng, ETypeMarkers.Police);
-          marker
-            .map(res => res.json())
-            .subscribe(res => this.id = res[0])
-          console.log("console id : " + this.id)
-          let etmP = Object.assign(
-            generateMarker(pos.lat, pos.lng, this.id),
-            {
-              lat: pos.lat,
-              lng: pos.lng,
-              icon: 'assets/img/markers/police.png',
-              title: 'Details marker police :',
-              label: 'Marker Police',
-              typeMarker: ETypeMarkers.Police,
-              control: null,
-              warning: null,
-              isFetchingDetails: true
+        }
+        let locationpro = this.markerService.addMarker(pos.lat, pos.lng, this.id).then(data => {
+          console.log(data)
+          if (data == "ko") {
+            let etmN = Object.assign(
+              generateMarker(null, null, null),
+              {
+                lat: null,
+                lng: null,
+                icon: 'assets/img/markers/police.png',
+                title: 'Details marker police :',
+                label: 'Marker Police',
+                typeMarker: ETypeMarkers.Police,
+                control: null,
+                warning: null,
+                isFetchingDetails: true
+              }
+            );
+            return { type: NavigationActions.FETCH_MARKER_ALREADY_EXIST, payload: etmN };
+          } else {
+            switch (x.payload) {
+              case ETypeMarkers.Police:
+                let etmP = Object.assign(
+                  generateMarker(pos.lat, pos.lng, data),
+                  {
+                    lat: pos.lat,
+                    lng: pos.lng,
+                    icon: 'assets/img/markers/police.png',
+                    title: 'Details marker police :',
+                    label: 'Marker Police',
+                    typeMarker: ETypeMarkers.Police,
+                    control: null,
+                    warning: null,
+                    isFetchingDetails: true
+                  }
+                );
+                //break;
+                return { type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmP };
+              case ETypeMarkers.Accident:
+                let etmA = (Object.assign(
+                  generateMarker(pos.lat, pos.lng, data),
+                  {
+                    icon: 'assets/img/markers/accident.png',
+                    title: 'Accident !!',
+                    label: 'Marker Accident',
+                    typeMarker: ETypeMarkers.Accident,
+                    control: null,
+                    warning: null,
+                    isFetchingDetails: true
+                  }
+                ));
+                return { type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmA };
+              case ETypeMarkers.TrafficJam:
+                let etmT = (Object.assign(
+                  generateMarker(pos.lat, pos.lng, data),
+                  {
+                    icon: 'assets/img/markers/traffic_jam.png',
+                    title: 'Traffic Jam !!',
+                    label: 'Marker Traffic Jam',
+                    typeMarker: ETypeMarkers.TrafficJam,
+                    control: null,
+                    warning: null,
+                    isFetchingDetails: true
+                  }
+                ));
+                return { type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmT };
+              case ETypeMarkers.Warning:
+                let etmW = (Object.assign(
+                  generateMarker(pos.lat, pos.lng, data),
+                  {
+                    icon: 'assets/img/markers/danger.png',
+                    title: 'Warning !!',
+                    label: 'Marker Warning',
+                    typeMarker: ETypeMarkers.Warning,
+                    control: null,
+                    warning: null,
+                    isFetchingDetails: true
+                  }
+                ));
+                return { type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmW };
+              case ETypeMarkers.User:
+                let etmU = (Object.assign(
+                  generateMarker(pos.lat, pos.lng, data),
+                  {
+                    icon: 'assets/img/markers/tux.png',
+                    title: 'Current Position !!',
+                    label: 'Marker User',
+                    typeMarker: ETypeMarkers.User,
+                    control: null,
+                    warning: null,
+                    isFetchingDetails: true
+                  }
+                ));
+                return { type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmU };
+              case ETypeMarkers.GasStation:
+                let etmG = (Object.assign(
+                  generateMarker(pos.lat, pos.lng, data),
+                  {
+                    icon: 'assets/img/markers/gas_station.png',
+                    title: 'Gas Station !!',
+                    label: 'Marker Gas Station',
+                    typeMarker: ETypeMarkers.GasStation,
+                    control: null,
+                    warning: null,
+                    isFetchingDetails: true
+                  }
+                ));
+                return { type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmG };
             }
-          );
-          //break;
-          return { type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmP };
-
-        case ETypeMarkers.Accident:
-          let etmA = (Object.assign(
-            generateMarker(pos.lat, pos.lng),
-            {
-              icon: 'assets/img/markers/accident.png',
-              title: 'Accident !!',
-              label: 'Marker Accident',
-              typeMarker: ETypeMarkers.Accident,
-              control: null,
-              warning: null,
-              isFetchingDetails: true
-            }
-          ));
-
-          //  break;
-          return { type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmA };
-
-        case ETypeMarkers.TrafficJam:
-          console.log('typeMarker :' + ETypeMarkers.TrafficJam)
-          let etmT = (Object.assign(
-            generateMarker(pos.lat, pos.lng),
-            {
-              icon: 'assets/img/markers/traffic_jam.png',
-              title: 'Traffic Jam !!',
-              label: 'Marker Traffic Jam',
-              typeMarker: ETypeMarkers.TrafficJam,
-              control: null,
-              warning: null,
-              isFetchingDetails: true
-            }
-          ));
-          //break;  
-          return { type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmT };
-
-        case ETypeMarkers.Warning:
-          let etmW = (Object.assign(
-            generateMarker(pos.lat, pos.lng),
-            {
-              icon: 'assets/img/markers/danger.png',
-              title: 'Warning !!',
-              label: 'Marker Warning',
-              typeMarker: ETypeMarkers.Warning,
-              control: null,
-              warning: null,
-              isFetchingDetails: true
-            }
-          ));
-          //break;
-          return { type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmW };
-
-        case ETypeMarkers.User:
-          let etmU = (Object.assign(
-            generateMarker(pos.lat, pos.lng),
-            {
-              icon: 'assets/img/markers/tux.png',
-              title: 'Current Position !!',
-              label: 'Marker User',
-              typeMarker: ETypeMarkers.User,
-              control: null,
-              warning: null,
-              isFetchingDetails: true
-            }
-          ));
-          //break;
-          return { type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmU };
-
-        case ETypeMarkers.GasStation:
-          let etmG = (Object.assign(
-            generateMarker(pos.lat, pos.lng),
-            {
-              icon: 'assets/img/markers/gas_station.png',
-              title: 'Gas Station !!',
-              label: 'Marker Gas Station',
-              typeMarker: ETypeMarkers.GasStation,
-              control: null,
-              warning: null,
-              isFetchingDetails: true
-            }
-          ));
-          //break;
-          return { type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmW };
-        //return null;
-      }
+          }
+        }); return locationpro
+      });
+      return Observable.fromPromise(locationPromise);
     });
-    //console.log("loc : "+locationPromise);
-    return Observable.fromPromise(locationPromise);
-
-  });
-
-
-
-
 }

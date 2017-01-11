@@ -72,6 +72,10 @@ export class MarkerService {
     let body = JSON.stringify(this.locationNeeded);
     console.log("the body :" + body);
     return this.http.post('http://localhost/ezawphp/addAlert.php', body)
+      .map(res => res.json())
+      .map(res => {
+        return res
+      }).toPromise();
     //   .map(res => res.json())
     //   .subscribe(res => console.log(res));  
   }
