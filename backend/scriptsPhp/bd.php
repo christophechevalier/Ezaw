@@ -1,7 +1,7 @@
 <?php
 
 	
-		$db_name  = 'waze';
+		$db_name  = 'ezaw';
         $hostname = 'localhost:3306';
         $username = 'root';
         $password = '';

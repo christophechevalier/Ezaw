@@ -2,12 +2,12 @@
 
 header("Access-Control-Allow-Origin: *");
 error_reporting(E_ALL);
-//ini_set('display_errors', 1);
-//$postdata = file_get_contents("php://input");
-//$request = json_decode($postdata);
-//$id_marqueur = trim(strip_tags($request -> id));
+ini_set('display_errors', 1);
+$postdata = file_get_contents("php://input");
+$request = json_decode($postdata);
+$id_marqueur = trim(strip_tags($request -> id));
 	
-	$id_marqueur = 56;
+	//$id_marqueur = 56;
 	include('bd.php');
 	$query = $bdd->prepare("SELECT * FROM alert WHERE id = ?");
 	$query->execute(array($id_marqueur));
