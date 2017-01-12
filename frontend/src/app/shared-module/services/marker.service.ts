@@ -76,7 +76,5 @@ export class MarkerService {
       .map(res => {
         return res
       }).toPromise();
-    //   .map(res => res.json())
-    //   .subscribe(res => console.log(res));  
   }
 }
