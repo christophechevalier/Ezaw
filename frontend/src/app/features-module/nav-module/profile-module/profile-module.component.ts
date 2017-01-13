@@ -18,9 +18,7 @@ export class ProfileModuleComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.routeSub =
-      this.route.params.subscribe(params => { 
-        
-      });
+      this.route.params.subscribe(params => { });
   }
 
   ngOnDestroy() {

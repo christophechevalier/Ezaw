@@ -11,9 +11,6 @@ import { TranslateService } from 'ng2-translate';
 // rxjs
 import { Subscription } from 'rxjs';
 
-// our actions
-import { ConfigActions } from '../../../../shared-module/reducers/config.actions';
-
 // our interfaces
 import { IConfigRecord, IConfig } from '../../../../shared-module/interfaces/config.interface';
 import { IStore } from '../../../../shared-module/interfaces/store.interface';

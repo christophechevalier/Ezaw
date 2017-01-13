@@ -6,7 +6,6 @@ import { ISidenav, ISidenavRecord } from '../interfaces/sidenav.interface';
 
 export function sidenavFactory(): ISidenav {
   return {
-    isSidenavLeftVisible: true,
     isSidenavRightVisible: true,
     sidenavMode: 'side'
   };

@@ -2,11 +2,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-// auth-module components
-import { AuthComponent } from './auth-module/auth-module.component';
-import { LoginComponent } from './auth-module/login/login.component';
-import { RegisterComponent } from './auth-module/register/register.component';
-
 // nav-module components
 import { NavComponent } from './nav-module/nav-module.component';
 import { NavigationComponent } from './nav-module/navigation/navigation.component';

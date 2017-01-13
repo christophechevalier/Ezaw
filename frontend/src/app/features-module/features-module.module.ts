@@ -8,7 +8,6 @@ import { FeatureComponent } from './features-module.component';
 import { AuthModule } from './auth-module/auth-module.module';
 import { NavModule } from './nav-module/nav-module.module';
 import { SharedModule } from '../shared-module/shared-module.module';
-import { ItineraryModule } from './nav-module/itinerary-module/itinerary-module.module';
 import { MarkerModule } from './nav-module/marker-module/marker-module.module';
 
 // our routes
@@ -20,7 +19,6 @@ const FEATURES_MODULES = [
   FeaturesRoutingModule,
   AuthModule,
   NavModule,
-  ItineraryModule,
   MarkerModule
 ];
 

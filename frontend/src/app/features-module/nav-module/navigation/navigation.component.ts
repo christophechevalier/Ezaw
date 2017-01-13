@@ -5,36 +5,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 // nrgx
 import { Store } from '@ngrx/store';
 
-// immutable
-import { List } from 'immutable';
-
 // rxjs
 import { Subscription } from 'rxjs';
 
 // our interfaces
 import { IStore } from './../../../shared-module/interfaces/store.interface';
-import {
-  IMarker,
-  IMarkers,
-  INavigationList,
-  ETypeMarkers,
-  EControls,
-  EWarnings,
-  EControlPolices,
-  EControlAccidents,
-  EControlTrafficJams,
-  EControlWarnings,
-  EControlFavorites,
-  EOnTheRoadCauses,
-  ESideRoadCauses,
-  EWeatherCauses
-} from './../../../shared-module/interfaces/navigation.interface';
+import { IMarker, INavigationList } from './../../../shared-module/interfaces/navigation.interface';
 
 // Google Map
 import { MouseEvent } from 'angular2-google-maps/core';
-
-// our helpers
-import { generateUuidV4 } from '../../../shared-module/helpers/helper';
 
 // service
 import { MarkerService } from './../../../shared-module/services/marker.service';
@@ -81,138 +60,138 @@ export class NavigationComponent implements OnInit, OnDestroy {
   public centerLng: number = 1.50;
   public lightAndDark = [
     {
-      "elementType": "geometry",
-      "stylers": [
+      'elementType': 'geometry',
+      'stylers': [
         {
-          "hue": "#ff4400"
+          'hue': '#ff4400'
         },
         {
-          "saturation": -68
+          'saturation': -68
         },
         {
-          "lightness": -4
+          'lightness': -4
         },
         {
-          "gamma": 0.72
+          'gamma': 0.72
         }
       ]
     },
     {
-      "featureType": "road",
-      "elementType": "labels.icon"
+      'featureType': 'road',
+      'elementType': 'labels.icon'
     },
     {
-      "featureType": "landscape.man_made",
-      "elementType": "geometry",
-      "stylers": [
+      'featureType': 'landscape.man_made',
+      'elementType': 'geometry',
+      'stylers': [
         {
-          "hue": "#0077ff"
+          'hue': '#0077ff'
         },
         {
-          "gamma": 3.1
+          'gamma': 3.1
         }
       ]
     },
     {
-      "featureType": "water",
-      "stylers": [
+      'featureType': 'water',
+      'stylers': [
         {
-          "hue": "#00ccff"
+          'hue': '#00ccff'
         },
         {
-          "gamma": 0.44
+          'gamma': 0.44
         },
         {
-          "saturation": -33
+          'saturation': -33
         }
       ]
     },
     {
-      "featureType": "poi.park",
-      "stylers": [
+      'featureType': 'poi.park',
+      'stylers': [
         {
-          "hue": "#44ff00"
+          'hue': '#44ff00'
         },
         {
-          "saturation": -23
+          'saturation': -23
         }
       ]
     },
     {
-      "featureType": "water",
-      "elementType": "labels.text.fill",
-      "stylers": [
+      'featureType': 'water',
+      'elementType': 'labels.text.fill',
+      'stylers': [
         {
-          "hue": "#007fff"
+          'hue': '#007fff'
         },
         {
-          "gamma": 0.77
+          'gamma': 0.77
         },
         {
-          "saturation": 65
+          'saturation': 65
         },
         {
-          "lightness": 99
+          'lightness': 99
         }
       ]
     },
     {
-      "featureType": "water",
-      "elementType": "labels.text.stroke",
-      "stylers": [
+      'featureType': 'water',
+      'elementType': 'labels.text.stroke',
+      'stylers': [
         {
-          "gamma": 0.11
+          'gamma': 0.11
         },
         {
-          "weight": 5.6
+          'weight': 5.6
         },
         {
-          "saturation": 99
+          'saturation': 99
         },
         {
-          "hue": "#0091ff"
+          'hue': '#0091ff'
         },
         {
-          "lightness": -86
+          'lightness': -86
         }
       ]
     },
     {
-      "featureType": "transit.line",
-      "elementType": "geometry",
-      "stylers": [
+      'featureType': 'transit.line',
+      'elementType': 'geometry',
+      'stylers': [
         {
-          "lightness": -48
+          'lightness': -48
         },
         {
-          "hue": "#ff5e00"
+          'hue': '#ff5e00'
         },
         {
-          "gamma": 1.2
+          'gamma': 1.2
         },
         {
-          "saturation": -23
+          'saturation': -23
         }
-      ]
+    ]
     },
     {
-      "featureType": "transit",
-      "elementType": "labels.text.stroke",
-      "stylers": [
+      'featureType': 'transit',
+      'elementType': 'labels.text.stroke',
+      'stylers': [
         {
-          "saturation": -64
+          'saturation': -64
         },
         {
-          "hue": "#ff9100"
+          'hue': '#ff9100'
         },
         {
-          "lightness": 16
+          'lightness': 16
         },
         {
-          "gamma": 0.47
+          'gamma': 0.47
         },
         {
-          "weight": 2.7
+          'weight': 2.7
         }
       ]
     }

@@ -1,4 +1,4 @@
-<div class="custom-map" [class.nav-theme]="config?.isDarkTheme">
+<div class="custom-map">
   <sebm-google-map
     class="sebm-google-map-container"
     *ngIf="showMap"
@@ -16,7 +16,6 @@
       [latitude]="m.lat"
       [longitude]="m.lng"
       [title]="m.title"
-      [label]="m.label"
       [id]="m.id"
       [markerDraggable]="m.draggable"
       (dragEnd)="markerDragEnd($event)"
@@ -24,35 +23,14 @@
     >
       <sebm-google-map-info-window [disableAutoPan]="true">
         <div layout-padding>
-          <strong><p align="center">{{ m.title }}</p></strong>
-          <br>
-          <strong>id :</strong> {{ m.id }}
-          <br>
-          <strong>Label :</strong> {{ m.label }}
-          <br>
-          <strong>Latitude :</strong> {{ m.lat }}
-          <br>
-          <strong>Longitude :</strong> {{ m.lng }}
-          <br>
-          <strong>Draggable :</strong> {{ m.draggable }}
-        </div>
-        <div align="center">
-          <button
-          md-icon-button
-          md-tooltip="{{ 'DISLIKE' | translate }}"
-          tooltip-position="below"
-          >
+          <strong><p align="center">{{ m.title }}</p></strong><br>
+          <button md-raised-button color="accent" md-tooltip="{{ 'DISLIKE' | translate }}" tooltip-position="below">
             <img class="icon-window-marker" src="assets/img/markers/dislike.png">
           </button>
-          <button
-          md-icon-button
-          md-tooltip="{{ 'LIKE' | translate }}"
-          tooltip-position="below"
-          >
+          <button md-raised-button color="accent" md-tooltip="{{ 'LIKE' | translate }}" tooltip-position="below">
             <img class="icon-window-marker" src="assets/img/markers/like.png">
           </button>
         </div>
-
       </sebm-google-map-info-window>
     </sebm-google-map-marker>
 

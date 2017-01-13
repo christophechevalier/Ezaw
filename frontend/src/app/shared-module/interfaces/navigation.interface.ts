@@ -1,5 +1,3 @@
-// typed-record
-import { TypedRecord } from 'typed-immutable-record';
 // immutable
 import { List } from 'immutable';
 
@@ -38,11 +36,9 @@ export interface IMarker {
 }
 
 export interface Sendlocation {
-
-    lat: number;
-    lng: number;
-    type? : ETypeMarkers;
-
+  lat: number;
+  lng: number;
+  type?: ETypeMarkers;
 }
 
 export interface IMarkers {

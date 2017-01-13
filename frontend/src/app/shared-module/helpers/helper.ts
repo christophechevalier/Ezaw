@@ -4,24 +4,6 @@ import { fromJS } from 'immutable';
 // typed record
 import { TypedRecord } from 'typed-immutable-record';
 
-// markers sidenav
-import {
-  IMarker,
-  IMarkers,
-  INavigationList,
-  ETypeMarkers,
-  EControls,
-  EWarnings,
-  EControlPolices,
-  EControlAccidents,
-  EControlTrafficJams,
-  EControlWarnings,
-  EControlFavorites,
-  EOnTheRoadCauses,
-  ESideRoadCauses,
-  EWeatherCauses
-} from './../interfaces/navigation.interface';
-
 let matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
 
 export function escapeStringRegexp(str) {
@@ -38,7 +20,7 @@ export function generateUuidV4(a = null) {
   return a ? (a ^ Math.random() * 16 >> a / 4)
     .toString(16) : (<any>[1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, generateUuidV4);
   /* tslint:enable */
-}
+};
 
 // replace IDs in the json received
 // by generated UUID
@@ -52,7 +34,7 @@ export function replaceIds(obj) {
       replaceIds(obj[i]);
     }
   }
-}
+};
 
 // https://github.com/rangle/typed-immutable-record/issues/23
 // redefine the makeTypedFactory to use fromJS so we can have
@@ -71,12 +53,12 @@ export const generateMarker = (mkLat: number, mkLng: number, idbdd: number) => {
     lng: mkLng,
     duration: null,
     draggable: false,
-  }
-}
+  };
+};
 
 // getCurrentPosition with refresh position in real time
 export const getCurrentLocation = () => {
-  return new Promise<{lat: number, lng: number}>((resolve) => {
+  return new Promise<{ lat: number, lng: number }>((resolve) => {
     let pos = { lat: null, lng: null };
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
@@ -86,4 +68,4 @@ export const getCurrentLocation = () => {
       });
     }
   });
-}
+};

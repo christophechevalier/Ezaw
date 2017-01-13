@@ -1,10 +1,5 @@
 // interfaces
-import {
-  IMarker,
-  IMarkers,
-  INavigationList,
-  ETypeMarkers,
-} from './../../../../shared-module/interfaces/navigation.interface'
+import { ETypeMarkers} from './../../../../shared-module/interfaces/navigation.interface';
 
 export class Marker {
 

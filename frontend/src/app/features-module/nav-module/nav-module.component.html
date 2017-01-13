@@ -1,15 +1,7 @@
 <div layout="column" class="page-nav-module" [class.nav-theme]="config?.isDarkTheme">
 
-  <md-sidenav-layout fullscreen (backdrop-clicked)="closeSidenavLeft()">
-    <md-sidenav #start [mode]="sidenav.sidenavMode" (close)="closeSidenavLeftIfMobile()" align="start" class="sidenav-itinerary">
-      <app-itinerary-module></app-itinerary-module>
-
-      <md-card-actions layout="row" layout-align="end center" layout-margin layout-padding>
-
-      </md-card-actions>
-    </md-sidenav>
-
-    <md-sidenav #end mode="side" (close)="closeSidenavRight()" align="end" class="sidenav-markers">
+  <md-sidenav-layout fullscreen>
+    <md-sidenav #end [mode]="sidenav.sidenavMode" [opened]="sidenav?.isSidenavRightVisible" align="end" class="sidenav-markers">
       <app-marker-module></app-marker-module>
 
       <md-card-actions layout="row" layout-align="end center" layout-margin layout-padding>
@@ -21,8 +13,6 @@
   </md-sidenav-layout>
 
   <md-toolbar color="primary" class="toolbar-bottom">
-
-    <app-toggle-sidenav></app-toggle-sidenav>
 
     <span flex></span>
 

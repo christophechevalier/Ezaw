@@ -72,7 +72,6 @@ const metaReducers = !environment.production ? [storeFreeze, combineReducers] : 
 
 const store = compose(...metaReducers)({
     config: ConfigReducer,
-    sidenavLeft : createSidenavReducer('LEFT'),
     sidenavRight : createSidenavReducer('RIGHT'),
     user: UserReducer,
     navigation: NavigationReducer

@@ -4,10 +4,6 @@ import { Component, Input } from '@angular/core';
 // marker sidenav
 import { Marker } from '../marker/marker';
 
-// our interfaces
-import { IMarker } from './../../../../shared-module/interfaces/navigation.interface';
-import { IMarkers } from './../../../../shared-module/interfaces/navigation.interface';
-
 @Component({
   selector: 'app-marker-detail',
   templateUrl: './marker-detail.component.html',

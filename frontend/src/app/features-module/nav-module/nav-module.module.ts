@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 // our modules
 import { SharedModule } from '../../shared-module/shared-module.module';
 import { ProfileModule } from './profile-module/profile-module.module';
-import { ItineraryModule } from './itinerary-module/itinerary-module.module';
 import { MarkerModule } from './marker-module/marker-module.module';
 import { SettingsModule } from './settings-module/settings-module.module';
 
@@ -28,7 +27,6 @@ const NAV_MODULES = [
     apiKey: 'AIzaSyBrTxwdypG6uUnm3hxb_ZtGh8niBD0aHww'
   }),
   ProfileModule,
-  ItineraryModule,
   MarkerModule,
   SettingsModule
 ];

@@ -39,7 +39,6 @@ function createNavigationReducer(navigationR = navigationRecordFactory, action: 
       console.log(navigationR);
       return navigationR.push(action.payload);
 
-    // TODO: Add condition to get markers on the map
     case NavigationActions.GET_MARKERS_SUCCESS:
       return navigationR.push(action.payload);
 
@@ -50,7 +49,7 @@ function createNavigationReducer(navigationR = navigationRecordFactory, action: 
       return navigationR;
   }
 }
-// : ActionReducer<INavigationList>
+
 export const NavigationReducer = createNavigationReducer;
 
 

@@ -4,7 +4,6 @@ import { makeTypedFactory } from '../helpers/helper';
 // immutable
 import { List } from 'immutable';
 
-
 // our interfaces
 import {
   IMarker,

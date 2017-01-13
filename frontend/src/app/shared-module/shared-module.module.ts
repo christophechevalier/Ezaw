@@ -18,17 +18,15 @@ import { TranslateModule } from 'ng2-translate';
 // our services
 import { DialogsService } from './services/dialogs.service';
 import { MarkerService } from './services/marker.service';
-// import { NavigationService } from './services/navigation.service';
+import { NavigationService } from './services/navigation.service';
 
 // our components
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
-import { ToggleSidenavComponent } from './components/toggle-sidenav/toggle-sidenav.component';
 import { MarkersSidenavComponent } from './components/markers-sidenav/markers-sidenav.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const SHARED_COMPONENTS = [
   ConfirmDialogComponent,
-  ToggleSidenavComponent,
   MarkersSidenavComponent,
   NotFoundComponent
 ];
@@ -58,7 +56,7 @@ const SHARED_MODULES = [
   providers: [
     DialogsService,
     MarkerService,
-    // NavigationService
+    NavigationService
   ]
 })
 export class SharedModule { }
