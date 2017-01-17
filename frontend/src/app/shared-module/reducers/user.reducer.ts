@@ -10,15 +10,30 @@ import { userRecordFactory } from './user.state';
 // our actions
 import { UserActions } from './user.actions';
 
-function createUserReducer (userR: IUserRecord = userRecordFactory(), action: Action) {
+function createUserReducer(userR: IUserRecord = userRecordFactory(), action: Action) {
   switch (action.type) {
     case UserActions.USR_IS_CONNECTING:
       return userR
         .merge({
+          isRegistering: false,
+          isRegistered: false,
           isConnecting: true,
           isConnected: false,
           isDisconnecting: false,
-          connectionFailed: false
+          connectionFailed: false,
+          registerationFailed: false
+        });
+
+    case UserActions.USR_IS_REGISTERING:
+      return userR
+        .merge({
+          isRegistering: true,
+          isRegistered: false,
+          isDisconnecting: true,
+          isConnecting: false,
+          isConnected: false,
+          connectionFailed: false,
+          registerationFailed: false
         });
 
     case UserActions.USR_IS_CONNECTED:
@@ -26,19 +41,40 @@ function createUserReducer (userR: IUserRecord = userRecordFactory(), action: Ac
         .merge({
           name: action.payload.name,
           username: action.payload.username,
+          isRegistering: false,
+          isRegistered: false,
           isConnected: true,
           isConnecting: false,
           isDisconnecting: false,
-          connectionFailed: false
+          connectionFailed: false,
+          registerationFailed: false
+        });
+
+    case UserActions.USR_IS_REGISTERED:
+      return userR
+        .merge({
+          username: action.payload.username,
+          email: action.payload.email,
+          password: action.payload.password,
+          isRegistering: false,
+          isRegistered: true,
+          isConnected: false,
+          isConnecting: false,
+          isDisconnecting: false,
+          connectionFailed: false,
+          registerationFailed: false
         });
 
     case UserActions.USR_IS_DISCONNECTING:
       return userR
         .merge({
+          isRegistering: false,
+          isRegistered: false,
           isDisconnecting: true,
           isConnecting: false,
           isConnected: true,
-          connectionFailed: false
+          connectionFailed: false,
+          registerationFailed: false
         });
 
     case UserActions.USR_IS_DISCONNECTED:
@@ -47,19 +83,37 @@ function createUserReducer (userR: IUserRecord = userRecordFactory(), action: Ac
     case UserActions.USR_CONNECTION_FAILED:
       return userR
         .merge({
+          isRegistering: false,
+          isRegistered: false,
           connectionFailed: true,
           isDisconnecting: false,
           isConnecting: false,
-          isConnected: false
+          isConnected: false,
+          registerationFailed: false
+        });
+
+    case UserActions.USR_REGISTERATION_FAILED:
+      return userR
+        .merge({
+          isRegistering: false,
+          isRegistered: false,
+          connectionFailed: false,
+          isDisconnecting: false,
+          isConnecting: false,
+          isConnected: false,
+          registerationFailed: true
         });
 
     case UserActions.USR_DISCONNECTION_FAILED:
       return userR
         .merge({
+          isRegistering: false,
+          isRegistered: false,
           connectionFailed: false,
           isDisconnecting: false,
           isConnecting: false,
-          isConnected: true
+          isConnected: true,
+          registerationFailed: false
         });
 
     default:

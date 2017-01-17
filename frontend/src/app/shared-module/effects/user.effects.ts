@@ -46,7 +46,7 @@ export class UserEffects {
         if (this.routeService.urlBeforeRedirectToLogin) {
           if (environment.debug) {
             console.debug(
-              `Redirecting to the URL "${this.routeService.urlBeforeRedirectToLogin}" which was asked before being redirected to /login`
+              `Redirecting to the URL "${this.routeService.urlBeforeRedirectToLogin}" which was asked before being redirected to /auth/login`
             );
           }
 

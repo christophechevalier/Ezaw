@@ -9,12 +9,16 @@ export function userFactory(): IUser {
     // from server
     username: null,
     password: null,
+    email: null,
 
     // for UI
+    isRegistering: false,
+    isRegistered: false,
     isConnecting: false,
     isDisconnecting: false,
     isConnected: false,
-    connectionFailed: false
+    connectionFailed: false,
+    registerationFailed: false
   };
 }
 

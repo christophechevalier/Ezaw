@@ -170,3 +170,15 @@ md-slide-toggle {
   border-width:24px 24px 0;
   z-index:1
 }
+
+.error-form {
+  color: md-color($md-red, 500, 1);
+}
+
+.blue-form {
+  color: md-color($md-blue, 500, 1);
+}
+
+md-input-container {
+  width: 90%;
+}
