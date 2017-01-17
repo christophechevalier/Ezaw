@@ -12,8 +12,8 @@ import { ProfileComponent } from './nav-module/profile-module/profile/profile.co
 import { NotFoundComponent } from './../shared-module/components/not-found/not-found.component';
 
 // our guards
-import { AuthGuardService } from './../shared-module/services/auth-guard.service';
-import { AlreadyLoggedGuardService } from './../shared-module/services/already-logged-guard.service';
+// import { AuthGuardService } from './../shared-module/services/auth-guard.service';
+// import { AlreadyLoggedGuardService } from './../shared-module/services/already-logged-guard.service';
 
 const routes: Routes = [
   {
@@ -23,13 +23,13 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    canActivate: [AlreadyLoggedGuardService],
+    // canActivate: [AlreadyLoggedGuardService],
     loadChildren: 'app/features-module/auth-module/auth-module.module#AuthModule'
   },
   {
     path: 'nav',
     component: NavComponent,
-    canActivate: [AuthGuardService],
+    // canActivate: [AuthGuardService],
     children: [
       {
         path: '404',

@@ -12,7 +12,7 @@
 
     <sebm-google-map-marker
       *ngFor="let m of markers; let i = index"
-      (markerClick)="clickedMarker(m.label, i, m.lat, m.lng)"
+      (markerClick)="clickedMarker(m.label, m.id, m.lat, m.lng)"
       [latitude]="m.lat"
       [longitude]="m.lng"
       [title]="m.title"
@@ -24,10 +24,10 @@
       <sebm-google-map-info-window [disableAutoPan]="true">
         <div layout-padding>
           <strong><p align="center">{{ m.title }}</p></strong><br>
-          <button md-raised-button color="accent" md-tooltip="{{ 'DISLIKE' | translate }}" tooltip-position="below">
+          <button md-raised-button color="accent" md-tooltip="{{ 'DISLIKE' | translate }}" tooltip-position="below"(click)="dislikedMarker(m.id)">
             <img class="icon-window-marker" src="assets/img/markers/dislike.png">
           </button>
-          <button md-raised-button color="accent" md-tooltip="{{ 'LIKE' | translate }}" tooltip-position="below">
+          <button md-raised-button color="accent" md-tooltip="{{ 'LIKE' | translate }}" tooltip-position="below"(click)="likeMarker(m.id)">
             <img class="icon-window-marker" src="assets/img/markers/like.png">
           </button>
         </div>

@@ -1,6 +1,5 @@
 // angular modules
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 
 // rxjs
@@ -22,13 +21,12 @@ import { IMarker, ETypeMarkers } from './../interfaces/navigation.interface';
 // our actions
 import { NavigationActions } from './../reducers/navigation.actions';
 
-import { navigationRecordFactory } from '../reducers/navigation.state';
 
 // our helpers
 import { generateMarker, getCurrentLocation } from './../helpers/helper';
 
 // immutable
-import { List } from 'immutable';
+// import { List } from 'immutable';
 
 @Injectable()
 export class NavigationEffects {
@@ -50,19 +48,115 @@ export class NavigationEffects {
 
   // GET NEAR BY ALERT
   // tslint:disable-next-line:member-ordering
-  @Effect({ dispatch: true }) getNearByAlert$: Observable<Action> = this.actions$
+@Effect({ dispatch: true }) getNearByAlert$: Observable<Action> = this.actions$
     .ofType(NavigationActions.GET_MARKERS)
-    .switchMap(x => this.navigationService.getNearByMarkers(this.currentPosLat, this.currentPosLng)
-      .map((res: Response) => {
+    .switchMap(x => {
+      let serverListe = getCurrentLocation().then(pos => {
+        let response = this.navigationService.getNearByMarkers(pos.lat, pos.lng)
+          .then(res => {
+            let markertab: IMarker[] = [];
+            for (let a = 0; a < res.length; a++) {
+              switch (res[a]['type']) {
+                case '0': markertab.push(<IMarker>{
+                  id: res[a]['id'],
+                  lat: parseFloat(res[a]['lat']),
+                  lng: parseFloat(res[a]['lng']),
+                  icon: 'assets/img/markers/police.png',
+                  title: 'Police !!',
+                  duration: null,
+                  draggable: false,
+                  typeMarker: ETypeMarkers.Police,
+                  control: null,
+                  warning: null,
+                  isFetchingDetails: false
+                });
+                  break;
 
-        let listMarker = navigationRecordFactory;
-        if (!res.ok) {
-          throw new Error('Error');
-        }
-        let listMarkers: List<IMarker> = res.json();
-        return { type: NavigationActions.GET_MARKERS_SUCCESS, payload: listMarkers };
-      }
-      ));
+                case '1': markertab.push(<IMarker>{
+                  id: res[a]['id'],
+                  lat: parseFloat(res[a]['lat']),
+                  lng: parseFloat(res[a]['lng']),
+                  icon: 'assets/img/markers/accident.png',
+                  title: 'Accident !!',
+                  duration: null,
+                  draggable: false,
+                  typeMarker: ETypeMarkers.Accident,
+                  control: null,
+                  warning: null,
+                  isFetchingDetails: false
+                });
+                  break;
+
+                case '2': markertab.push(<IMarker>{
+                  id: res[a]['id'],
+                  lat: parseFloat(res[a]['lat']),
+                  lng: parseFloat(res[a]['lng']),
+                  icon: 'assets/img/markers/traffic_jam.png',
+                  title: 'traffic_jam !!',
+                  duration: null,
+                  draggable: false,
+                  typeMarker: ETypeMarkers.TrafficJam,
+                  control: null,
+                  warning: null,
+                  isFetchingDetails: false
+                });
+                  break;
+
+                case '3': markertab.push(<IMarker>{
+                  id: res[a]['id'],
+                  lat: parseFloat(res[a]['lat']),
+                  lng: parseFloat(res[a]['lng']),
+                  icon: 'assets/img/markers/danger.png',
+                  title: 'danger !!',
+                  duration: null,
+                  draggable: false,
+                  typeMarker: ETypeMarkers.Warning,
+                  control: null,
+                  warning: null,
+                  isFetchingDetails: false
+                });
+                  break;
+
+                case '4': markertab.push(<IMarker>{
+                  id: res[a]['id'],
+                  lat: parseFloat(res[a]['lat']),
+                  lng: parseFloat(res[a]['lng']),
+                  icon: 'assets/img/markers/gas_station.png',
+                  title: 'gas_station !!',
+                  duration: null,
+                  draggable: false,
+                  typeMarker: ETypeMarkers.GasStation,
+                  control: null,
+                  warning: null,
+                  isFetchingDetails: false
+                });
+                  break;
+
+                case '5': markertab.push(<IMarker>{
+                  id: res[a]['id'],
+                  lat: parseFloat(res[a]['lat']),
+                  lng: parseFloat(res[a]['lng']),
+                  icon: 'aassets/img/markers/tux.png',
+                  title: 'User !!',
+                  duration: null,
+                  draggable: false,
+                  typeMarker: ETypeMarkers.User,
+                  control: null,
+                  warning: null,
+                  isFetchingDetails: false
+                });
+                  break;
+              }
+              // markertab.push(<IMarker>{
+              //   lat : parseFloat(res[a]['lat']),
+              // });
+            }
+            return { type: NavigationActions.GET_MARKERS_SUCCESS, payload: markertab };
+          });
+        return response;
+      });
+      return Observable.fromPromise(serverListe);
+    });
 
   // FETCH TYPE MARKER DETAILS
   // tslint:disable-next-line:member-ordering
@@ -72,7 +166,6 @@ export class NavigationEffects {
       let fetchMarkerPromise = new Promise((resolve, reject) => {
         let locationPromise = getCurrentLocation().then(pos => {
           this.id = x.payload;
-
           this.markerService.addMarker(pos.lat, pos.lng, this.id).then(data => {
             if (data === 'ko') {
               let etmN = Object.assign(
@@ -191,5 +284,27 @@ export class NavigationEffects {
       });
 
       return Observable.fromPromise(fetchMarkerPromise);
+    });
+
+      @Effect({ dispatch: true }) likeMarker$: Observable<Action> = this.actions$
+    .ofType(NavigationActions.LIKE_MARKER)
+    .switchMap(x => {
+      let finalResponseLike = new Promise((resolve, reject) => {
+        let response = this.markerService.likeMarker(x.payload).then(res => {
+          resolve({ type: NavigationActions.LIKE_MARKER_SUCCESS, payload: res });
+        });
+      });
+      return Observable.fromPromise(finalResponseLike);
+    });
+
+    @Effect({ dispatch: true }) dislikeMarker$: Observable<Action> = this.actions$
+    .ofType(NavigationActions.DISLIKE_MARKER)
+    .switchMap(x => {
+      let finalResponseDislike = new Promise((resolve, reject) => {
+        let response = this.markerService.dislikeMarker(x.payload).then(res => {
+          resolve({ type: NavigationActions.DISLIKE_MARKER_SUCCESS, payload: res });
+        });
+      });
+      return Observable.fromPromise(finalResponseDislike);
     });
 }

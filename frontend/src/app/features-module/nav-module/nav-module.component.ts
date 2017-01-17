@@ -41,7 +41,6 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     this.configSub =
       store$.select('config')
-        // .do(x => console.log(x))
         .map((configR: IConfigRecord) => configR.toJS())
         .subscribe((config: IConfig) => {
           this.config = config;

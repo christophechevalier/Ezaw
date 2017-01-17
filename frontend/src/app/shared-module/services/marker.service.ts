@@ -1,6 +1,6 @@
 // angular modules
 import { Injectable } from '@angular/core';
-import { Response, Headers, RequestOptions } from '@angular/http';
+import { Response } from '@angular/http';
 
 // our interfaces
 import { ETypeMarkers } from './../../shared-module/interfaces/navigation.interface';
@@ -20,7 +20,6 @@ export class MarkerService {
 
   // Get the icons markers of sidenav markers
   getMarkers() {
-    console.log('Getting markers for sidenav right');
     return this.http.get('../../../mocks-json/markers.json')
       .map((response: Response) => <Array<{ title: string, icon: string, markerType: string }>>response.json().dataType)
       .map((r) => {
@@ -37,11 +36,28 @@ export class MarkerService {
     this.locationNeeded.lat = lat;
     this.locationNeeded.lng = lng;
     this.locationNeeded.type = type;
-    // let headers = new Headers({ 'Content-Type': 'application/json' });
-    // let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify(this.locationNeeded);
-    // console.log('The body :' + body);
     return this.http.post('http://localhost/scriptsPhp/addAlert.php', body)
+      .map(res => res.json())
+      .map(res => {
+        return res;
+      }).toPromise();
+  }
+
+  likeMarker(id: string) {
+    let sendingId = { id: id };
+    let body = JSON.stringify(sendingId);
+    return this.http.post('http://localhost/scriptsPhp/LikedMarkers.php', body)
+      .map(res => res.json())
+      .map(res => {
+        return res;
+      }).toPromise();
+  }
+
+  dislikeMarker(id: string) {
+    let sendingId = { id: id };
+    let body = JSON.stringify(sendingId);
+    return this.http.post('http://localhost/scriptsPhp/dislikedMarkers.php', body)
       .map(res => res.json())
       .map(res => {
         return res;

@@ -12,6 +12,9 @@ import { Subscription } from 'rxjs';
 import { IStore } from './../../../shared-module/interfaces/store.interface';
 import { IMarker, INavigationList } from './../../../shared-module/interfaces/navigation.interface';
 
+// our actions
+import { NavigationActions } from '../../../shared-module/reducers/navigation.actions';
+
 // Google Map
 import { MouseEvent } from 'angular2-google-maps/core';
 
@@ -205,7 +208,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
   ) {
     this.markerSub =
       store$.select('navigation')
-        // .do(z => console.log(z.toJS()))
         .map((navigationR: INavigationList) => navigationR.toJS())
         .subscribe(navigation => {
           this.markers = navigation;
@@ -216,6 +218,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.markerSub =
       this.route.params.subscribe(params => {
       });
+
+      this.getNearByMarkers();
   }
 
   ngOnDestroy() {
@@ -226,7 +230,18 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   }
 
-  clickedMarker(m: IMarker) {
+   clickedMarker(m: IMarker) {
+  }
 
+  dislikedMarker(mID) {
+   this.store$.dispatch({ type: NavigationActions.DISLIKE_MARKER, payload : mID });
+  }
+
+  likeMarker(mId) {
+    this.store$.dispatch({ type: NavigationActions.LIKE_MARKER, payload : mId });
+  }
+
+  getNearByMarkers() {
+    this.store$.dispatch({ type: NavigationActions.GET_MARKERS });
   }
 }

@@ -44,8 +44,8 @@ import { DialogsService } from './shared-module/services/dialogs.service';
 import { NavigationService } from './shared-module/services/navigation.service';
 
 // our guards
-import { AlreadyLoggedGuardService } from './shared-module/services/already-logged-guard.service';
-import { AuthGuardService } from './shared-module/services/auth-guard.service';
+// import { AlreadyLoggedGuardService } from './shared-module/services/already-logged-guard.service';
+// import { AuthGuardService } from './shared-module/services/auth-guard.service';
 
 // our mocks
 import { UserMockService } from './shared-module/mocks/user-mock.service';
@@ -109,8 +109,8 @@ const store = compose(...metaReducers)({
   ],
   providers: [
     // guards
-    AuthGuardService,
-    AlreadyLoggedGuardService,
+    // AuthGuardService,
+    // AlreadyLoggedGuardService,
 
     // http interceptors
     HttpResponseInterceptor,

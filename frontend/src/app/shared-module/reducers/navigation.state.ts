@@ -1,5 +1,5 @@
 // our helpers
-import { makeTypedFactory } from '../helpers/helper';
+// import { makeTypedFactory } from '../helpers/helper';
 
 // immutable
 import { List } from 'immutable';
@@ -7,17 +7,17 @@ import { List } from 'immutable';
 // our interfaces
 import {
   IMarker,
-  IMarkers,
-  INavigationList,
-  ETypeMarkers,
-  EControlPolices,
-  EControlAccidents,
-  EControlTrafficJams,
-  EControlWarnings,
-  EControlFavorites,
-  EOnTheRoadCauses,
-  ESideRoadCauses,
-  EWeatherCauses
+  // IMarkers,
+  // INavigationList,
+  // ETypeMarkers,
+  // EControlPolices,
+  // EControlAccidents,
+  // EControlTrafficJams,
+  // EControlWarnings,
+  // EControlFavorites,
+  // EOnTheRoadCauses,
+  // ESideRoadCauses,
+  // EWeatherCauses
 } from '../interfaces/navigation.interface';
 
 export function navigationFactory() {

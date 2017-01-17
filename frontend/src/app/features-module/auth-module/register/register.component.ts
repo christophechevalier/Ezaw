@@ -1,7 +1,7 @@
 // angular module
-import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // rxjs
 import { Subscription } from 'rxjs';
@@ -55,7 +55,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.userSub =
       store$.select('user')
         .map((userR: IUserRecord) => userR.toJS())
-        .subscribe((user: IUser) => this.user = user);
+        .subscribe(user => {
+          this.user = user;
+          if (this.user.isRegistered) {
+            this.route.params.subscribe(params => {
+              this.router.navigate(['/auth/login']);
+            });
+          }
+        });
   }
 
   ngOnInit() {
@@ -106,7 +113,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.store$.dispatch({ type: UserActions.USR_IS_REGISTERING, payload: user });
     } else {
       this.store$.dispatch({ type: UserActions.USR_REGISTERATION_FAILED });
-      console.log('USR_REGISTERATION_FAILED');
     }
   }
 

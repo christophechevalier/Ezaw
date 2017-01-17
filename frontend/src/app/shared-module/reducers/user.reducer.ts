@@ -37,10 +37,12 @@ function createUserReducer(userR: IUserRecord = userRecordFactory(), action: Act
         });
 
     case UserActions.USR_IS_CONNECTED:
+      let user = action.payload;
       return userR
         .merge({
-          name: action.payload.name,
-          username: action.payload.username,
+          username: user[0]['username'],
+          email: user[0]['mail'],
+          password: user[0]['password'],
           isRegistering: false,
           isRegistered: false,
           isConnected: true,
@@ -53,9 +55,6 @@ function createUserReducer(userR: IUserRecord = userRecordFactory(), action: Act
     case UserActions.USR_IS_REGISTERED:
       return userR
         .merge({
-          username: action.payload.username,
-          email: action.payload.email,
-          password: action.payload.password,
           isRegistering: false,
           isRegistered: true,
           isConnected: false,
