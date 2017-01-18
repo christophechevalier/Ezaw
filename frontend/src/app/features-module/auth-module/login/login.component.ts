@@ -1,7 +1,7 @@
 // angular module
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy,Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // rxjs
 import { Subscription } from 'rxjs';
@@ -15,8 +15,6 @@ import { UserActions } from './../../../shared-module/reducers/user.actions';
 // our interfaces
 import { IStore } from '../../../shared-module/interfaces/store.interface';
 import { IUser, IUserRecord } from '../../../shared-module/interfaces/user.interface';
-
-
 
 @Component({
   selector: 'app-login',
@@ -108,6 +106,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     } else {
       this.store$.dispatch({ type: UserActions.USR_CONNECTION_FAILED });
     }
+  }
+
+  reset() {
+    this.formAuth.reset();
   }
 
   onValueChanged(data?: any) {

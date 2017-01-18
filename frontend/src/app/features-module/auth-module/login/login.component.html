@@ -1,6 +1,6 @@
 <div class="page-login">
   <md-card-content layout="column" layout-margin layout-padding>
-    <form [formGroup]="formAuth" (ngSubmit)="connectUser(formAuth.value)">
+    <form [formGroup]="formAuth" (ngSubmit)="connectUser(formAuth.value) && formAuth.reset()">
       <div align="center">
         <br>
         <md-card-subtitle>
