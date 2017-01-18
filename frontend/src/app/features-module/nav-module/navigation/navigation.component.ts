@@ -1,5 +1,5 @@
 // angular module
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy,  ApplicationRef, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 // nrgx
@@ -20,6 +20,9 @@ import { MouseEvent } from 'angular2-google-maps/core';
 
 // service
 import { MarkerService } from './../../../shared-module/services/marker.service';
+
+// our helpers
+import { getCurrentLocation } from '../../../shared-module/helpers/helper';
 
 @Component({
   selector: 'app-navigation',
@@ -204,7 +207,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
     private store$: Store<IStore>,
     private router: Router,
     private route: ActivatedRoute,
-    private markerService: MarkerService
+    private markerService: MarkerService,
+    private ref: ChangeDetectorRef
   ) {
     this.markerSub =
       store$.select('navigation')
@@ -219,9 +223,12 @@ export class NavigationComponent implements OnInit, OnDestroy {
       this.route.params.subscribe(params => {
       });
 
-     let timer = Observable.timer(2000,4000);
+    this.store$.dispatch({ type: NavigationActions.GET_MARKERS });
+
+     let timer = Observable.timer(2000,6000);
      timer.subscribe(t=> {
      this.getNearByMarkers(t);
+     this.ref.detectChanges();
      });
     //this.getNearByMarkers();
   }
@@ -247,5 +254,12 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   getNearByMarkers(t) {
     this.store$.dispatch({ type: NavigationActions.GET_MARKERS });
+  }
+
+  GetUserLocation(){
+     getCurrentLocation().then(pos => {
+        this.centerLat = pos.lat,
+        this.centerLng = pos.lng
+      })
   }
 }

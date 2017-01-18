@@ -33,7 +33,11 @@ export class UserEffects {
     .switchMap(x => {
       let finalUser = new Promise((resolve, reject) => {
         let userRespond = this.userService.connectUser(x.payload).then(user => {
-          resolve({ type: UserActions.USR_IS_CONNECTED, payload: user });
+          if (user === "ko"){
+            resolve({ type: UserActions.USR_CONNECTION_FAILED, payload: user });
+          }else {
+             resolve({ type: UserActions.USR_IS_CONNECTED, payload: user });
+          } 
         });
       });
       return Observable.fromPromise(finalUser);
@@ -60,7 +64,6 @@ export class UserEffects {
       this.userService.disconnectUser();
       this.router.navigate(['/auth/login']);
       return { type: UserActions.USR_IS_DISCONNECTED };
-
     });
 }
 

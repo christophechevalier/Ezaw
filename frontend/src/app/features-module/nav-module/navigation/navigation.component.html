@@ -21,6 +21,7 @@
       (dragEnd)="markerDragEnd($event)"
       [iconUrl]="m.icon"
     >
+    
       <sebm-google-map-info-window [disableAutoPan]="true">
         <div layout-padding>
           <strong><p align="center">{{ m.title }}</p></strong><br>
@@ -33,6 +34,5 @@
         </div>
       </sebm-google-map-info-window>
     </sebm-google-map-marker>
-
   </sebm-google-map>
 </div>
