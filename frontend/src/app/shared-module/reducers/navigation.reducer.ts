@@ -33,31 +33,6 @@ function createNavigationReducer(navigationR = navigationRecordFactory, action: 
 
       if (navigationR.isEmpty) {
         for (let c = 0; c < listServer.length; c++) {
-          let typeneeded: ETypeMarkers;
-          if (listServer[c]['ETypeMarkers'] === '0') {
-            typeneeded = ETypeMarkers.Police;
-          } else {
-            if (listServer[c]['ETypeMarkers'] === '1') {
-              typeneeded = ETypeMarkers.Accident;
-            } else {
-              if (listServer[c]['ETypeMarkers'] === '2') {
-                typeneeded = ETypeMarkers.TrafficJam;
-              } else {
-                if (listServer[c]['ETypeMarkers'] === '3') {
-                  typeneeded = ETypeMarkers.Warning;
-                } else {
-                  if (listServer[c]['ETypeMarkers'] === '4') {
-                    typeneeded = ETypeMarkers.GasStation;
-                  } else {
-                    if (listServer[c]['ETypeMarkers'] === '5') {
-                      typeneeded = ETypeMarkers.User;
-                    }
-                  }
-                }
-              }
-            }
-          }
-
           listclient.push(<IMarker>{
             id: listServer[c]['id'],
             lat: listServer[c]['lat'],
@@ -66,7 +41,7 @@ function createNavigationReducer(navigationR = navigationRecordFactory, action: 
             title: listServer[c]['title'],
             duration: listServer[c]['duration'],
             draggable: listServer[c]['draggable'],
-            typeMarker: typeneeded,
+            typeMarker: listServer[c]['ETypeMarkers'],
             control: listServer[c]['control'],
             warning: listServer[c]['warning'],
             isFetchingDetails: listServer[c]['isFetchingDetails']
