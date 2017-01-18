@@ -1,4 +1,5 @@
-import { makeTypedFactory } from 'typed-immutable-record';
+// our helpers
+import { makeTypedFactory } from '../helpers/helper';
 
 // our interfaces
 import { IUser, IUserRecord } from '../interfaces/user.interface';
@@ -8,12 +9,17 @@ export function userFactory(): IUser {
     // from server
     username: null,
     password: null,
+    cfpassword: null,
+    email: null,
 
     // for UI
+    isRegistering: false,
+    isRegistered: false,
     isConnecting: false,
     isDisconnecting: false,
     isConnected: false,
-    connectionFailed: false
+    connectionFailed: false,
+    registerationFailed: false
   };
 }
 

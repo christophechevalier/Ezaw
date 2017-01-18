@@ -1,15 +1,7 @@
 <div layout="column" class="page-nav-module" [class.nav-theme]="config?.isDarkTheme">
 
   <md-sidenav-layout fullscreen>
-    <md-sidenav #start [mode]="config.sidenavMode" (close)="closeSidenavLeftIfMobile()" align="start" class="sidenav-itinerary">
-      <app-itinerary-module></app-itinerary-module>
-
-      <md-card-actions layout="row" layout-align="end center" layout-margin layout-padding>
-
-      </md-card-actions>
-    </md-sidenav>
-
-    <md-sidenav #end mode="side" (close)="closeSidenavRightIfMobile()" align="end" class="sidenav-markers">
+    <md-sidenav #end [mode]="sidenav.sidenavMode" [opened]="sidenav?.isSidenavRightVisible" align="end" class="sidenav-markers">
       <app-marker-module></app-marker-module>
 
       <md-card-actions layout="row" layout-align="end center" layout-margin layout-padding>
@@ -22,18 +14,16 @@
 
   <md-toolbar color="primary" class="toolbar-bottom">
 
-    <app-toggle-sidenav></app-toggle-sidenav>
-
     <span flex></span>
 
     <span>{{ 'WELCOME_TO' | translate }}</span>
     <img class="logo-nav-ezaw" src="/assets/img/ezaw-logo.png">
 
-    <span flex></span>
-
     <button class="menu" md-icon-button [md-menu-trigger-for]="menu">
       <md-icon class="color-accent">more_vert</md-icon>
     </button>
+
+    <span flex></span>
 
     <app-markers-sidenav></app-markers-sidenav>
   </md-toolbar>

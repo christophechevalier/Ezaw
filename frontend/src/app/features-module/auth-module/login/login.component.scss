@@ -1,49 +1,11 @@
-/* Overlay Progress */
-
-#overlay {
-  position: absolute;
-  top: 64px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color:rgba(0, 0, 0, 0.7);
-  overflow: hidden;
-  color: white;
-  font-size: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: wait;
-}
-
-.overlay-full-screen {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
 /deep/ .md-tab-label {
   min-width: 1px !important;
   width: 100% !important;
 }
 
-/* Mobile */
-
-@media screen and (max-width: 420px) {
-  #overlay {
-    position: absolute;
-    top: 64px;
-    left: 0;
-    width: 100%;
-    min-height: 100vh;
-    background-color:rgba(0, 0, 0, 0.7);
-    overflow: hidden;
-    color: white;
-    font-size: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: wait;
-  }
+md-progress-circle {
+  width: 10px;
+  height: 10px;
+  line-height: 10px;
+  display: inline-block;
 }
-

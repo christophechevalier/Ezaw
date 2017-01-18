@@ -9,8 +9,8 @@ $passwd = trim(strip_tags($request -> password));
 //$mail = trim(strip_tags($request -> emailAdress));
 
 
-if($login == "") die("Erreur : login non renseigné"); 
-if($passwd == "") die("Erreur : password non renseigné"); 
+if($login == "") die("Erreur : login non renseignÃ©"); 
+if($passwd == "") die("Erreur : password non renseignÃ©"); 
 
 try
 {
@@ -22,7 +22,7 @@ try
 	
 	if(count($results) == 1){
 		
-		echo json_encode("ok");
+		echo json_encode($results);
 		
 	}else{
 		

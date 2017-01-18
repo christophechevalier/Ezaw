@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Http } from '@angular/http';
 
+// http interceptor
+import { provideInterceptorService } from 'ng2-interceptors';
+
 // environments for our app
 import { environment } from '../environments/environment';
 
@@ -21,6 +24,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 // our effects
 import { UserEffects } from './shared-module/effects/user.effects';
+import { NavigationEffects } from './shared-module/effects/navigation.effects';
 
 // store freeze
 import { storeFreeze } from 'ngrx-store-freeze';
@@ -28,10 +32,20 @@ import { storeFreeze } from 'ngrx-store-freeze';
 // our reducers
 import { UserReducer } from './shared-module/reducers/user.reducer';
 import { ConfigReducer } from './shared-module/reducers/config.reducer';
+import { NavigationReducer } from './shared-module/reducers/navigation.reducer';
+import { createSidenavReducer } from './shared-module/reducers/sidenav.reducer';
 
 // our services
 import { UserService } from './shared-module/services/user.service';
+import { HttpResponseInterceptor } from './shared-module/services/http-response-interceptor.service';
 import { RouteService } from './shared-module/services/route.service';
+import { MarkerService } from './shared-module/services/marker.service';
+import { DialogsService } from './shared-module/services/dialogs.service';
+import { NavigationService } from './shared-module/services/navigation.service';
+
+// our guards
+// import { AlreadyLoggedGuardService } from './shared-module/services/already-logged-guard.service';
+// import { AuthGuardService } from './shared-module/services/auth-guard.service';
 
 // our mocks
 import { UserMockService } from './shared-module/mocks/user-mock.service';
@@ -57,7 +71,9 @@ const metaReducers = !environment.production ? [storeFreeze, combineReducers] : 
 
 const store = compose(...metaReducers)({
     config: ConfigReducer,
-    user: UserReducer
+    sidenavRight : createSidenavReducer('RIGHT'),
+    user: UserReducer,
+    navigation: NavigationReducer
 });
 
 @NgModule({
@@ -78,6 +94,7 @@ const store = compose(...metaReducers)({
 
     // effects
     EffectsModule.runAfterBootstrap(UserEffects),
+    EffectsModule.runAfterBootstrap(NavigationEffects),
 
     // translate
     TranslateModule.forRoot({
@@ -90,8 +107,21 @@ const store = compose(...metaReducers)({
     MaterialModule.forRoot(),
   ],
   providers: [
+    // guards
+    // AuthGuardService,
+    // AlreadyLoggedGuardService,
+
+    // http interceptors
+    HttpResponseInterceptor,
+    provideInterceptorService([
+      HttpResponseInterceptor
+    ]),
+
     // services
     RouteService,
+    DialogsService,
+    MarkerService,
+    NavigationService,
     {
       provide: UserService,
       useClass: (environment.mock ? UserMockService : UserService)

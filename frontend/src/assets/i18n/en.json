@@ -21,6 +21,10 @@
   "ACCIDENT": "Accident",
   "POLICE": "Police",
   "WARNING": "Warning",
+  "GAS_STATION": "GasStation",
   "ALERTS": "Alerts",
-  "GAS_STATION": "Gas Station"
+  "LIKE": "Like",
+  "DISLIKE": "Dislike",
+  "COMMENTARY": "Commentary",
+  "USER_POSITION": "User Position"
 }

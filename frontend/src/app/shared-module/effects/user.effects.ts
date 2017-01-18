@@ -1,7 +1,6 @@
 // angular modules
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Response } from '@angular/http';
 
 // rxjs
 import { Observable } from 'rxjs/Observable';
@@ -11,10 +10,7 @@ import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
 
 // our environment
-import { environment } from '../../../environments/environment';
-
-// our interfaces
-import { IUser } from '../interfaces/user.interface';
+// import { environment } from '../../../environments/environment';
 
 // our services
 import { UserService } from '../services/user.service';
@@ -32,66 +28,44 @@ export class UserEffects {
     private routeService: RouteService
   ) { }
 
-  // tslint:disable-next-line:member-ordering
-  @Effect({dispatch: true}) usrConnect$: Observable<Action> = this.actions$
+  @Effect({ dispatch: true }) usrConnect$: Observable<Action> = this.actions$
     .ofType(UserActions.USR_IS_CONNECTING)
-    .switchMap((action: Action) => this.userService.connectUser(action.payload)
-      .map((res: any) => {
-        if (!res.ok) {
-          throw new Error('Error while connecting user');
-        }
-
-        let user: IUser = res.json();
-
-        if (this.routeService.urlBeforeRedirectToLogin) {
-          if (environment.debug) {
-            console.debug(
-              `Redirecting to the URL "${this.routeService.urlBeforeRedirectToLogin}" which was asked before being redirected to /login`
-            );
-          }
-
-          this.router.navigate([this.routeService.urlBeforeRedirectToLogin]);
-        } else {
-          this.router.navigate(['/nav/navigation']);
-        }
-
-        return { type: UserActions.USR_IS_CONNECTED, payload: user };
-      })
-      .catch((err) => {
-        if (environment.debug) {
-          console.error(err);
-        }
-
-        return Observable.of({ type: UserActions.USR_CONNECTION_FAILED });
-      })
-    );
-
-  // tslint:disable-next-line:member-ordering
-  @Effect({dispatch: true}) usrDisconnect$: Observable<Action> = this.actions$
-    .ofType(UserActions.USR_IS_DISCONNECTING)
-    .switchMap(() => this.userService.disconnectUser()
-      .map((res: Response) => {
-        if (!res.ok) {
-          throw new Error('Error while disconnecting user');
-        }
-
-        return { type: UserActions.USR_IS_DISCONNECTED };
-      })
-      .catch((err) => {
-        if (environment.debug) {
-          console.error(err);
-        }
-
-        return Observable.of({ type: UserActions.USR_DISCONNECTION_FAILED });
-      })
-    );
-
-  @Effect({dispatch: false}) usrDisconnected$: Observable<void> = this.actions$
-    .ofType(UserActions.USR_IS_DISCONNECTED)
-    .map(() => {
-      this.router.navigate(['/auth/login']);
+    .switchMap(x => {
+      let finalUser = new Promise((resolve, reject) => {
+        let userRespond = this.userService.connectUser(x.payload).then(user => {
+          if (user === "ko"){
+            resolve({ type: UserActions.USR_CONNECTION_FAILED, payload: user });
+          }else {
+             resolve({ type: UserActions.USR_IS_CONNECTED, payload: user });
+          } 
+        });
+      });
+      return Observable.fromPromise(finalUser);
     });
-  }
+
+  @Effect({ dispatch: true }) usrAuth$: Observable<Action> = this.actions$
+    .ofType(UserActions.USR_IS_REGISTERING)
+    .switchMap(x => {
+      let finalUser = new Promise((resolve, reject) => {
+        let userRespond = this.userService.insertUser(x.payload).then(user => {
+          if (user === 'ok') {
+            resolve({ type: UserActions.USR_IS_REGISTERED, payload: user });
+          } else {
+            resolve({ type: UserActions.USR_REGISTERATION_FAILED, payload: user });
+          }
+        });
+      });
+      return Observable.fromPromise(finalUser);
+    });
+
+  @Effect({ dispatch: true }) usrDisconnected$: Observable<Action> = this.actions$
+    .ofType(UserActions.USR_IS_DISCONNECTING)
+    .map(() => {
+      this.userService.disconnectUser();
+      this.router.navigate(['/auth/login']);
+      return { type: UserActions.USR_IS_DISCONNECTED };
+    });
+}
 
 
 

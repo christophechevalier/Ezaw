@@ -3,22 +3,19 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, OnInit, OnDestro
 import { MdSidenav } from '@angular/material';
 
 // rxjs
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 // ngrx - store
 import { Store } from '@ngrx/store';
 
-// our reducers
-import { USR_IS_DISCONNECTING } from '../../shared-module/reducers/user.reducer';
-
 // our interfaces
 import { IStore } from '../../shared-module/interfaces/store.interface';
 import { IConfig, IConfigRecord } from '../../shared-module/interfaces/config.interface';
+import { ISidenav, ISidenavRecord } from '../../shared-module/interfaces/sidenav.interface';
 import { IUser, IUserRecord } from '../../shared-module/interfaces/user.interface';
 
 // our actions
-import { ConfigActions } from '../../shared-module/reducers/config.actions';
-
+import { UserActions } from './../../shared-module/reducers/user.actions';
 
 @Component({
   selector: 'app-nav-module',
@@ -30,13 +27,13 @@ import { ConfigActions } from '../../shared-module/reducers/config.actions';
 
 export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
   private config: IConfig;
+  private sidenav: ISidenav;
   private configSub: Subscription;
+  public sidenavRightSub: Subscription;
   private user: IUser;
   private userSub: Subscription;
-  public isSidenavLeftVisibleSub: Subscription;
   public isSidenavRightVisibleSub: Subscription;
 
-  @ViewChild('start') start: MdSidenav;
   @ViewChild('end') end: MdSidenav;
 
   constructor(
@@ -49,6 +46,13 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
           this.config = config;
         });
 
+    this.sidenavRightSub =
+      store$.select('sidenavRight')
+        .map((sidenavR: ISidenavRecord) => sidenavR.toJS())
+        .subscribe((sidenav: ISidenav) => {
+          this.sidenav = sidenav;
+        });
+
     this.userSub =
       store$.select('user')
         .map((userR: IUserRecord) => userR.toJS())
@@ -58,36 +62,13 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    // temporary fix based on problems with property opened in Angular Material sidenav
-    this.start._onTransitionEnd = function () {
-      this._openPromise = null;
-      this._closePromise = null;
-    };
-    this.end._onTransitionEnd = function () {
-      this._openPromise = null;
-      this._closePromise = null;
-    };
 
-    this.onResize();
   }
 
   ngAfterViewInit() {
-    this.isSidenavLeftVisibleSub =
-      this.store$.select('config')
-        .map((configR: IConfigRecord) => configR.get('isSidenavLeftVisible'))
-        .distinctUntilChanged()
-        .map((isSidenavLeftVisible: boolean) => {
-          if (isSidenavLeftVisible) {
-            this.start.open();
-          } else {
-            this.start.close();
-          }
-        })
-        .subscribe();
-
     this.isSidenavRightVisibleSub =
-      this.store$.select('config')
-        .map((configR: IConfigRecord) => configR.get('isSidenavRightVisible'))
+      this.store$.select('sidenavRight')
+        .map((sidenavR: ISidenavRecord) => sidenavR.get('isSidenavRightVisible'))
         .distinctUntilChanged()
         .map((isSidenavRightVisible: boolean) => {
           if (isSidenavRightVisible) {
@@ -101,49 +82,12 @@ export class NavComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.configSub.unsubscribe();
+    this.sidenavRightSub.unsubscribe();
     this.userSub.unsubscribe();
-    this.isSidenavLeftVisibleSub.unsubscribe();
     this.isSidenavRightVisibleSub.unsubscribe();
   }
 
   disconnectUser() {
-    this.store$.dispatch({ type: USR_IS_DISCONNECTING });
-  }
-
-  closeSidenavLeft() {
-    this.store$.dispatch({ type: ConfigActions.CLOSE_SIDENAV_LEFT });
-  }
-
-  closeSidenavLeftIfMobile() {
-    this.store$.dispatch({ type: ConfigActions.CLOSE_SIDENAV_LEFT_IF_MOBILE });
-  }
-
-  closeSidenavRightIfMobile() {
-    this.store$.dispatch({ type: ConfigActions.CLOSE_SIDENAV_RIGHT_IF_MOBILE });
-  }
-
-  openSidenavLeft() {
-    this.store$.dispatch({ type: ConfigActions.OPEN_SIDENAV_LEFT });
-  }
-
-  openSidenavRight() {
-    this.store$.dispatch({ type: ConfigActions.OPEN_SIDENAV_RIGHT });
-  }
-
-  onResize() {
-    Observable.fromEvent(window, 'resize')
-      .debounceTime(100)
-      .subscribe((event: Event) => {
-        if (event.target['innerWidth'] < 960) {
-          this.store$.dispatch({ type: ConfigActions.SET_SIDENAV_MODE, payload: 'over' });
-          this.closeSidenavLeft();
-          this.closeSidenavRightIfMobile();
-        }
-        else {
-          this.store$.dispatch({ type: ConfigActions.SET_SIDENAV_MODE, payload: 'side' });
-          this.openSidenavLeft();
-          this.openSidenavRight();
-        }
-      });
+    this.store$.dispatch({ type: UserActions.USR_IS_DISCONNECTING });
   }
 }

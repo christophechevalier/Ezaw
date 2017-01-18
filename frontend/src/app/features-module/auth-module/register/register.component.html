@@ -1,40 +1,78 @@
 <div class="page-register">
-  <md-card-content layout="column" layout-margin layout-padding layout-align="center center">
-    <form #formLogin="ngForm">
+  <md-card-content layout="column" layout-margin layout-padding>
+    <form [formGroup]="formRegister" (ngSubmit)="registerUser(formRegister.value) && formRegister.reset()">
       <div align="center">
         <br>
         <md-card-subtitle>
           <p>{{ 'SIGN_UP' | translate | uppercase }}</p>
         </md-card-subtitle>
 
-        <md-input placeholder="{{ 'USERNAME' | translate }}" name="username" type="Text">
-              <span md-prefix>
-                <md-icon>person</md-icon>
-              </span>
-        </md-input>
+        <div class="error" *ngIf="user?.registerationFailed">
+          Username and password already exists. Please change your username !
+        </div>
 
-        <md-input placeholder="{{ 'EMAIL' | translate }}" name="email" type="Text">
-              <span md-prefix>
-                <md-icon>email</md-icon>
-              </span>
-        </md-input>
-
-        <md-input placeholder="{{ 'PASSWORD' | translate }}" name="password" type="Text">
-              <span md-prefix>
-                <md-icon>vpn_key</md-icon>
-              </span>
-        </md-input>
-
-        <md-input placeholder="{{ 'PASSWORD_CONFIRM' | translate }}" name="cfpassword" type="password">
-              <span md-prefix>
-                <md-icon>done</md-icon>
-              </span>
-        </md-input>
+        <!-- USERNAME -->
+        <md-input-container #usernameInput layout-padding>
+          <input
+            md-input type="text" name="username" formControlName="username"
+            [(ngModel)]="username" flex
+            placeholder="{{ 'USERNAME' | translate }}"
+            required
+            >
+          <span md-prefix><md-icon>person</md-icon>&nbsp;</span>
+          <md-hint *ngIf="formErrors.username" class="error-form">
+            {{ formErrors.username }}
+          </md-hint>
+        </md-input-container>
+        <!-- EMAIL -->
+        <md-input-container #emailInput layout-padding>
+          <input
+            md-input type="text" name="email" formControlName="email"
+            [(ngModel)]="email" flex
+            placeholder="{{ 'EMAIL' | translate }}"
+            required
+            >
+          <span md-prefix><md-icon>person</md-icon>&nbsp;</span>
+          <md-hint *ngIf="formErrors.email" class="error-form">
+            {{ formErrors.email }}
+          </md-hint>
+        </md-input-container>
+        <!-- PASSWORD -->
+        <md-input-container #passwordInput layout-padding>
+          <input
+            md-input type="password" name="password" formControlName="password"
+            [(ngModel)]="password" flex
+            placeholder="{{ 'PASSWORD' | translate }}"
+            required
+            validateEqual="cfpassword"
+            reverse="false"
+            >
+          <span md-prefix><md-icon>vpn_key</md-icon>&nbsp;</span>
+          <md-hint *ngIf="formErrors.password" class="error-form">
+            {{ formErrors.password }}
+          </md-hint>
+        </md-input-container>
+        <!-- CONFIRM PASSWORD -->
+        <md-input-container #cfpasswordInput layout-padding>
+          <input
+            md-input type="password" name="cfpassword" formControlName="cfpassword"
+            [(ngModel)]="cfpassword" flex
+            placeholder="{{ 'PASSWORD_CONFIRM' | translate }}"
+            required
+            validateEqual="password"
+            reverse="true"
+            >
+          <span md-prefix><md-icon>vpn_key</md-icon>&nbsp;</span>
+          <md-hint *ngIf="formErrors.password" class="error-form">
+            {{ formErrors.cfpassword }}
+          </md-hint>
+        </md-input-container>
       </div>
 
-      <div align="end" class="pnl-btn-connect">
-        <button type="submit" md-raised-button color="primary">
+      <div align="right" class="pnl-btn-connect">
+        <button type="submit" md-raised-button color="primary" [disabled]="user?.isRegistering || !formRegister.valid">
           <span>{{ 'SIGN_UP' | translate }}</span>
+          <md-progress-circle *ngIf="user?.isRegistering" mode="indeterminate"></md-progress-circle>
         </button>
       </div>
     </form>

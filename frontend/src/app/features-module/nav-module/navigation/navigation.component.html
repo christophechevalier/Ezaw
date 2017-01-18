@@ -1,29 +1,38 @@
-<div class="custom-map" [class.nav-theme]="config?.isDarkTheme">
-  <sebm-google-map *ngIf="showMap"
-                   [latitude]="lat || centerLat"
-                   [longitude]="lng || centerLng"
-                   [zoom]="zoom"
-                   [disableDefaultUI]="false"
-                   [zoomControl]="false"
-                   (mapClick)="mapClicked($event)">
+<div class="custom-map">
+  <sebm-google-map
+    class="sebm-google-map-container"
+    *ngIf="showMap"
+    [latitude]="lat || centerLat"
+    [longitude]="lng || centerLng"
+    [zoom]="zoom"
+    [disableDefaultUI]="true"
+    [zoomControl]="false"
+    [styles]="lightAndDark"
+    >
 
     <sebm-google-map-marker
       *ngFor="let m of markers; let i = index"
-      (markerClick)="clickedMarker(m.label, i)"
+      (markerClick)="clickedMarker(m.label, m.id, m.lat, m.lng)"
       [latitude]="m.lat"
       [longitude]="m.lng"
+      [title]="m.title"
+      [id]="m.id"
+      [markerDraggable]="m.draggable"
+      (dragEnd)="markerDragEnd($event)"
+      [iconUrl]="m.icon"
     >
-
-
-      <sebm-google-map-info-window>
-        <p align="center"><strong>Marker :</strong> {{i}}</p>
-        <span>
-          <strong>Latitude :</strong> {{m.lat}}
-          <br>
-          <strong>Longitude :</strong> {{m.lng}}
-        </span>
+    
+      <sebm-google-map-info-window [disableAutoPan]="true">
+        <div layout-padding>
+          <strong><p align="center">{{ m.title }}</p></strong><br>
+          <button md-raised-button color="accent" md-tooltip="{{ 'DISLIKE' | translate }}" tooltip-position="below"(click)="dislikedMarker(m.id)">
+            <img class="icon-window-marker" src="assets/img/markers/dislike.png">
+          </button>
+          <button md-raised-button color="accent" md-tooltip="{{ 'LIKE' | translate }}" tooltip-position="below"(click)="likeMarker(m.id)">
+            <img class="icon-window-marker" src="assets/img/markers/like.png">
+          </button>
+        </div>
       </sebm-google-map-info-window>
     </sebm-google-map-marker>
-
   </sebm-google-map>
 </div>

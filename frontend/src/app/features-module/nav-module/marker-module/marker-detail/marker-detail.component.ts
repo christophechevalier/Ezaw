@@ -1,6 +1,7 @@
 // angular module
 import { Component, Input } from '@angular/core';
 
+// marker sidenav
 import { Marker } from '../marker/marker';
 
 @Component({
@@ -10,7 +11,6 @@ import { Marker } from '../marker/marker';
 })
 export class MarkerDetailComponent {
 
-  message: string;
   @Input() marker: Marker;
 
   markers: Marker[];

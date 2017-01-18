@@ -1,23 +1,42 @@
 <div class="page-login">
-  <md-card-content layout="column" layout-margin layout-padding layout-align="center center">
-    <form #formLogin="ngForm" (ngSubmit)="connectUser(formLogin.value)">
+  <md-card-content layout="column" layout-margin layout-padding>
+    <form [formGroup]="formAuth" (ngSubmit)="connectUser(formAuth.value) && formAuth.reset()">
       <div align="center">
         <br>
         <md-card-subtitle>
           <p>{{ 'LOG_ME' | translate | uppercase}}</p>
         </md-card-subtitle>
 
-        <md-input placeholder="{{ 'USERNAME' | translate }}" name="username" [(ngModel)]="username" type="Text">
-              <span md-prefix>
-                <md-icon>person</md-icon>
-              </span>
-        </md-input>
+        <div class="error" *ngIf="user?.connectionFailed">
+          Username and password do not match
+        </div>
 
-        <md-input placeholder="{{ 'PASSWORD' | translate }}" name="password" [(ngModel)]="password" type="password">
-              <span md-prefix>
-                <md-icon>vpn_key</md-icon>
-              </span>
-        </md-input>
+        <!-- USERNAME -->
+        <md-input-container #usernameInput layout-padding>
+          <input
+            md-input type="text" name="username" formControlName="username"
+            [(ngModel)]="username" flex
+            placeholder="{{ 'USERNAME' | translate }}"
+            required
+            >
+          <span md-prefix><md-icon>person</md-icon>&nbsp;</span>
+          <md-hint *ngIf="formErrors.username" class="error-form">
+            {{ formErrors.username }}
+          </md-hint>
+        </md-input-container>
+        <!-- PASSWORD -->
+        <md-input-container #passwordInput layout-padding>
+          <input
+            md-input type="password" name="password" formControlName="password"
+            [(ngModel)]="password" flex
+            placeholder="{{ 'PASSWORD' | translate }}"
+            required
+            >
+          <span md-prefix><md-icon>vpn_key</md-icon>&nbsp;</span>
+          <md-hint *ngIf="formErrors.password" class="error-form">
+            {{ formErrors.password }}
+          </md-hint>
+        </md-input-container>
       </div>
 
       <div align="center">
@@ -26,19 +45,11 @@
         </md-checkbox>
       </div>
 
-      <div align="end" layout-margin layout-padding>
-        <button type="submit" md-raised-button color="primary" [disabled]="user?.isConnecting">
+      <div align="right" layout-margin layout-padding>
+        <button type="submit" md-raised-button color="primary" [disabled]="user?.isConnecting || !formAuth.valid">
           <span>{{ 'LOG_ME' | translate }}</span>
+          <md-progress-circle *ngIf="user?.isConnecting" mode="indeterminate"></md-progress-circle>
         </button>
-      </div>
-
-      <div id="overlay" *ngIf="user?.isConnecting">
-        <md-progress-circle class="overlay-full-screen" mode="indeterminate"></md-progress-circle>
-        <span>{{ 'WAITING_PROGRESS' | translate }}</span>
-      </div>
-
-      <div class="error" *ngIf="user?.connectionFailed">
-        Username and password do not match
       </div>
 
     </form>

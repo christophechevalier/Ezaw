@@ -1,7 +1,7 @@
 // angular modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
@@ -15,19 +15,24 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { TranslateModule } from 'ng2-translate';
 
-// services
+// our services
 import { DialogsService } from './services/dialogs.service';
 import { MarkerService } from './services/marker.service';
+import { NavigationService } from './services/navigation.service';
 
-// component
+// our components
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
-import { ToggleSidenavComponent } from './components/toggle-sidenav/toggle-sidenav.component';
 import { MarkersSidenavComponent } from './components/markers-sidenav/markers-sidenav.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+
+// our directives
+import { EqualValidator } from './directives/equal-validator.directive';
 
 const SHARED_COMPONENTS = [
   ConfirmDialogComponent,
-  ToggleSidenavComponent,
-  MarkersSidenavComponent
+  MarkersSidenavComponent,
+  NotFoundComponent,
+  EqualValidator
 ];
 
 const SHARED_MODULES = [
@@ -39,6 +44,7 @@ const SHARED_MODULES = [
   StoreModule,
   EffectsModule,
   TranslateModule,
+  ReactiveFormsModule
 ];
 
 @NgModule({
@@ -54,7 +60,8 @@ const SHARED_MODULES = [
   ],
   providers: [
     DialogsService,
-    MarkerService
+    MarkerService,
+    NavigationService
   ]
 })
 export class SharedModule { }

@@ -1,38 +1,264 @@
 // angular module
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy,  ApplicationRef, ChangeDetectorRef } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
-// Interfaces
-import { IMarker } from '../../../shared-module/interfaces/marker.interface';
-// import { ILocation } from '../../../shared-module/interfaces/location.interface';
+// nrgx
+import { Store } from '@ngrx/store';
+
+// rxjs
+import { Subscription,Observable } from 'rxjs';
+
+// our interfaces
+import { IStore } from './../../../shared-module/interfaces/store.interface';
+import { IMarker, INavigationList } from './../../../shared-module/interfaces/navigation.interface';
+
+// our actions
+import { NavigationActions } from '../../../shared-module/reducers/navigation.actions';
 
 // Google Map
 import { MouseEvent } from 'angular2-google-maps/core';
 
+// service
+import { MarkerService } from './../../../shared-module/services/marker.service';
+
+// our helpers
+import { getCurrentLocation } from '../../../shared-module/helpers/helper';
+
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss']
+  styles: [`
+    .sebm-google-map-container {
+      min-height: 100vh;
+      height: 100vh;
+      width: 100%;
+    }
+    .custom-map {
+      overflow: hidden;
+      cursor: wait;
+      height: 100%;
+      width: 100%;
+      position: fixed;
+      min-height: 100%;
+      flex: 1 1 auto;
+      bottom: 41px;
+    }
+    .icon-window-marker {
+      width: 20px;
+      height: 20px;
+    }
+  `]
 })
 
-export class NavigationComponent {
+export class NavigationComponent implements OnInit, OnDestroy {
+  public marker: IMarker;
+  private markerSub: Subscription;
 
+  public lat: number;
+  public lng: number;
+  public currentPosLat: number;
+  public currentPosLng: number;
   public markers: IMarker[] = [];
 
-  zoom: number = 15;
-  showMap = true;
-  centerLat: number = 43.548317;
-  centerLng: number = 1.502877;
+  public zoom: number = 8;
+  public showMap = true;
+  public centerLat: number = 43.55;
+  public centerLng: number = 1.50;
+  public lightAndDark = [
+    {
+      'elementType': 'geometry',
+      'stylers': [
+        {
+          'hue': '#ff4400'
+        },
+        {
+          'saturation': -68
+        },
+        {
+          'lightness': -4
+        },
+        {
+          'gamma': 0.72
+        }
+      ]
+    },
+    {
+      'featureType': 'road',
+      'elementType': 'labels.icon'
+    },
+    {
+      'featureType': 'landscape.man_made',
+      'elementType': 'geometry',
+      'stylers': [
+        {
+          'hue': '#0077ff'
+        },
+        {
+          'gamma': 3.1
+        }
+      ]
+    },
+    {
+      'featureType': 'water',
+      'stylers': [
+        {
+          'hue': '#00ccff'
+        },
+        {
+          'gamma': 0.44
+        },
+        {
+          'saturation': -33
+        }
+      ]
+    },
+    {
+      'featureType': 'poi.park',
+      'stylers': [
+        {
+          'hue': '#44ff00'
+        },
+        {
+          'saturation': -23
+        }
+      ]
+    },
+    {
+      'featureType': 'water',
+      'elementType': 'labels.text.fill',
+      'stylers': [
+        {
+          'hue': '#007fff'
+        },
+        {
+          'gamma': 0.77
+        },
+        {
+          'saturation': 65
+        },
+        {
+          'lightness': 99
+        }
+      ]
+    },
+    {
+      'featureType': 'water',
+      'elementType': 'labels.text.stroke',
+      'stylers': [
+        {
+          'gamma': 0.11
+        },
+        {
+          'weight': 5.6
+        },
+        {
+          'saturation': 99
+        },
+        {
+          'hue': '#0091ff'
+        },
+        {
+          'lightness': -86
+        }
+      ]
+    },
+    {
+      'featureType': 'transit.line',
+      'elementType': 'geometry',
+      'stylers': [
+        {
+          'lightness': -48
+        },
+        {
+          'hue': '#ff5e00'
+        },
+        {
+          'gamma': 1.2
+        },
+        {
+          'saturation': -23
+        }
+      ]
+    },
+    {
+      'featureType': 'transit',
+      'elementType': 'labels.text.stroke',
+      'stylers': [
+        {
+          'saturation': -64
+        },
+        {
+          'hue': '#ff9100'
+        },
+        {
+          'lightness': 16
+        },
+        {
+          'gamma': 0.47
+        },
+        {
+          'weight': 2.7
+        }
+      ]
+    }
+  ];
 
-  constructor() { }
-
-  clickedMarker(index: number) {
-    this.markers.splice(index, 1);
+  constructor(
+    private store$: Store<IStore>,
+    private router: Router,
+    private route: ActivatedRoute,
+    private markerService: MarkerService,
+    private ref: ChangeDetectorRef
+  ) {
+    this.markerSub =
+      store$.select('navigation')
+        .map((navigationR: INavigationList) => navigationR.toJS())
+        .subscribe(navigation => {
+          this.markers = navigation;
+        });
   }
 
-  mapClicked($event: MouseEvent) {
-    this.markers.push(<IMarker>{
-      lat: $event.coords.lat,
-      lng: $event.coords.lng
-    });
+  ngOnInit() {
+    this.markerSub =
+      this.route.params.subscribe(params => {
+      });
+
+    this.store$.dispatch({ type: NavigationActions.GET_MARKERS });
+
+     let timer = Observable.timer(2000,6000);
+     timer.subscribe(t=> {
+     this.getNearByMarkers(t);
+     this.ref.detectChanges();
+     });
+  }
+
+  ngOnDestroy() {
+    this.markerSub.unsubscribe();
+  }
+
+  markerDragEnd($event: MouseEvent) {
+
+  }
+
+  clickedMarker(m: IMarker) {
+  }
+
+  dislikedMarker(mID) {
+    this.store$.dispatch({ type: NavigationActions.DISLIKE_MARKER, payload: mID });
+  }
+
+  likeMarker(mId) {
+    this.store$.dispatch({ type: NavigationActions.LIKE_MARKER, payload: mId });
+  }
+
+  getNearByMarkers(t) {
+    this.store$.dispatch({ type: NavigationActions.GET_MARKERS });
+  }
+
+  GetUserLocation(){
+     getCurrentLocation().then(pos => {
+        this.centerLat = pos.lat,
+        this.centerLng = pos.lng
+      })
   }
 }
