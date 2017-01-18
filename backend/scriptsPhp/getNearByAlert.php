@@ -10,6 +10,8 @@ $lon_courante= trim(strip_tags($request -> lng));
 //$lat_courante= 43.353010299;
 //$lon_courante= 1.623376199;
 
+	
+	include('cleaningBase.php');
 	// Perimètre en km
 	$distance_choisie = 5;
 	include('bd.php');

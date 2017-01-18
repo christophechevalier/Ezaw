@@ -6,7 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 // rxjs
-import { Subscription } from 'rxjs';
+import { Subscription,Observable } from 'rxjs';
 
 // our interfaces
 import { IStore } from './../../../shared-module/interfaces/store.interface';
@@ -175,7 +175,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
         {
           'saturation': -23
         }
-    ]
+      ]
     },
     {
       'featureType': 'transit',
@@ -219,7 +219,11 @@ export class NavigationComponent implements OnInit, OnDestroy {
       this.route.params.subscribe(params => {
       });
 
-      this.getNearByMarkers();
+     let timer = Observable.timer(2000,4000);
+     timer.subscribe(t=> {
+     this.getNearByMarkers(t);
+     });
+    //this.getNearByMarkers();
   }
 
   ngOnDestroy() {
@@ -230,18 +234,18 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   }
 
-   clickedMarker(m: IMarker) {
+  clickedMarker(m: IMarker) {
   }
 
   dislikedMarker(mID) {
-   this.store$.dispatch({ type: NavigationActions.DISLIKE_MARKER, payload : mID });
+    this.store$.dispatch({ type: NavigationActions.DISLIKE_MARKER, payload: mID });
   }
 
   likeMarker(mId) {
-    this.store$.dispatch({ type: NavigationActions.LIKE_MARKER, payload : mId });
+    this.store$.dispatch({ type: NavigationActions.LIKE_MARKER, payload: mId });
   }
 
-  getNearByMarkers() {
+  getNearByMarkers(t) {
     this.store$.dispatch({ type: NavigationActions.GET_MARKERS });
   }
 }

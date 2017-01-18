@@ -16,6 +16,6 @@ error_reporting(E_ALL);
 	$queryDelete = $bdd->prepare("DELETE FROM alert WHERE compteur_dislike > 5 ");
 	$queryDelete->execute();
 	$resultsDelete = $queryDelete->rowCount();
-	echo($resultsDelete);
+	
 
 ?>

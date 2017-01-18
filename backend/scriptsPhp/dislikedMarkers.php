@@ -22,11 +22,10 @@ $id_marqueur = trim(strip_tags($request -> id));
 						$sql= $bdd->prepare('UPDATE alert SET compteur_dislike = ? WHERE id = ?');
 						$sql -> execute(array(intval($compteurDislike),$id_marqueur));
 						$results = $sql->rowCount();
-						echo($results);
+						echo json_encode("ok");
 
-		}else{
-				
-			include('cleaningBase.php');
+		}else{	
+			echo json_encode("ko");
 		}
 	}
 
