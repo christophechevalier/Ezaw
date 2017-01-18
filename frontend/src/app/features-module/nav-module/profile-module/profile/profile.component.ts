@@ -1,6 +1,8 @@
 // angular modules
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+
+import {LoginComponent} from '../../../auth-module/login/login.component'
 
 @Component({
   selector: 'app-profile',

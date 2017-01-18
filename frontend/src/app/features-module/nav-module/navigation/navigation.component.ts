@@ -230,7 +230,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
      this.getNearByMarkers(t);
      this.ref.detectChanges();
      });
-    //this.getNearByMarkers();
   }
 
   ngOnDestroy() {
