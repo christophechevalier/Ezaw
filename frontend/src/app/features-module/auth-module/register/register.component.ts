@@ -1,5 +1,5 @@
 // angular module
-import { Component, OnInit,OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -38,16 +38,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   validationMessages = {
     'username': {
-      'required': 'Required !'
+      'required': 'Required !',
     },
     'email': {
-      'required': 'Required !'
+      'required': 'Required !',
+      'pattern': 'Invalid Email adress !'
     },
     'password': {
-      'required': 'Required !'
+      'required': 'Required !',
+      'validateEqual': 'Not equal'
     },
     'cfpassword': {
-      'required': 'Required !'
+      'required': 'Required !',
+      'validateEqual': 'Not equal'
     }
   };
 
@@ -75,6 +78,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.user = {
         username: 'null',
         password: 'null',
+        cfpassword: 'null',
         email: 'null',
         isRegistering: false,
         isRegistered: false,
@@ -92,7 +96,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
   createformRegister() {
     this.formRegister = this.fb.group({
       username: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', Validators.compose(
+        [
+          Validators.required,
+          Validators.pattern('[a-z0-9!#$%&*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?')
+        ]
+      )],
       password: ['', Validators.required],
       cfpassword: ['', Validators.required]
     });
@@ -114,6 +123,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     } else {
       this.store$.dispatch({ type: UserActions.USR_REGISTERATION_FAILED });
     }
+  }
+
+  reset() {
+    this.formRegister.reset();
   }
 
   onValueChanged(data?: any) {

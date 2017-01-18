@@ -5,6 +5,7 @@ export interface IUser {
   // from server
   username: string;
   password: string;
+  cfpassword: string;
   email: string;
 
   // for UI

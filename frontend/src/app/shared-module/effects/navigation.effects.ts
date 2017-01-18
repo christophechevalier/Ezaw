@@ -135,7 +135,7 @@ export class NavigationEffects {
                     id: res[a]['id'],
                     lat: parseFloat(res[a]['lat']),
                     lng: parseFloat(res[a]['lng']),
-                    icon: 'aassets/img/markers/tux.png',
+                    icon: 'assets/img/markers/tux.png',
                     title: 'User !!',
                     duration: null,
                     draggable: false,

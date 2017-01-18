@@ -70,6 +70,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.user = {
         username: 'null',
         password: 'null',
+        cfpassword: 'null',
         email: 'null',
         isRegistering: false,
         isRegistered: false,

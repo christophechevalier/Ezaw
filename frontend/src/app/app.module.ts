@@ -62,7 +62,6 @@ import { SharedModule } from './shared-module/shared-module.module';
 // opaque tokens
 import { AVAILABLE_LANGUAGES } from './shared-module/opaque-tokens/opaque-tokens';
 
-
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, './assets/i18n', '.json');
 }

@@ -1,11 +1,15 @@
 <div class="page-register">
   <md-card-content layout="column" layout-margin layout-padding>
-    <form [formGroup]="formRegister" (ngSubmit)="registerUser(formRegister.value)">
+    <form [formGroup]="formRegister" (ngSubmit)="registerUser(formRegister.value) && formRegister.reset()">
       <div align="center">
         <br>
         <md-card-subtitle>
           <p>{{ 'SIGN_UP' | translate | uppercase }}</p>
         </md-card-subtitle>
+
+        <div class="error" *ngIf="user?.registerationFailed">
+          Username and password already exists. Please change your username !
+        </div>
 
         <!-- USERNAME -->
         <md-input-container #usernameInput layout-padding>
@@ -40,6 +44,8 @@
             [(ngModel)]="password" flex
             placeholder="{{ 'PASSWORD' | translate }}"
             required
+            validateEqual="cfpassword"
+            reverse="true"
             >
           <span md-prefix><md-icon>vpn_key</md-icon>&nbsp;</span>
           <md-hint *ngIf="formErrors.password" class="error-form">
@@ -53,6 +59,8 @@
             [(ngModel)]="cfpassword" flex
             placeholder="{{ 'PASSWORD_CONFIRM' | translate }}"
             required
+            validateEqual="password"
+            reverse="true"
             >
           <span md-prefix><md-icon>vpn_key</md-icon>&nbsp;</span>
           <md-hint *ngIf="formErrors.password" class="error-form">

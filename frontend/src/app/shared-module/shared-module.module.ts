@@ -25,10 +25,14 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { MarkersSidenavComponent } from './components/markers-sidenav/markers-sidenav.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
+// our directives
+import { EqualValidator } from './directives/equal-validator.directive';
+
 const SHARED_COMPONENTS = [
   ConfirmDialogComponent,
   MarkersSidenavComponent,
-  NotFoundComponent
+  NotFoundComponent,
+  EqualValidator
 ];
 
 const SHARED_MODULES = [

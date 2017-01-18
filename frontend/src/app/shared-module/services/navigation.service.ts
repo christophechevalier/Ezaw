@@ -18,10 +18,6 @@ export class NavigationService {
 
   constructor(private http: InterceptorService) { }
 
-  getDetails(idMarker: string, TypeMarker: string) {
-    return this.http.get(`${environment.urlBackend}/markers/${idMarker}/type/${TypeMarker}`);
-  }
-
   getNearByMarkers(lat: number, lng: number) {
     this.locationNeeded.lat = lat;
     this.locationNeeded.lng = lng;

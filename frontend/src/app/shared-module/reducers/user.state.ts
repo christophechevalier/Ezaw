@@ -9,6 +9,7 @@ export function userFactory(): IUser {
     // from server
     username: null,
     password: null,
+    cfpassword: null,
     email: null,
 
     // for UI
