@@ -2,7 +2,7 @@
 import { List } from 'immutable';
 
 // types
-export enum ETypeMarkers { Police, Accident, TrafficJam, Warning, GasStation, User };
+export enum ETypeMarkers { Police, Accident, TrafficJam, Warning };
 
 // controls
 export enum EControlPolices { Visible, Hide, Opposite };

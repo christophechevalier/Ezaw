@@ -19,16 +19,6 @@
       "title": "WARNING",
       "icon": "assets/img/markers/danger.png",
       "markerType": "Warning"
-    },
-    {
-      "title": "USER_POSITION",
-      "icon": "assets/img/markers/tux.png",
-      "markerType": "User"
-    },
-    {
-      "title": "GAS_STATION",
-      "icon": "assets/img/markers/gas_station.png",
-      "markerType": "GasStation"
     }
   ]
 }

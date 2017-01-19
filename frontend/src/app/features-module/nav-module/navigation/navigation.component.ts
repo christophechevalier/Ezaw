@@ -62,7 +62,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   public userPosition = { lat: 0, lng: 0 }
 
-  public zoom: number = 8;
+  public zoom: number = 10;
   public showMap = true;
   public centerLat: number = 43.55;
   public centerLng: number = 1.50;
@@ -225,7 +225,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
       this.route.params.subscribe(params => {
       });
 
-
     this.store$.dispatch({ type: NavigationActions.GET_MARKERS });
 
     let timer = Observable.timer(2000, 6000);
@@ -239,8 +238,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
       this.getNearByMarkers(t);
       this.ref.detectChanges();
     });
-
-
   }
 
   ngOnDestroy() {

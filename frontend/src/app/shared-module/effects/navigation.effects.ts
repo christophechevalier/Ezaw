@@ -51,7 +51,7 @@ export class NavigationEffects {
     .switchMap(x => {
       let fetchMarkerPromise = new Promise((resolve, reject) => {
         let serverListe = getCurrentLocation().then(pos => {
-            this.navigationService.getNearByMarkers(pos.lat, pos.lng)
+          this.navigationService.getNearByMarkers(pos.lat, pos.lng)
             .then(res => {
               let markertab: IMarker[] = [];
               for (let a = 0; a < res.length; a++) {
@@ -110,36 +110,6 @@ export class NavigationEffects {
                     duration: null,
                     draggable: false,
                     typeMarker: ETypeMarkers.Warning,
-                    control: null,
-                    warning: null,
-                    isFetchingDetails: false
-                  });
-                    break;
-
-                  case '4': markertab.push(<IMarker>{
-                    id: res[a]['id'],
-                    lat: parseFloat(res[a]['lat']),
-                    lng: parseFloat(res[a]['lng']),
-                    icon: 'assets/img/markers/gas_station.png',
-                    title: 'gas_station !!',
-                    duration: null,
-                    draggable: false,
-                    typeMarker: ETypeMarkers.GasStation,
-                    control: null,
-                    warning: null,
-                    isFetchingDetails: false
-                  });
-                    break;
-
-                  case '5': markertab.push(<IMarker>{
-                    id: res[a]['id'],
-                    lat: parseFloat(res[a]['lat']),
-                    lng: parseFloat(res[a]['lng']),
-                    icon: 'assets/img/markers/tux.png',
-                    title: 'User !!',
-                    duration: null,
-                    draggable: false,
-                    typeMarker: ETypeMarkers.User,
                     control: null,
                     warning: null,
                     isFetchingDetails: false
@@ -246,36 +216,6 @@ export class NavigationEffects {
                     }
                   ));
                   resolve({ type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmW });
-                  break;
-                case ETypeMarkers.User:
-                  let etmU = (Object.assign(
-                    generateMarker(pos.lat, pos.lng, data),
-                    {
-                      icon: 'assets/img/markers/tux.png',
-                      title: 'Current Position !!',
-                      label: 'Marker User',
-                      typeMarker: ETypeMarkers.User,
-                      control: null,
-                      warning: null,
-                      isFetchingDetails: true
-                    }
-                  ));
-                  resolve({ type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmU });
-                  break;
-                case ETypeMarkers.GasStation:
-                  let etmG = (Object.assign(
-                    generateMarker(pos.lat, pos.lng, data),
-                    {
-                      icon: 'assets/img/markers/gas_station.png',
-                      title: 'Gas Station !!',
-                      label: 'Marker Gas Station',
-                      typeMarker: ETypeMarkers.GasStation,
-                      control: null,
-                      warning: null,
-                      isFetchingDetails: true
-                    }
-                  ));
-                  resolve({ type: NavigationActions.FETCH_MARKER_SUCCESS, payload: etmG });
                   break;
               }
             }
