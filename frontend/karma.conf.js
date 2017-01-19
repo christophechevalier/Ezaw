@@ -1,45 +1,32 @@
-module.exports = function (config) {
-  config.set({
-    basePath: '',
-    frameworks: ['jasmine', 'angular-cli'],
-    plugins: [
-      require('karma-jasmine'),
-      require('karma-jasmine-diff-reporter'),
-      require('karma-clear-screen-reporter'),
-      require('karma-chrome-launcher'),
-      require('karma-remap-istanbul'),
-      require('angular-cli/plugins/karma')
-    ],
-    files: [
-      { pattern: './src/test.ts', watched: false }
-    ],
-    preprocessors: {
-      './src/test.ts': ['angular-cli']
-    },
-    mime: {
-      'text/x-typescript': ['ts','tsx']
-    },
-    remapIstanbulReporter: {
-      reports: {
-        html: 'coverage',
-        lcovonly: './coverage/coverage.lcov'
-      }
-    },
-    angularCli: {
-      config: './angular-cli.json',
-      environment: 'dev'
-    },
-    reporters: config.angularCli && config.angularCli.codeCoverage
-      ? ['jasmine-diff', 'progress', 'karma-remap-istanbul', 'clear-screen']
-      : ['jasmine-diff', 'progress', 'clear-screen'],
-    jasmineDiffReporter: {
-      pretty: true
-    },
-    port: 9876,
-    colors: true,
-    logLevel: config.LOG_INFO,
-    autoWatch: true,
-    browsers: ['Chromium'],
-    singleRun: false
-  });
+var SpecReporter = require('jasmine-spec-reporter');
+
+exports.config = {
+  getPageTimeout: 60000,
+  allScriptsTimeout: 11000,
+  specs: [
+    './e2e/login.e2e-spec.ts'
+  ],
+  capabilities: {
+    'browserName': 'chrome',
+    'chromeOptions': {
+      'args': ['--no-sandbox']
+    }
+  },
+  directConnect: true,
+  baseUrl: 'http://localhost:4200/',
+  framework: 'jasmine',
+  jasmineNodeOpts: {
+    showColors: true,
+    defaultTimeoutInterval: 60000,
+    print: function() {}
+  },
+  useAllAngular2AppRoots: true,
+  beforeLaunch: function() {
+    require('ts-node').register({
+      project: 'e2e'
+    });
+  },
+  onPrepare: function() {
+    jasmine.getEnv().addReporter(new SpecReporter());
+  }
 };
