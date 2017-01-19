@@ -1,12 +1,12 @@
 // angular module
-import { Component, OnInit, OnDestroy,  ApplicationRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ApplicationRef, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 // nrgx
 import { Store } from '@ngrx/store';
 
 // rxjs
-import { Subscription,Observable } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 // our interfaces
 import { IStore } from './../../../shared-module/interfaces/store.interface';
@@ -59,6 +59,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
   public currentPosLat: number;
   public currentPosLng: number;
   public markers: IMarker[] = [];
+
+  public userPosition = { lat: 0, lng: 0 }
 
   public zoom: number = 8;
   public showMap = true;
@@ -223,13 +225,22 @@ export class NavigationComponent implements OnInit, OnDestroy {
       this.route.params.subscribe(params => {
       });
 
+
     this.store$.dispatch({ type: NavigationActions.GET_MARKERS });
 
-     let timer = Observable.timer(2000,6000);
-     timer.subscribe(t=> {
-     this.getNearByMarkers(t);
-     this.ref.detectChanges();
-     });
+    let timer = Observable.timer(2000, 6000);
+
+    timer.subscribe(t => {
+      this.getUserLocation(t);
+      this.ref.detectChanges();
+    })
+
+    timer.subscribe(t => {
+      this.getNearByMarkers(t);
+      this.ref.detectChanges();
+    });
+
+
   }
 
   ngOnDestroy() {
@@ -255,10 +266,12 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.store$.dispatch({ type: NavigationActions.GET_MARKERS });
   }
 
-  GetUserLocation(){
-     getCurrentLocation().then(pos => {
-        this.centerLat = pos.lat,
-        this.centerLng = pos.lng
-      })
+  getUserLocation(t) {
+    getCurrentLocation().then(pos => {
+      var lat: string = pos.lat.toString()
+      var lng: string = pos.lng.toString()
+      this.userPosition.lat = parseFloat(lat)
+      this.userPosition.lng = parseFloat(lng)
+    })
   }
 }

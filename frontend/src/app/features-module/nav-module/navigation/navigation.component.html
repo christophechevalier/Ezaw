@@ -11,6 +11,11 @@
     >
 
     <sebm-google-map-marker
+      [latitude]="userPosition.lat"
+      [longitude]="userPosition.lng"
+    >
+    </sebm-google-map-marker>
+    <sebm-google-map-marker
       *ngFor="let m of markers; let i = index"
       (markerClick)="clickedMarker(m.label, m.id, m.lat, m.lng)"
       [latitude]="m.lat"
