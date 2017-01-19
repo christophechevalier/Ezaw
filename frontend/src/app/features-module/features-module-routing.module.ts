@@ -18,7 +18,7 @@ import { NotFoundComponent } from './../shared-module/components/not-found/not-f
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'nav/navigation',
+    redirectTo: 'auth/login',
     pathMatch: 'full'
   },
   {
